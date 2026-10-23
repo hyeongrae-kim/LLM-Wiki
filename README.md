@@ -1,8 +1,12 @@
 # Retrieval as Reasoning: Self-Evolving Agent-Native Retrieval via LLM-Wiki
 
+> **This fork** adds Korean-language support, a paper-faithful Error Book loop,
+> an `llm-wiki` CLI and a Korean National Assembly demo corpus.
+> 한국어 안내: [README.ko.md](README.ko.md) · 시연 대본: [docs/DEMO_KO.md](docs/DEMO_KO.md) ·
+> 원본 대비 변경 사항: [docs/CHANGES_KO.md](docs/CHANGES_KO.md)
+
 **Haoliang Ming, Feifei Li, Xiaoqing Wu, Wenhui Que**
 
-This repository
 This repository contains the official code release for **LLM-Wiki**, an
 agent-native retrieval system that operationalizes the
 *Retrieval-as-Reasoning* paradigm. LLM-Wiki compiles documents into

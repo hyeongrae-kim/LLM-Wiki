@@ -11,7 +11,8 @@ RAW      ?= raw
 Q        ?= 순직 해병 특검법 첫 본회의 표결에서 국민의힘 소속으로 찬성한 의원은?
 
 BIN := $(VENV)/bin
-CLI := $(BIN)/llm-wiki --corpus $(CORPUS)
+CLI := $(BIN)/llm-wiki
+C   := --corpus $(CORPUS)
 
 .PHONY: help setup convert prepare build quickstart status search ask eval \
         demo-add demo-errorbook demo-fix demo-reset test site deploy-pages
@@ -28,44 +29,44 @@ convert:  ## (Optional) regenerate example articles from raw/ tables
 	$(BIN)/python corpora/assembly/convert.py --raw $(RAW) --out $(EXAMPLES)
 
 prepare:  ## Copy example articles + purpose/page types into place (PRESET=small|full)
-	$(CLI) prepare --source $(EXAMPLES) --config-dir $(CONFIG) --preset $(PRESET)
+	$(CLI) prepare $(C) --source $(EXAMPLES) --config-dir $(CONFIG) --preset $(PRESET)
 
 build:  ## Compile the wiki, then save the "built" snapshot used by demo-reset
-	$(CLI) build
-	$(CLI) errorbook export
-	$(CLI) snapshot --name built
+	$(CLI) build $(C)
+	$(CLI) errorbook $(C) export
+	$(CLI) snapshot $(C) --name built
 
 quickstart:  ## Small end-to-end build (~27 documents)
 	$(MAKE) prepare PRESET=small
 	$(MAKE) build
 
 status:  ## Wiki statistics
-	$(CLI) status
+	$(CLI) status $(C)
 
 search:  ## wiki_search only, no LLM (Q="…")
-	$(CLI) search "$(Q)"
+	$(CLI) search $(C) "$(Q)"
 
 ask:  ## Ask the Retrieval-as-Reasoning agent (Q="…")
-	$(CLI) ask "$(Q)" -v
+	$(CLI) ask $(C) "$(Q)" -v
 
 eval:  ## Score 10 generated questions (gold answers from the tables)
-	$(CLI) eval --limit 10
+	$(CLI) eval $(C) --limit 10
 
 demo-add:  ## Live: add the 2026 지방선거 투표용지 특검 documents
-	$(CLI) add $(EXAMPLES)/add/*.md
+	$(CLI) add $(C) $(EXAMPLES)/add/*.md
 
 demo-errorbook:  ## Live: plant 3 defects, lint (record), show injected constraints
-	$(CLI) errorbook inject-demo
-	$(CLI) lint
-	$(CLI) errorbook show
+	$(CLI) errorbook $(C) inject-demo
+	$(CLI) lint $(C)
+	$(CLI) errorbook $(C) show
 
 demo-fix:  ## Live: repair (code + LLM), then verify twice so entries close
-	$(CLI) fix --llm
-	$(CLI) lint
-	$(CLI) errorbook export
+	$(CLI) fix $(C) --llm
+	$(CLI) lint $(C)
+	$(CLI) errorbook $(C) export
 
 demo-reset:  ## Restore the wiki to the "built" snapshot
-	$(CLI) restore --name built
+	$(CLI) restore $(C) --name built
 
 test:  ## Offline tests (no API calls)
 	$(BIN)/pytest -q
