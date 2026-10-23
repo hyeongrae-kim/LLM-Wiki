@@ -15,6 +15,12 @@ results/
 logs/
 *.log
 
+# Local settings, demo state, generated per-corpus files
+.env
+.snapshots/
+.quartz/
+/purpose_*.md
+
 # OS / editor
 .DS_Store
 .vscode/

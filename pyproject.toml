@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-wiki"
+version = "0.2.0"
+description = "LLM-Wiki: agent-native Retrieval-as-Reasoning over an LLM-compiled wiki (with Korean support)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = ["requests>=2.31", "PyYAML>=6.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+llm-wiki = "llm_wiki_bench.cli:main"
+
+# Install in editable mode (`pip install -e .`): the code resolves raw/,
+# wiki_output/ and configs/ relative to the repository checkout.
+[tool.setuptools]
+packages = ["llm_wiki_bench"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
