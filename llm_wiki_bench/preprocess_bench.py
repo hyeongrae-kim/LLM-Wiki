@@ -25,7 +25,7 @@ import sys
 from pathlib import Path
 from collections import defaultdict
 
-BASE_DIR = Path(__file__).parent
+BASE_DIR = Path(__file__).parent.parent   # repo root, same as bench_config.BASE_DIR
 DATASETS_DIR = BASE_DIR / "datasets"
 RAW_DIR = BASE_DIR / "raw"
 DATA_DIR = BASE_DIR / "data"
@@ -309,15 +309,15 @@ dataset: 2wikimhqa
 DATASET_PROCESSORS = {
     "hotpotqa": {
         "processor": process_hotpotqa,
-        "input_file": "hotpotqa/hotpot_dev_distractor_v1.json",
+        "input_file": "hotpotqa/hotpotqa_dev.json",
     },
     "musique": {
         "processor": process_musique,
-        "input_file": "musique/data/musique_ans_v1.0_dev.jsonl",
+        "input_file": "musique/musique_dev.jsonl",
     },
     "2wikimhqa": {
         "processor": process_2wikimhqa,
-        "input_file": "2wikimhqa/data/dev.json",
+        "input_file": "2wikimhqa/2wikimhqa_dev.json",
     },
 }
 

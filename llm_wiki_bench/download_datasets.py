@@ -19,7 +19,7 @@ import os
 import sys
 from pathlib import Path
 
-DATASETS_DIR = Path(__file__).parent / "datasets"
+DATASETS_DIR = Path(__file__).parent.parent / "datasets"   # repo root
 
 
 def download_hotpotqa(output_dir: Path):

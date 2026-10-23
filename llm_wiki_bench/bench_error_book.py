@@ -17,6 +17,12 @@ Two orthogonal states:
    injected into the LLM prompt.
 2. Fix status (``fixed: true/false`` on each sample) — controls whether the
    periodic LLM repair pass should attempt to fix it.
+
+Closing rule ("verify disappearance -> close"): an open entry whose category
+is absent from two consecutive lint checks is closed and its samples are
+marked fixed. ``broken_link`` entries additionally wait until the LLM repair
+pass has created (or ruled out) every missing target page, because their
+samples are the work list for that pass.
 """
 
 import json
@@ -200,6 +206,16 @@ _ISSUE_TEMPLATES = {
 }
 
 
+ISSUE_TEMPLATES = _ISSUE_TEMPLATES
+
+
+def _link_target(sample_name: str) -> str:
+    """'from → [[dir/target]]' → 'dir/target' (or the bare name)."""
+    if " → " in sample_name:
+        sample_name = sample_name.split(" → ")[-1]
+    return sample_name.strip("[]")
+
+
 def record_lint_issues(issues: dict, batch_article_stems: list[str] | None = None):
     """Record lint findings into the error book.
 
@@ -258,29 +274,26 @@ def record_lint_issues(issues: dict, batch_article_stems: list[str] | None = Non
 
         if existing:
             existing["last_seen"] = today
+            existing["pass_count"] = 0  # seen again: the clean-check streak restarts
             if existing.get("needs_llm_fix") and category == "broken_link":
                 # Broken-link entries: deduplicate-and-accumulate, preserving any existing
             # ``fixed`` flag and ``context`` from previous runs.
                 existing_samples = _get_samples(existing)
-                existing_map = {}  # name → sample_dict
-                for s in existing_samples:
-                    s = _normalize_sample(s)
-                    existing_map[_sample_name(s)] = s
-                for s in samples:
-                    s = _normalize_sample(s)
-                    name = _sample_name(s)
-                    if " → " in name:
-                        target = name.split(" → ")[-1].strip("[]")
+                existing_map = {}  # link target → sample_dict
+                for s_ in existing_samples:
+                    s_ = _normalize_sample(s_)
+                    existing_map[_link_target(_sample_name(s_))] = s_
+                for s_ in samples:
+                    s_ = _normalize_sample(s_)
+                    target = _link_target(_sample_name(s_))
+                    if target in existing_map:
+                        # Broken again right now: whatever fixed it did not stick.
+                        existing_map[target]["fixed"] = False
                     else:
-                        target = name.strip("[]")
-                    if target not in existing_map:
-                        existing_map[target] = s
-                new_samples_list = [
-                    v if isinstance(v, dict) else {"name": k, "fixed": False}
-                    for k, v in sorted(existing_map.items(), key=lambda x: x[0])
-                ]
+                        existing_map[target] = s_
+                new_samples_list = [existing_map[k] for k in sorted(existing_map)]
                 _set_samples(existing, new_samples_list)
-                _set_count(existing, len(existing_map))
+                _set_count(existing, sum(1 for v in new_samples_list if not _sample_is_fixed(v)))
             else:
                 _set_count(existing, item_count)
                 _set_samples(existing, samples)
@@ -288,6 +301,7 @@ def record_lint_issues(issues: dict, batch_article_stems: list[str] | None = Non
                 existing["status"] = "open"
                 existing["pass_count"] = 0
                 print(f"  📔 Error {existing['id']} reappeared, reopened")
+                config.append_log("errorbook", f"{existing['id']} reopened ({category})")
             changed = True
         else:
             # Create a new entry.
@@ -316,6 +330,8 @@ def record_lint_issues(issues: dict, batch_article_stems: list[str] | None = Non
             errors.append(new_error)
             changed = True
             print(f"  📔 New error {new_id}: {template['description']} ({item_count} issues)")
+            config.append_log("errorbook", f"{new_id} opened ({category})",
+                              [f"{_sample_name(x)}" for x in samples[:5]])
 
     # Bump the pass_count of pre-existing entries that did not show up this round.
     seen_categories = set()
@@ -325,13 +341,27 @@ def record_lint_issues(issues: dict, batch_article_stems: list[str] | None = Non
 
     for e in errors:
         if e.get("status") == "open" and e.get("category") not in seen_categories:
-            if e.get("needs_llm_fix"):
-                continue  # entries needing LLM repair are not closed via pass_count
+            samples_now = [_normalize_sample(x) for x in _get_samples(e)]
+            if e.get("category") == "broken_link":
+                # Samples are the LLM page-creation work list; wait for it, except
+                # for sources/ targets, which that pass never creates.
+                for x in samples_now:
+                    if _link_target(_sample_name(x)).startswith("sources/"):
+                        x["fixed"] = True
+                _set_samples(e, samples_now)
+                if any(not _sample_is_fixed(x) for x in samples_now):
+                    continue
+            else:
+                # The lint no longer detects them: the disappearance is verified.
+                for x in samples_now:
+                    x["fixed"] = True
+                _set_samples(e, samples_now)
             e["pass_count"] = e.get("pass_count", 0) + 1
             if e["pass_count"] >= 2:
                 e["status"] = "closed"
                 e["closed_at"] = today
-                print(f"  📔 Error {e['id']} not seen for 2 checks, closed")
+                print(f"  📔 Error {e['id']} ({e.get('category')}) not seen for 2 checks, closed")
+                config.append_log("errorbook", f"{e['id']} closed ({e.get('category')})")
             changed = True
 
     # Hard-delete entries that have been closed for more than 30 days.
@@ -681,4 +711,90 @@ def get_unfixed_samples_full(category: str) -> list[dict]:
             s_n = _normalize_sample(s)
             if not _sample_is_fixed(s_n):
                 out.append(s_n)
+    return out
+
+
+# ─── Markdown export (for Obsidian / Quartz) ───
+
+_CATEGORY_LABELS_KO = {
+    "broken_link": "깨진 링크",
+    "index_error": "인덱스 불일치",
+    "duplicate": "중복 페이지",
+    "digest_incomplete": "digest 필수 섹션 누락",
+    "type_path_mismatch": "type·디렉터리 불일치",
+    "missing_source_article": "원문 연결 누락",
+    "unseen_page_overwrite": "미열람 페이지 덮어쓰기 시도",
+    "missing_summary": "한 줄 요약 누락",
+    "missing_sections": "필수 섹션 누락",
+}
+
+
+def _cell(text) -> str:
+    return str(text).replace("|", "\\|").replace("\n", " ")
+
+
+def export_markdown(max_ledger: int = 30) -> Path | None:
+    """Render the error book and the recent repair ledger to ``wiki/error-book.md``."""
+    wiki_dir = config.WIKI_DIR
+    if not wiki_dir:
+        return None
+    ko = config.is_korean()
+    label = (lambda c: _CATEGORY_LABELS_KO.get(c, c)) if ko else (lambda c: c)
+    errors = load_error_book()
+    open_errors = [e for e in errors if e.get("status") != "closed"]
+    closed_errors = [e for e in errors if e.get("status") == "closed"]
+    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+    L = ["---", "type: meta", "tags: [error-book]", "---", "# Error Book"]
+    if ko:
+        L += ["> 위키 품질 자기교정 기록: 탐지 → 기록 → 프롬프트 제약 주입 → 수리 → 재검증(2회) → 종료",
+              "", f"갱신 {now} · 활성 {len(open_errors)}건 · 종료 {len(closed_errors)}건", "",
+              "## 활성 항목", "",
+              "| ID | 유형 | 상태 | 남은 샘플 | 발견 | 최근 확인 | 연속 통과 |",
+              "|---|---|---|---|---|---|---|"]
+    else:
+        L += ["> Wiki self-correction log: detect → record → inject constraint → repair → verify (2 checks) → close",
+              "", f"Updated {now} · {len(open_errors)} active · {len(closed_errors)} closed", "",
+              "## Active", "",
+              "| ID | Category | Status | Unfixed | Discovered | Last seen | Clean checks |",
+              "|---|---|---|---|---|---|---|"]
+    for e in open_errors:
+        L.append(f"| {e.get('id')} | {_cell(label(e.get('category', '')))} | open | "
+                 f"{len(get_unfixed_samples(e))} | {e.get('discovered_at', '')} | "
+                 f"{e.get('last_seen', '')} | {e.get('pass_count', 0)}/2 |")
+    for e in open_errors:
+        L += ["", f"### {e.get('id')} · {_cell(label(e.get('category', '')))}",
+              f"- {'제약' if ko else 'Constraint'}: {e.get('constraint', '')}"]
+        for x in _get_samples(e)[:8]:
+            L.append(f"- {'✅' if _sample_is_fixed(x) else '❌'} `{_sample_name(x)[:120]}`")
+
+    L += ["", "## 종료된 항목" if ko else "## Closed", ""]
+    if closed_errors:
+        L += ["| ID | 유형 | 발견 | 종료 |" if ko else "| ID | Category | Discovered | Closed |", "|---|---|---|---|"]
+        for e in closed_errors:
+            L.append(f"| {e.get('id')} | {_cell(label(e.get('category', '')))} | "
+                     f"{e.get('discovered_at', '')} | {e.get('closed_at', '')} |")
+    else:
+        L.append("(없음)" if ko else "(none)")
+
+    constraints = get_active_constraints().strip()
+    L += ["", "## 다음 Step 2 프롬프트에 주입되는 제약" if ko else "## Constraints injected into the next Step 2 prompt",
+          "", "```text", constraints or "(none)", "```"]
+
+    ledger = load_ledger()[-max_ledger:]
+    L += ["", "## 최근 수리 이력 (lint_ledger.jsonl)" if ko else "## Recent repairs (lint_ledger.jsonl)", ""]
+    if ledger:
+        L += ["| 시각 | 유형 | 방식 | 파일 | 건수 | 메모 |" if ko else "| Time | Type | Method | File | Count | Note |",
+              "|---|---|---|---|---|---|"]
+        code_label = "코드" if ko else "code"
+        for r in reversed(ledger):
+            kind = code_label if r.get("auto_fixed") else "LLM"
+            L.append(f"| {r.get('ts', '')} | {_cell(r.get('issue_type', ''))} | "
+                     f"{kind} · {_cell(r.get('fix_method', ''))} | {_cell(r.get('file', ''))} | "
+                     f"{r.get('count', '')} | {_cell(r.get('note', ''))[:80]} |")
+    else:
+        L.append("(없음)" if ko else "(none)")
+
+    out = wiki_dir / "error-book.md"
+    out.write_text("\n".join(L) + "\n", encoding="utf-8")
     return out

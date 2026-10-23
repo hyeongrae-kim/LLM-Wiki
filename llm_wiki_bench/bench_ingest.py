@@ -34,6 +34,9 @@ from llm_client import call_llm, call_llm_json
 # Error-book module.
 import bench_error_book as error_book
 
+# Unicode / Korean text helpers.
+import textutil
+
 # ─── Feature toggles ───
 # Set ABLATION_ERROR_BOOK=0 to disable the error book (constraint injection, LLM repair, logging).
 _ENABLE_ERROR_BOOK = os.environ.get("ABLATION_ERROR_BOOK", "1") != "0"
@@ -43,6 +46,10 @@ _logger = logging.getLogger("bench_ingest")
 _logger.setLevel(logging.INFO)
 if not _logger.handlers:
     _logger.addHandler(logging.StreamHandler())
+
+
+# Pause between Step 1 and Step 2 (seconds); hosted APIs rarely need it.
+_STEP_PAUSE_SECONDS = float(os.environ.get("INGEST_STEP_PAUSE", "5"))
 
 
 # ─── Utility functions ───
@@ -58,10 +65,13 @@ def _read_file_safe(path: Path, max_len: int = 5000) -> str:
 
 
 # ─── Index smart-truncation constants ───
-MAX_INDEX_TOTAL_CHARS = 100000  # ~25K tokens; leaves room for the rest of the prompt.
+MAX_INDEX_TOTAL_CHARS = int(os.environ.get(
+    "MAX_INDEX_TOTAL_CHARS", "60000" if config.is_korean() else "100000"))  # ~25K English tokens
 
 # ─── Prompt total-length safety valve ───
-MAX_TOTAL_PROMPT_CHARS = 500000  # ~125K tokens; safe for models with a 200K-token context window.
+# Korean costs ~2-4x more tokens per character than English, hence the lower default.
+MAX_TOTAL_PROMPT_CHARS = int(os.environ.get(
+    "MAX_TOTAL_PROMPT_CHARS", "250000" if config.is_korean() else "500000"))  # ~125K English tokens
 
 
 def _apply_prompt_safety_valve(system: str, user: str) -> tuple[str, str]:
@@ -136,8 +146,33 @@ def _apply_prompt_safety_valve(system: str, user: str) -> tuple[str, str]:
     return system, user
 
 
+def _dump_prompt(kind: str, system: str, user: str) -> None:
+    """Save a prompt under wiki_output/<corpus>/logs/prompts/ when WIKI_DUMP_PROMPTS=1."""
+    if os.environ.get("WIKI_DUMP_PROMPTS", "0") != "1" or config.WIKI_DIR is None:
+        return
+    out_dir = config.WIKI_DIR.parent / "logs" / "prompts"
+    out_dir.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S-%f")
+    (out_dir / f"{stamp}-{kind}.md").write_text(
+        f"# SYSTEM\n\n{system}\n\n# USER\n\n{user}\n", encoding="utf-8")
+
+
+def _error_book_constraints() -> str:
+    """Active Error Book constraints for the Step 2 prompt ('' when disabled/empty)."""
+    if not _ENABLE_ERROR_BOOK:
+        return ""
+    try:
+        constraints = error_book.get_active_constraints()
+    except Exception:
+        return ""
+    if constraints:
+        n = sum(1 for line in constraints.splitlines() if line.startswith("- ["))
+        print(f"  📔 Error Book: injecting {n} active constraint(s) into the Step 2 prompt")
+    return constraints
+
+
 # ─── Level-2 helper: candidate entity-name extraction regex ───
-_CAND_CJK_RE = re.compile(r"[\u4e00-\u9fa5]{2,15}")
+_CAND_CJK_RE = re.compile(r"[\u4e00-\u9fa5\uac00-\ud7a3]{2,15}")
 _CAND_LATIN_RE = re.compile(r"\b[A-Z][A-Za-z.\-]{1,30}\b")
 
 
@@ -182,7 +217,8 @@ def _get_all_index_content(source_title: str = "") -> dict[str, str]:
     if total_chars <= MAX_INDEX_TOTAL_CHARS:
         return {f"wiki/{k}/_index.md": v for k, v in indexes.items()}
 
-    title_keywords = set(w.lower() for w in source_title.split() if len(w) > 2)
+    title_keywords = {v.lower() for w in source_title.split()
+                      for v in textutil.word_variants(w) if len(v) >= 2}
 
     scored = []
     for dir_name, content in indexes.items():
@@ -321,6 +357,26 @@ def _get_existing_page_names(expand_dirs: set[str] | None = None,
     return "\n".join(lines) if lines else "(no existing pages)"
 
 
+_SUMMARY_EXAMPLE_EN = "> Baroque-era German composer, father of modern Western music"
+_SUMMARY_EXAMPLE_KO = "> 조선 제4대 국왕, 훈민정음 창제자"
+
+
+def _length_range(lo_words: int, hi_words: int) -> str:
+    if config.is_korean():
+        return f"{lo_words * 2}-{hi_words * 2} Korean-character"
+    return f"{lo_words}-{hi_words} word"
+
+
+def _section_label_rule() -> str:
+    if config.is_korean():
+        return "short Korean topic labels (2-10 characters)"
+    return "short English topic labels (2-4 words)"
+
+
+_ALIAS_MATCH_EXAMPLE_EN = 'if index shows "[[Bach]] (J.S. Bach)" and source mentions "J.S. Bach" → select "Bach"'
+_ALIAS_MATCH_EXAMPLE_KO = 'if index shows "[[법제사법위원회]] (법사위)" and source mentions "법사위" → select "법제사법위원회"'
+
+
 # ─── Step 1 prompt: page selection + noise filtering ───
 
 def build_select_pages_prompt(source_title: str, source_content: str) -> tuple[str, str]:
@@ -354,7 +410,7 @@ Full text:
 
 ## Task
 
-This Wikipedia paragraph is about to be ingested into the knowledge base. First judge content quality, then select pages to view.
+This {config.source_label()} is about to be ingested into the knowledge base. First judge content quality, then select pages to view.
 
 ### Step 1: Should this paragraph be skipped?
 
@@ -363,7 +419,7 @@ Skip ONLY if the paragraph is:
 - A disambiguation page with no actual content
 - A redirect stub
 
-Most Wikipedia paragraphs contain useful knowledge and should NOT be skipped.
+Most {config.source_label()}s contain useful knowledge and should NOT be skipped.
 
 ### Step 2: If the paragraph has knowledge value, select existing pages to view
 
@@ -391,11 +447,13 @@ Notes:
 - Only select pages **directly and deeply related** to the source paragraph
 - **Limit: at most 10 pages**, prioritize the most important ones
 - Page names must exactly match those in the indexes
-- Match aliases: if index shows "[[Bach]] (J.S. Bach)" and source mentions "J.S. Bach" → select "Bach"
+- Match aliases: {_ALIAS_MATCH_EXAMPLE_KO if config.is_korean() else _ALIAS_MATCH_EXAMPLE_EN}
 - The reasoning field MUST be concise, no more than 100 characters. Just one sentence summarizing why. Do NOT analyze each page individually.
 """
 
-    return _apply_prompt_safety_valve(system, user)
+    system, user = _apply_prompt_safety_valve(system, user)
+    _dump_prompt("step1", system, user)
+    return system, user
 
 
 # ─── Step 1 prompt (batch mode): page selection ───
@@ -433,7 +491,7 @@ def build_select_pages_batch_prompt(articles: list[dict]) -> tuple[str, str]:
 
 ## Task
 
-These Wikipedia paragraphs are about to be ingested into the knowledge base. Select which existing pages need to be viewed/updated.
+These {config.source_label()}s are about to be ingested into the knowledge base. Select which existing pages need to be viewed/updated.
 
 ### Output JSON format
 
@@ -451,7 +509,80 @@ Notes:
 - The reasoning field MUST be concise, no more than 100 characters. Just one sentence summarizing why. Do NOT analyze each page individually.
 """
 
-    return _apply_prompt_safety_valve(system, user)
+    system, user = _apply_prompt_safety_valve(system, user)
+    _dump_prompt("step1-batch", system, user)
+    return system, user
+
+
+_INGEST_EXAMPLE_EN = """---FILE: wiki/sources/digests/einstein-physics.md---
+---
+type: source
+source_title: Albert Einstein
+tags: [physics, relativity]
+---
+# Albert Einstein
+> Source: Wikipedia paragraph
+## Summary
+Albert Einstein was a German-born theoretical physicist...
+## Key Facts
+- Born March 14, 1879 in Ulm, Germany
+- Developed the theory of special relativity in 1905
+## Key Entities
+- Albert Einstein
+- Theory of Relativity
+## Related Context
+- Einstein's work on the photoelectric effect earned him the Nobel Prize in 1921
+
+---FILE: wiki/entities/Einstein.md---
+---
+type: entities
+aliases: [Albert Einstein, A. Einstein]
+tags: [physicist, Nobel laureate]
+---
+# Einstein
+> German-born theoretical physicist, developer of the theory of relativity
+## Key Facts
+- Albert Einstein (1879-1955) was a German-born theoretical physicist
+- Developed the theory of special relativity (1905) and general relativity (1915)
+## Related Pages
+- [[concepts/Relativity]] — Einstein's foundational theory
+## Related Sources
+- [[sources/digests/einstein-physics]] — Wikipedia paragraph about Einstein"""
+
+_INGEST_EXAMPLE_KO = """---FILE: wiki/sources/digests/세종대왕-훈민정음.md---
+---
+type: source
+source_title: 세종대왕
+tags: [조선, 한글]
+---
+# 세종대왕과 훈민정음
+> Source: 원문 문서
+## Summary
+세종대왕은 조선의 제4대 국왕으로 1443년 훈민정음을 창제하고 1446년 반포했다...
+## Key Facts
+- 세종대왕(1397~1450)은 조선의 제4대 국왕이다
+- 세종대왕은 1443년 훈민정음을 창제했다
+## Key Entities
+- 세종대왕
+- 훈민정음
+## Related Context
+- 훈민정음 반포일(10월 9일)은 한글날로 기념된다
+
+---FILE: wiki/entities/세종대왕.md---
+---
+type: entities
+aliases: [세종, 이도, King Sejong]
+tags: [조선 국왕]
+---
+# 세종대왕
+> 조선 제4대 국왕, 훈민정음 창제자
+## Key Facts
+- 세종대왕(1397~1450)은 조선의 제4대 국왕이다
+- 세종대왕은 1443년 훈민정음을 창제했다
+## Related Pages
+- [[concepts/훈민정음]] — 세종대왕이 창제한 문자
+## Related Sources
+- [[sources/digests/세종대왕-훈민정음]] — 세종대왕 관련 원문 요약"""
 
 
 # ─── Step 2 prompt (single): generate wiki pages ───
@@ -492,12 +623,7 @@ Core principles:
 Your task: Analyze the source paragraph and directly generate/update Wiki page files."""
 
     # Inject error-book constraints (skipped when the error book is disabled).
-    error_constraints = ""
-    if _ENABLE_ERROR_BOOK:
-        try:
-            error_constraints = error_book.get_active_constraints()
-        except Exception:
-            pass
+    error_constraints = _error_book_constraints()
 
     user = f"""## Schema
 {schema_content}
@@ -546,7 +672,7 @@ Output format: `---FILE: path---` followed by complete file content.
 1. **Source digest page** (wiki/sources/digests/): Structured summary of the source paragraph
    - Filename format: `title-keywords.md` (no `source-` prefix, the directory already indicates it's a source)
    - ⚠️ **All 4 sections must be output**:
-   - **## Summary**: ≤200 word structured summary (required)
+   - **## Summary**: {config.length_limit(200)} structured summary (required)
    - **## Key Facts**: Factual information from the source (required, ≥2 items)
    - **## Key Entities**: Entity names mentioned (required, ≥1 item)
    - **## Related Context**: Background info useful for multi-hop QA (required)
@@ -566,7 +692,7 @@ Output format: `---FILE: path---` followed by complete file content.
 Notes:
 - ⚠️ **Do NOT output any _index.md files** (auto-maintained by code)
 - **Do NOT output wiki/index.md** (auto-generated)
-- Use English page names
+- {config.page_name_rule()}
 - **Control output quantity**: max 3-5 knowledge pages per source paragraph
 - Prefer merging related content into one page over creating many small pages
 
@@ -579,45 +705,14 @@ If directory structure has **obvious issues**, append after all files:
 
 ## Output Example
 
----FILE: wiki/sources/digests/einstein-physics.md---
----
-type: source
-source_title: Albert Einstein
-tags: [physics, relativity]
----
-# Albert Einstein
-> Source: Wikipedia paragraph
-## Summary
-Albert Einstein was a German-born theoretical physicist...
-## Key Facts
-- Born March 14, 1879 in Ulm, Germany
-- Developed the theory of special relativity in 1905
-## Key Entities
-- Albert Einstein
-- Theory of Relativity
-## Related Context
-- Einstein's work on the photoelectric effect earned him the Nobel Prize in 1921
-
----FILE: wiki/entities/Einstein.md---
----
-type: entities
-aliases: [Albert Einstein, A. Einstein]
-tags: [physicist, Nobel laureate]
----
-# Einstein
-> German-born theoretical physicist, developer of the theory of relativity
-## Key Facts
-- Albert Einstein (1879-1955) was a German-born theoretical physicist
-- Developed the theory of special relativity (1905) and general relativity (1915)
-## Related Pages
-- [[concepts/Relativity]] — Einstein's foundational theory
-## Related Sources
-- [[sources/digests/einstein-physics]] — Wikipedia paragraph about Einstein
+{_INGEST_EXAMPLE_KO if config.is_korean() else _INGEST_EXAMPLE_EN}
 
 **Important**: The above is just an example format. Place knowledge pages in the most appropriate directory based on content.
 """
 
-    return _apply_prompt_safety_valve(system, user)
+    system, user = _apply_prompt_safety_valve(system, user)
+    _dump_prompt("step2", system, user)
+    return system, user
 
 
 # ─── Step 2 prompt (batch): generate wiki pages ───
@@ -669,6 +764,9 @@ Core principles:
 
 Your task: Analyze multiple source paragraphs and generate/update all Wiki page files at once. Note that multiple paragraphs may share entities — merge updates into single pages."""
 
+    # Inject error-book constraints (same as the single-article prompt).
+    error_constraints = _error_book_constraints()
+
     user = f"""## Schema
 {schema_content}
 
@@ -695,6 +793,8 @@ Note: Only write pages into directories listed above.
 ## Source Paragraphs to Process (total: {len(articles)})
 {articles_text}
 
+{error_constraints}
+
 ## Task
 
 1. **Analyze** all source paragraphs: identify key facts, entities/concepts, pages to create/update
@@ -713,7 +813,7 @@ Output format: `---FILE: path---` followed by complete file content.
    - ⚠️ **Filename must match the stem given above** (i.e., `{{stem}}.md`)
    - ⚠️ **frontmatter must include `source_article: {{stem}}`**
    - ⚠️ **All 4 sections must be output**:
-   - **## Summary**: ≤200 word summary (required)
+   - **## Summary**: {config.length_limit(200)} summary (required)
    - **## Key Facts**: Factual information (required, ≥2 items)
    - **## Key Entities**: Entity names (required, ≥1)
    - **## Related Context**: Background for multi-hop QA (required)
@@ -730,7 +830,7 @@ Output format: `---FILE: path---` followed by complete file content.
 Notes:
 - ⚠️ **Do NOT output any _index.md files**
 - **Do NOT output wiki/index.md**
-- Use English page names
+- {config.page_name_rule()}
 - **Max 3-5 knowledge pages per source paragraph**
 - Prefer merging over creating many small pages
 
@@ -742,12 +842,14 @@ Notes:
 Only output if truly needed. Most of the time, no changes are necessary.
 """
 
-    return _apply_prompt_safety_valve(system, user)
+    system, user = _apply_prompt_safety_valve(system, user)
+    _dump_prompt("step2-batch", system, user)
+    return system, user
 
 
 def _predict_article_stem(title: str) -> str:
     """Predict the article stem for a source paragraph."""
-    safe_title = re.sub(r'[<>:"/\\|?*\[\]]', '', title)[:60].strip()
+    safe_title = re.sub(r'[<>:"/\\|?*\[\]#]', '', textutil.nfc(title))[:60].strip()
     safe_title = safe_title.rstrip('.')
     stem = safe_title.replace(' ', '-').lower()
     stem = re.sub(r'-{2,}', '-', stem).strip('-')
@@ -756,8 +858,14 @@ def _predict_article_stem(title: str) -> str:
 
 # ─── Validation and post-processing helpers ───
 
-def _normalize_filename(filename: str) -> str:
-    """Normalize filenames: unify whitespace and full/half-width characters."""
+def _normalize_filename(filename: str, for_link: bool = False) -> str:
+    """Normalize filenames: NFC, unify whitespace and full/half-width characters.
+
+    For real file names (``for_link=False``) characters that are unsafe in
+    paths or wikilinks are removed and the stem is capped at 200 UTF-8 bytes
+    (Hangul takes 3 bytes per syllable; the OS limit is 255 bytes).
+    """
+    filename = textutil.nfc(filename)
     result = []
     for ch in filename:
         code = ord(ch)
@@ -770,6 +878,9 @@ def _normalize_filename(filename: str) -> str:
     name = "".join(result)
     name = re.sub(r'\s+', ' ', name).strip()
     name = re.sub(r'\s*-\s*', '-', name)
+    if not for_link:
+        stem, ext = (name[:-3], ".md") if name.endswith(".md") else (name, "")
+        name = textutil.safe_filename(stem) + ext
     return name
 
 
@@ -1007,6 +1118,9 @@ def _lcs_len(a: str, b: str) -> int:
     return prev[n]
 
 
+_DATE_PREFIX_RE = re.compile(r"^\d{4}-\d{2}-\d{2}-")
+
+
 def _fuzzy_match_article(title_part: str, candidates: list[str]) -> str | None:
     """Fuzzy-match the best article stem from a candidate list."""
     if len(candidates) == 1:
@@ -1015,14 +1129,17 @@ def _fuzzy_match_article(title_part: str, candidates: list[str]) -> str | None:
     best_score = 0
     best_match = None
     for cand in candidates:
-        cand_title = cand[11:] if len(cand) > 11 else cand
+        # Strip a "YYYY-MM-DD-" prefix only when the stem actually has one.
+        cand_title = cand[11:] if _DATE_PREFIX_RE.match(cand) else cand
         lcs = _lcs_len(title_part.lower(), cand_title.lower())
         score = lcs / max(len(title_part), len(cand_title), 1)
         if score > best_score:
             best_score = score
             best_match = cand
 
-    return best_match if best_score >= 0.2 else None
+    # Templated titles (e.g. "...일부개정법률안(...의원 등 10인)") share long
+    # suffixes, so a low threshold links digests to the wrong article.
+    return best_match if best_score >= 0.6 else None
 
 
 def _inject_article_link_to_digests(article_stems: list[str]):
@@ -1058,7 +1175,7 @@ def _inject_article_link_to_digests(article_stems: list[str]):
                 best_score = score
                 best_art = art_stem
 
-        if best_art and best_score >= 0.3:
+        if best_art and best_score >= 0.6:
             if new_text.startswith("---"):
                 fm_result = config.split_frontmatter(new_text)
                 if fm_result:
@@ -1307,7 +1424,7 @@ def _generate_overview_text(existing_index: str, dir_catalog: str) -> str:
 {old_overview if old_overview else "(none)"}
 
 ## Task
-Generate a 200-400 word comprehensive overview as a SINGLE PARAGRAPH (no line breaks, no bullet points, no numbered lists, no separate sections). The paragraph should:
+Generate a {_length_range(200, 400)} comprehensive overview as a SINGLE PARAGRAPH (no line breaks, no bullet points, no numbered lists, no separate sections). The paragraph should:
 1. Summarize the core knowledge domains and coverage
 2. Naturally weave in the most important entity/concept keywords (for semantic matching)
 3. Point out the main threads and topic connections
@@ -1702,8 +1819,9 @@ def quick_lint_bench() -> dict:
     if md_suffix_issues:
         issues["md_suffix"] = md_suffix_issues[:10]
 
-    # Append to the error book (skipped when the error book is disabled).
-    if _ENABLE_ERROR_BOOK and issues:
+    # Append to the error book (skipped when the error book is disabled). A clean
+    # lint is recorded too: that is what advances pass_count toward "closed".
+    if _ENABLE_ERROR_BOOK:
         try:
             error_book.record_lint_issues(issues)
         except Exception as e:
@@ -2311,7 +2429,7 @@ def llm_fix_incomplete_digests() -> int:
             candidate = articles_dir / md.name
             if candidate.exists():
                 article_path = candidate
-        if article_path is None and articles_dir.exists() and len(md.name) >= 10 and md.name[4] == '-':
+        if article_path is None and articles_dir.exists() and _DATE_PREFIX_RE.match(md.name):
             date_prefix = md.name[:10]
             matches = list(articles_dir.glob(f"{date_prefix}-*.md"))
             if matches:
@@ -2350,7 +2468,7 @@ def llm_fix_incomplete_digests() -> int:
 {article_block}
 
 Please complete the missing sections. Format requirements:
-- ## Summary: ≤200 word structured summary
+- ## Summary: {config.length_limit(200)} structured summary
 - ## Key Facts: Factual information, each item starts with -
 - ## Key Entities: Entity names mentioned, each item starts with - (no [[]] links)
 - ## Related Context: Background context and connections
@@ -2362,6 +2480,7 @@ Only output sections that need to be added (starting with ##), do not output exi
                             model=config.LLM_PREMIUM_MODEL, temperature=0.2)
             if not result or not result.strip():
                 continue
+            result = textutil.normalize_headings(textutil.nfc(result))
 
             r = config.split_frontmatter(digest_text)
             if r is None:
@@ -2406,6 +2525,16 @@ Only output sections that need to be added (starting with ##), do not output exi
             pass
 
     return fixed
+
+
+def _mark_error_book_fixed(category: str, names: list[str]) -> None:
+    """Mark repaired samples as fixed in the error book (no-op when disabled)."""
+    if not _ENABLE_ERROR_BOOK or not names:
+        return
+    try:
+        error_book.mark_samples_fixed(category, names)
+    except Exception as e:
+        print(f"  ⚠️ Failed to update error book: {e}")
 
 
 def llm_fix_missing_summary() -> int:
@@ -2459,6 +2588,7 @@ def llm_fix_missing_summary() -> int:
     print(f"  📝 Found {len(missing_pages)} knowledge pages missing summary, starting LLM fix...")
 
     fixed = 0
+    fixed_names: list[str] = []
     for md, dir_name in missing_pages:
         text = md.read_text(encoding="utf-8")
         result = config.split_frontmatter(text)
@@ -2472,7 +2602,7 @@ def llm_fix_missing_summary() -> int:
 
 Generate ONE line of blockquote summary that describes the core identity of this entity/concept.
 Format: > One-sentence summary
-Example: > Baroque-era German composer, father of modern Western music"""
+Example: {_SUMMARY_EXAMPLE_KO if config.is_korean() else _SUMMARY_EXAMPLE_EN}"""
 
         try:
             llm_result = call_llm(sys_prompt, user_prompt, max_tokens=256,
@@ -2494,9 +2624,11 @@ Example: > Baroque-era German composer, father of modern Western music"""
             new_text = f"---\n{fm}\n---\n{body}"
             md.write_text(new_text, encoding="utf-8")
             fixed += 1
+            fixed_names.append(f"{dir_name}/{md.stem}")
         except Exception as e:
             print(f"    ⚠️ {dir_name}/{md.stem} — LLM summary failed: {e}")
 
+    _mark_error_book_fixed("missing_summary", fixed_names)
     return fixed
 
 
@@ -2573,6 +2705,7 @@ def llm_fix_missing_sections() -> int:
     )[:3000]
 
     fixed = 0
+    fixed_names: list[str] = []
     for md, dir_name, missing in missing_pages:
         text = md.read_text(encoding="utf-8")
         r = config.split_frontmatter(text)
@@ -2608,6 +2741,7 @@ Only output sections that need to be added (starting with ##)."""
                                   model=config.LLM_FAST_MODEL, temperature=0.2)
             if not llm_result or not llm_result.strip():
                 continue
+            llm_result = textutil.normalize_headings(textutil.nfc(llm_result))
 
             llm_sections = {}
             current_sec = None
@@ -2630,9 +2764,11 @@ Only output sections that need to be added (starting with ##)."""
             new_text = f"---\n{fm}\n---\n{body}"
             md.write_text(new_text, encoding="utf-8")
             fixed += 1
+            fixed_names.append(f"{dir_name}/{md.stem}")
         except Exception as e:
             print(f"    ⚠️ {dir_name}/{md.stem} — LLM section fix failed: {e}")
 
+    _mark_error_book_fixed("missing_sections", fixed_names)
     return fixed
 
 
@@ -3039,7 +3175,9 @@ def _inject_related_sources_for_page(page_path: Path, page_name: str):
             continue
         digest_lower = digest_text.lower()
         for name in search_names:
-            if name.lower() in digest_lower:
+            # contains_name: a short Hangul name (조국) must not match inside a
+            # longer word (조국혁신당).
+            if textutil.contains_name(digest_lower, name.lower()):
                 matched_digests.append(digest_md.stem)
                 break
 
@@ -3220,7 +3358,7 @@ Output format:
                 continue
 
             chosen_dir = target_dir
-            content = llm_result.strip()
+            content = textutil.normalize_headings(textutil.nfc(llm_result.strip()))
 
             dir_match = re.search(r'---DIR:\s*(\w+)\s*---', content)
             if dir_match:
@@ -3366,7 +3504,9 @@ Output JSON format:
   "results": [
     {{"fact": "the fact text", "supported": true/false, "reason": "brief reason"}}
   ]
-}}"""
+}}
+
+Copy each "fact" value EXACTLY as it appears in "Key Facts to Verify" (same language, same wording)."""
 
         try:
             result = call_llm_json(sys_prompt, user_prompt,
@@ -3538,7 +3678,9 @@ Output JSON:
   ]
 }}
 
-If no contradictions found, return {{"has_contradiction": false, "contradictions": []}}"""
+If no contradictions found, return {{"has_contradiction": false, "contradictions": []}}
+
+"claim" must be copied EXACTLY from the page text (same language, same wording) so it can be located and replaced; write "correct_info" in the same language as the page."""
 
         try:
             result = call_llm_json(sys_prompt, user_prompt,
@@ -3700,8 +3842,9 @@ def merge_duplicate_pages():
 Criteria:
 1. Same person, different names: e.g., "Einstein" and "Albert-Einstein"
 2. Same work, different names: e.g., "Relativity" and "Theory-of-Relativity"
-3. Translation/spelling variants
+3. Translation/spelling variants, abbreviations (e.g., "법사위" and "법제사법위원회")
 4. Note: aliases in parentheses are NOT separate pages
+5. Different people who share a name (e.g., "박지원(1942)" and "박지원(1987)") are NOT duplicates
 
 Only flag cases you are very confident about."""
 
@@ -4031,7 +4174,7 @@ def generate_overview():
 {indexes_text}
 
 ## Task
-Generate a 200-400 word comprehensive overview:
+Generate a {_length_range(200, 400)} comprehensive overview:
 1. Summarize the core knowledge domains and coverage
 2. List the most important entity/concept keywords (densely packed for semantic matching)
 3. Point out the main threads and topic connections
@@ -4261,7 +4404,7 @@ def relocate_pending_entries(dry_run: bool = False, batch_size: int = 40,
                 sections_text = "\n".join(f"- {s}" for s in existing_sections)
                 sys_prompt = (
                     "You are a knowledge base editor. Decide which section each 'Unsorted' entry belongs to. "
-                    "Section names should be short English topic labels (2-4 words). "
+                    f"Section names should be {_section_label_rule()}. "
                     "Do NOT leave any entry in 'Unsorted' — every entry must go into a section."
                 )
                 user_prompt = f"""Directory: {dir_name}/ — stores {dir_name}-related knowledge pages
@@ -4284,15 +4427,15 @@ def relocate_pending_entries(dry_run: bool = False, batch_size: int = 40,
 
 Rules:
 - Output JSON only, no extra explanation
-- Section names: short English topic labels (2-4 words), consistent style with existing sections
+- Section names: {_section_label_rule()}, consistent style with existing sections
 - {new_section_rule}
 - Do NOT use the directory name "{dir_name}" as a section name — sections must be finer-grained sub-topics
-- Do NOT use "Other", "Uncategorized", "Miscellaneous" as section names
+- Do NOT use "Other", "Uncategorized", "Miscellaneous", "기타", "미분류" as section names
 - Decide based on entry tags and summary"""
             else:
                 sys_prompt = (
                     "You are a knowledge base editor. Create a section structure for these entries. "
-                    "Section names should be short English topic labels (2-4 words). "
+                    f"Section names should be {_section_label_rule()}. "
                     f"Create {suggested_min}-{suggested_max} sections total. "
                     "Do NOT leave any entry in 'Unsorted'."
                 )
@@ -4310,11 +4453,11 @@ Rules:
 
 Rules:
 - Output JSON only, no extra explanation
-- Section names: short English topic labels (2-4 words), consistent style
+- Section names: {_section_label_rule()}, consistent style
 - Must create at least 2 different sections
 - Total sections strictly between {suggested_min}-{suggested_max}
 - Do NOT use "{dir_name}" as a section name
-- Do NOT use "Other", "Uncategorized", "Miscellaneous" as section names
+- Do NOT use "Other", "Uncategorized", "Miscellaneous", "기타", "미분류" as section names
 - Decide based on entry tags and summary"""
 
             try:
@@ -4344,7 +4487,7 @@ Rules:
             if dec["section"] == "Unsorted":
                 left_behind.append(entry)
                 continue
-            if dec["section"] in ("Other", "Uncategorized", "Miscellaneous", dir_name):
+            if dec["section"] in ("Other", "Uncategorized", "Miscellaneous", "기타", "미분류", dir_name):
                 left_behind.append(entry)
                 continue
             target = dec["section"]
@@ -4795,6 +4938,44 @@ def periodic_maintenance(articles_since_last: int, total_ingested: int = 0) -> b
     return True
 
 
+def finalize_light():
+    """One lint → code fix → structural LLM fix pass, then index rebuild.
+
+    A cheaper alternative to ``finalize_wiki`` after adding a few documents:
+    it skips the content-level checks (fact grounding, contradictions) and the
+    3-round loop, but still runs the Error Book cycle once and re-lints to
+    verify the repairs.
+    """
+    print(f"\n{'='*50}")
+    print(f"  🏁 Light finalization (1 round: code fix + structural LLM fix)")
+    print(f"{'='*50}")
+    issues = quick_lint_bench()
+    if issues:
+        fixes = auto_fix_bench()
+        total_fixed = sum(fixes.values())
+        if total_fixed:
+            print(f"    🔧 Code fixed {total_fixed} ({', '.join(f'{k}={v}' for k, v in fixes.items() if v)})")
+    if _ENABLE_ERROR_BOOK:
+        try:
+            llm_fix_structural()
+        except Exception as e:
+            print(f"    ⚠️ LLM fix failed: {e}")
+    try:
+        relocate_pending_entries(dry_run=False, force_final=True)
+    except Exception as e:
+        print(f"    ⚠️ Relocation failed: {e}")
+    _rebuild_sources_index()
+    _rebuild_global_index(update_overview=False)
+    final_issues = quick_lint_bench()
+    remaining = sum(len(v) if isinstance(v, list) else 1 for v in final_issues.values())
+    print(f"    {'✅ Zero issues' if not remaining else f'⚠️ {remaining} remaining issues'}")
+    config.append_log("finalize-light", f"{_count_knowledge_pages()} knowledge pages",
+                      [f"remaining lint issues: {remaining}"])
+    if _ENABLE_ERROR_BOOK:
+        error_book.print_error_book()
+        error_book.export_markdown()
+
+
 def finalize_wiki():
     """Post-ingestion finalization.
 
@@ -4905,6 +5086,10 @@ def finalize_wiki():
 
     page_count = _count_knowledge_pages()
     print(f"\n  🏁 Finalization complete | {page_count} knowledge pages")
+    remaining = sum(len(v) if isinstance(v, list) else 1 for v in (final_issues or {}).values())
+    config.append_log("finalize", f"{page_count} knowledge pages", [f"remaining lint issues: {remaining}"])
+    if _ENABLE_ERROR_BOOK:
+        error_book.export_markdown()
 
 
 
@@ -4914,6 +5099,7 @@ def parse_file_outputs(text: str) -> dict[str, str]:
     if dir_changes_idx != -1:
         text = text[:dir_changes_idx]
 
+    text = textutil.nfc(text)
     pattern = r'---FILE:\s*(.+?)---\s*\n'
     parts = re.split(pattern, text)
 
@@ -5052,10 +5238,10 @@ def write_wiki_files(file_outputs: dict[str, str], selected_pages: list[str] = N
             link = m.group(1)
             if "/" in link:
                 prefix, name = link.rsplit("/", 1)
-                normed = _normalize_filename(name).rstrip('.').rstrip(',')
+                normed = _normalize_filename(name, for_link=True).rstrip('.').rstrip(',')
                 new_link = f"{prefix}/{normed}"
             else:
-                new_link = _normalize_filename(link)
+                new_link = _normalize_filename(link, for_link=True)
             return f"[[{new_link}]]" if new_link != link else m.group(0)
         return re.sub(r'\[\[([^\]]+)\]\]', _norm_link, content)
 
@@ -5105,6 +5291,9 @@ def write_wiki_files(file_outputs: dict[str, str], selected_pages: list[str] = N
             print(f"  ⚠️ Skipped unsafe path: {rel_path}")
             continue
 
+        # The lint checks expect the canonical English section headings.
+        content = textutil.normalize_headings(content)
+
         if not _check_frontmatter_complete(content, rel_path):
             print(f"  ⏭️ Skipped {rel_path} (incomplete content)")
             continue
@@ -5117,6 +5306,13 @@ def write_wiki_files(file_outputs: dict[str, str], selected_pages: list[str] = N
             actual_path = wiki_dir / rel_path[len("wiki/"):]
             if actual_path.exists() and page_name not in _selected_names:
                 print(f"  🛡️ Skipped {rel_path} (existing page not selected in Step1, would lose data)")
+                if _ENABLE_ERROR_BOOK:
+                    try:
+                        error_book.record_sample_with_context(
+                            "unseen_page_overwrite", rel_path[len("wiki/"):].removesuffix(".md"),
+                            template=error_book.ISSUE_TEMPLATES["unseen_page_overwrite"])
+                    except Exception as e:
+                        print(f"  ⚠️ Failed to record to error book: {e}")
                 continue
 
         if rel_path.startswith("wiki/sources/digests/") and not rel_path.endswith("_index.md"):
@@ -5192,7 +5388,11 @@ def write_wiki_files(file_outputs: dict[str, str], selected_pages: list[str] = N
 
         content = _sanitize_frontmatter(content)
 
-        full_path.write_text(content, encoding="utf-8")
+        try:
+            full_path.write_text(content, encoding="utf-8")
+        except OSError as e:
+            print(f"  ⚠️ Failed to write {rel_path}: {e}")
+            continue
         written += 1
         print(f"  📄 Written {rel_path} ({len(content)} chars)")
 
@@ -5350,7 +5550,7 @@ def save_cache(cache: dict):
 def ingest_single(article_path: Path, cache: dict, force: bool = False) -> bool:
     """Ingest a single article."""
     try:
-        text = article_path.read_text(encoding="utf-8")
+        text = textutil.nfc(article_path.read_text(encoding="utf-8").lstrip("\ufeff"))
     except (OSError, UnicodeDecodeError) as e:
         print(f"  ❌ Failed to read {article_path}: {e}")
         return False
@@ -5404,7 +5604,7 @@ def ingest_single(article_path: Path, cache: dict, force: bool = False) -> bool:
     existing_content = _read_selected_pages(selected_pages)
 
     # Brief pause between Step 1 and Step 2 to ease back-pressure.
-    time.sleep(5)
+    time.sleep(_STEP_PAUSE_SECONDS)
 
     t2 = time.time()
     gen_sys, gen_user = build_ingest_prompt(
@@ -5453,7 +5653,14 @@ def ingest_single(article_path: Path, cache: dict, force: bool = False) -> bool:
     save_cache(cache)
 
     print(f"  ✅ Done: wrote {written} files (select {t_step1:.1f}s + generate {t_step2:.1f}s)")
+    config.append_log("ingest", title, _ingest_log_details(selected_pages, file_outputs))
     return True
+
+
+def _ingest_log_details(selected_pages: list[str], file_outputs: dict[str, str]) -> list[str]:
+    details = [f"Step 1 selected: {', '.join(selected_pages) if selected_pages else '(none)'}"]
+    details += [f"wrote [[{p[len('wiki/'):].removesuffix('.md')}]]" for p in list(file_outputs)[:20]]
+    return details
 
 
 def _read_selected_pages(selected_pages: list[str], max_total_chars: int = 100000) -> str:
@@ -5561,7 +5768,7 @@ def _ingest_batch_one(batch_paths: list[Path], cache: dict, force: bool = False)
     articles = []  # list of dict: {title, content, sha, path}
     for p in batch_paths:
         try:
-            text = p.read_text(encoding="utf-8")
+            text = textutil.nfc(p.read_text(encoding="utf-8").lstrip("\ufeff"))
         except (OSError, UnicodeDecodeError) as e:
             print(f"  ❌ Failed to read {p}: {e}")
             continue
@@ -5612,7 +5819,7 @@ def _ingest_batch_one(batch_paths: list[Path], cache: dict, force: bool = False)
     existing_content = _read_selected_pages(selected_pages)
 
     # Brief pause between Step 1 and Step 2 to ease back-pressure.
-    time.sleep(5)
+    time.sleep(_STEP_PAUSE_SECONDS)
 
     t2 = time.time()
     gen_sys, gen_user = build_ingest_prompt_batch(
@@ -5665,19 +5872,26 @@ def _ingest_batch_one(batch_paths: list[Path], cache: dict, force: bool = False)
     save_cache(cache)
 
     print(f"  ✅ Batch done: wrote {written} files for {len(articles)} articles (select {t_step1:.1f}s + generate {t_step2:.1f}s)")
+    config.append_log("ingest", " / ".join(a["title"] for a in articles)[:200],
+                      _ingest_log_details(selected_pages, file_outputs))
     return {"success": len(articles), "failed": 0}
 
 
 def ingest_batch(article_paths: list[Path], batch_size: int = 5,
-                 limit: int = None, force: bool = False):
-    """Ingest articles in batches (with periodic maintenance and final repair)."""
+                 limit: int = None, force: bool = False, finalize: str = "full"):
+    """Ingest articles in batches (with periodic maintenance and final repair).
+
+    ``finalize`` selects the post-ingestion pass: ``"full"`` (3 lint↔repair
+    rounds over the whole wiki, as in the paper), ``"light"`` (one round of code
+    + structural LLM repair — for incremental additions) or ``"none"``.
+    """
     cache = load_cache()
 
     to_process = []
     skipped = 0
     for p in article_paths:
         try:
-            text = p.read_text(encoding="utf-8")
+            text = textutil.nfc(p.read_text(encoding="utf-8").lstrip("\ufeff"))
         except (OSError, UnicodeDecodeError):
             continue
         sha = hashlib.sha256(text.encode()).hexdigest()
@@ -5779,7 +5993,13 @@ def ingest_batch(article_paths: list[Path], batch_size: int = 5,
 
     print()
 
-    finalize_wiki()
+    if finalize == "full":
+        finalize_wiki()
+    elif finalize == "light":
+        finalize_light()
+    else:
+        _rebuild_sources_index()
+        _rebuild_global_index()
 
     t_elapsed = time.time() - t_total
     print(f"\n{'='*50}")
@@ -5792,8 +6012,7 @@ def main():
     import argparse
     parser = argparse.ArgumentParser(description="Benchmark Wiki ingestion")
     parser.add_argument("--dataset", "-d", required=True,
-                        choices=["hotpotqa", "musique", "2wikimhqa"],
-                        help="Dataset to ingest")
+                        help="Dataset / corpus name (articles in raw/<name>/articles)")
     parser.add_argument("--limit", "-l", type=int, default=None,
                         help="Limit number of articles to ingest")
     parser.add_argument("--batch-size", "-b", type=int, default=3,
@@ -5805,7 +6024,7 @@ def main():
     config.set_dataset(args.dataset)
     config.ensure_wiki_dirs()
 
-    raw_dir = BENCH_DIR / "raw" / args.dataset / "articles"
+    raw_dir = config.RAW_DIR
     if not raw_dir.exists():
         print(f"❌ Raw articles directory not found: {raw_dir}")
         print(f"   Please run: python preprocess_bench.py --dataset {args.dataset}")

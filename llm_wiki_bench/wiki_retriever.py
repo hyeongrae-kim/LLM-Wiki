@@ -23,6 +23,11 @@ sub-token contributions are summed):
 
 A BM25 score over (name + description + body) is added on top, capped so it
 cannot outrank a structural exact match.
+
+Korean support: BM25 indexes Hangul as character bigrams, and each query word
+is also scored with trailing particles removed ("조국혁신당은" → "조국혁신당");
+a page name contained in a longer query word ("김건희특검법" ⊃ "김건희") scores
+just below a substring hit.
 """
 
 from __future__ import annotations
@@ -35,6 +40,8 @@ from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Iterable
+
+import textutil
 
 _logger = logging.getLogger("llm_wiki.retriever")
 
@@ -73,7 +80,6 @@ class WikiRetriever:
     _BM25_WEIGHT = 5.0   # scale factor on the BM25 score before adding
     _BM25_CAP = 60.0     # cap on the BM25 contribution (< exact-name score 100)
 
-    _TOKEN_RE = re.compile(r"[a-z0-9]+")
 
     def __init__(self, wiki_dir: Path):
         self.wiki_dir = Path(wiki_dir)
@@ -99,10 +105,10 @@ class WikiRetriever:
             return
 
         for md in self.wiki_dir.rglob("*.md"):
-            rel = md.relative_to(self.wiki_dir)
+            rel = Path(textutil.nfc(str(md.relative_to(self.wiki_dir))))
             rel_str = str(rel)
 
-            if md.name in ("index.md", "overview.md", "log.md"):
+            if md.name in ("index.md", "overview.md", "log.md", "error-book.md"):
                 continue
 
             if md.name == "_index.md":
@@ -115,11 +121,11 @@ class WikiRetriever:
                 continue
 
             try:
-                text = md.read_text(encoding="utf-8")
+                text = textutil.nfc(md.read_text(encoding="utf-8"))
             except (OSError, UnicodeDecodeError):
                 continue
 
-            page = self._parse_page(md.stem, rel, text)
+            page = self._parse_page(rel.stem, rel, text)
             self.pages[rel_str] = page
 
         self._build_bm25()
@@ -172,8 +178,8 @@ class WikiRetriever:
 
     @classmethod
     def _tokenize(cls, text: str) -> list[str]:
-        """ASCII tokenizer (lowercase, ≥2 chars). Suitable for English corpora."""
-        return [m.group() for m in cls._TOKEN_RE.finditer(text.lower()) if len(m.group()) >= 2]
+        """Lowercase ASCII words (≥2 chars) plus Hangul character bigrams."""
+        return textutil.search_tokens(text)
 
     def _build_bm25(self) -> None:
         inv: dict[str, dict[str, int]] = {}
@@ -217,7 +223,7 @@ class WikiRetriever:
     def search(self, query: str, limit: int = 10) -> list[SearchResult]:
         """Search by structured fields first, then fall back to page content (BM25)."""
         self.load()
-        query = (query or "").strip()
+        query = textutil.nfc(query or "").strip()
         if not query:
             return []
 
@@ -261,10 +267,24 @@ class WikiRetriever:
         results.sort(key=lambda r: r.score, reverse=True)
         return results[:limit]
 
+    @classmethod
+    def _score_word(cls, word: str, page: WikiPage) -> tuple[float, set[str]]:
+        """Score a single query word against one page (highest field wins).
+
+        The word is tried as typed and with a trailing Korean particle removed.
+        """
+        best_score, best_field = 0.0, None
+        for w in textutil.word_variants(word):
+            w = w.lower()
+            if textutil.has_hangul(w) and len(w) < 2:
+                continue  # single syllables (법, 및) would match half the wiki
+            score, field = cls._score_variant(w, page)
+            if score > best_score:
+                best_score, best_field = score, field
+        return best_score, ({best_field} if best_field else set())
+
     @staticmethod
-    def _score_word(word: str, page: WikiPage) -> tuple[float, set[str]]:
-        """Score a single sub-token against one page (highest field wins)."""
-        w = word.lower()
+    def _score_variant(w: str, page: WikiPage) -> tuple[float, str | None]:
         best_score = 0.0
         best_field: str | None = None
 
@@ -275,6 +295,8 @@ class WikiRetriever:
             best_score, best_field = 100.0, "name"
         elif w in name or w in name_norm:
             best_score, best_field = 80.0, "name"
+        elif len(name) >= 2 and textutil.has_hangul(name) and name in w:
+            best_score, best_field = 75.0, "name"
 
         # aliases
         for alias in page.aliases:
@@ -284,6 +306,8 @@ class WikiRetriever:
                 break
             if w in al and 70.0 > best_score:
                 best_score, best_field = 70.0, "aliases"
+            elif len(al) >= 2 and textutil.has_hangul(al) and al in w and 65.0 > best_score:
+                best_score, best_field = 65.0, "aliases"
 
         # tags
         for tag in page.tags:
@@ -296,7 +320,7 @@ class WikiRetriever:
         if page.description and w in page.description.lower() and 40.0 > best_score:
             best_score, best_field = 40.0, "description"
 
-        return best_score, ({best_field} if best_field else set())
+        return best_score, best_field
 
     # ── read ──────────────────────────────────────────────────────────────
 
@@ -310,10 +334,14 @@ class WikiRetriever:
         self.load()
         out: list[dict] = []
         for raw in paths:
-            p = (raw or "").strip()
+            p = textutil.nfc(raw or "").strip()
             if p == "/":
                 out.append({"path": "/", "type": "root", "dirs": sorted(self.dir_indexes.keys())})
                 continue
+
+            # Wikilink-style paths ("members/조국") omit the .md suffix.
+            if not p.endswith(".md") and f"{p}.md" in self.pages:
+                p = f"{p}.md"
 
             if p.endswith(".md"):
                 page = self.pages.get(p)

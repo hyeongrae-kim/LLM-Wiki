@@ -77,6 +77,22 @@ _ANSWER_SYSTEM_PROMPT = """You are a multi-hop question answering assistant. Ans
 - Examples of CORRECT output: "yes", "no", "John Smith", "1990", "Springfield", "Portland"
 - Examples of WRONG output: "Based on the context, the answer is John Smith.", "Springfield, Illinois, United States", "June 15, 1990" (when only year is asked)"""
 
+# Korean variant (WIKI_LANG=ko): same protocol, Korean answer conventions.
+_ANSWER_SYSTEM_PROMPT_KO = """You are a question answering assistant over a Korean knowledge base. Answer the question using the provided context as your primary reference. If the context is incomplete, you may supplement with your own knowledge.
+
+## Instructions
+1. The question may require combining facts from MULTIPLE pages to derive the answer.
+2. First identify which pages contain relevant facts, then chain the facts together step by step.
+3. For comparison questions (누가 더 많이/먼저 ...), extract the specific values for each entity and compare.
+4. For bridge questions (X를 대표발의한 의원의 소속 정당은?), follow the chain: find X → find the member → find the party.
+5. For yes/no questions, check each entity separately, then combine.
+6. Try your BEST to answer even with partial information. Only say "알 수 없음" if you truly cannot determine the answer.
+
+## OUTPUT FORMAT (CRITICAL)
+- Answer in Korean. Output ONLY the final answer — no reasoning, no preamble such as "정답:" or "문맥에 따르면".
+- Use the shortest complete answer: a full name (성+이름, e.g. "안철수"), a number with its unit (e.g. "189명"), a date, a party or committee name, or 예/아니오.
+- If several items are asked for, separate them with ", "."""
+
 _ANSWER_USER_TEMPLATE = """## Context (from Wiki knowledge base)
 {context}
 
@@ -101,6 +117,7 @@ def _format_context(pages: list[tuple[str, str]], pages_text: dict[str, str]) ->
 _THINKING_STEP_RE = re.compile(r'^\d+\.\s*\*\*.*\*\*', re.MULTILINE)
 
 _UNKNOWN_INDICATORS = (
+    "알 수 없", "정보가 없", "찾을 수 없", "언급되어 있지 않", "제공되지 않",
     "i cannot find any information",
     "there is no information in the context",
     "the pages do not contain any information",
@@ -116,6 +133,8 @@ _PREFIXES_TO_REMOVE = (
     "the answer is:", "the answer is", "answer:", "final answer:",
     "looking at this question step by step:", "looking at the context,",
     "the question asks",
+    "정답:", "답:", "답변:", "최종 답:", "최종 답변:", "문맥에 따르면,", "제공된 문맥에 따르면,",
+    "위키에 따르면,", "컨텍스트에 따르면,",
 )
 
 
@@ -166,12 +185,13 @@ def _extract_clean_answer(raw: str) -> str:
 
 def _answer(question: str, context: str, model: str | None = None) -> str:
     raw = call_llm(
-        system_prompt=_ANSWER_SYSTEM_PROMPT,
+        system_prompt=_ANSWER_SYSTEM_PROMPT_KO if config.is_korean() else _ANSWER_SYSTEM_PROMPT,
         user_prompt=_ANSWER_USER_TEMPLATE.format(question=question, context=context),
         temperature=0.0,
         max_tokens=2048,
         model=model,
         enable_thinking=True,
+        lang_directive=False,
     )
     return _extract_clean_answer(raw)
 
@@ -183,7 +203,7 @@ def main() -> None:
         description="Run Retrieval-as-Reasoning QA over a compiled LLM-Wiki."
     )
     parser.add_argument("--dataset", "-d", required=True,
-                        choices=["hotpotqa", "musique", "2wikimhqa"])
+                        help="Dataset / corpus name (hotpotqa, musique, 2wikimhqa, or your own).")
     parser.add_argument("--limit", "-n", type=int, default=None,
                         help="Process only the first N QA pairs.")
     parser.add_argument("--t-max", type=int, default=15,

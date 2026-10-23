@@ -191,7 +191,7 @@ def _print_summary(summary: dict, dataset: str) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate LLM-Wiki answer predictions.")
     parser.add_argument("--dataset", "-d", required=True,
-                        choices=["hotpotqa", "musique", "2wikimhqa"])
+                        help="Dataset / corpus name (data/<name>/qa_pairs.jsonl).")
     parser.add_argument("--predictions", "-p", required=True,
                         help="Path to predictions JSONL file.")
     parser.add_argument("--output-dir", "-o", default=None,

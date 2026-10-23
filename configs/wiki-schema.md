@@ -1,52 +1,49 @@
 # Wiki Schema — Structured Knowledge Base
 
+> This file is pasted into the ingestion prompt. Section headings, frontmatter
+> keys and directory names below are checked by code (lint / repair) and must
+> be written exactly as shown, in English. Everything else follows the output
+> language of the wiki.
+
 ## Directory layout
 
 Page types are declared in `wiki/page_types.yaml`. On first ingestion the LLM
 analyses a sample of source articles and proposes a per-corpus directory
 schema; you can also set it manually.
 
-**Fixed infrastructure directories:**
+**Fixed infrastructure directories (maintained by code):**
 
 ```
 wiki/
 ├── sources/               # source-page root
-│   ├── digests/           #   structured summaries of source paragraphs
+│   ├── digests/           #   structured summaries of source documents
 │   └── articles/          #   verbatim copies of the original source text
-├── syntheses/             # distilled query-result pages
-├── index.md               # listing of directories with descriptions + page counts
-├── overview.md            # global overview (regenerated periodically)
-├── log.md                 # append-only operation log
+├── index.md               # directory catalog + knowledge overview (code)
+├── log.md                 # append-only operation log (code)
+├── error-book.md          # error book rendered for humans (code)
 └── page_types.yaml        # registry of page types
 ```
 
-**Dynamic page-type directories** (defined in `page_types.yaml`, generated on
-first ingestion; one per corpus):
-
-```
-wiki/
-├── {type_a}/              # e.g. entities/, events/, concepts/, relations/
-├── {type_b}/
-└── {type_c}/              # exact names and descriptions vary per corpus
-```
+**Dynamic page-type directories** (defined in `page_types.yaml`, one set per
+corpus, English lowercase names such as `entities/`, `events/`, `concepts/`).
+Every directory has an `_index.md` that is maintained by code — never write it.
 
 ## Frontmatter
 
 ```yaml
 ---
-type: source|synthesis|{dynamic_type}
+type: source|{dynamic_type}
 aliases: [list of aliases / variant names]
 tags: [list of tags]
 ---
 ```
 
-> `type` matches the directory name.
-> `aliases` is used at retrieval time — list common aliases, foreign names and
-> alternative translations.
-> `created` and `updated` are injected by the engine; the LLM does not need to
-> emit them.
+- `type` equals the directory name (`source` for digests).
+- `aliases` is used at retrieval time — list abbreviations, former names,
+  foreign-language / hanja names and alternative spellings.
+- `created` and `updated` are injected by the engine; do not emit them.
 
-### Generic knowledge-page template (`{dir}/`)
+### Knowledge-page template (`{dir}/`)
 
 ```markdown
 ---
@@ -56,69 +53,65 @@ tags: [tags]
 ---
 
 # Page title
+> One-sentence summary (required, directly under the title)
 
-## Basic info
-- Key attribute 1:
-- Key attribute 2:
-
-## Core facts
+## Key Facts
 - Fact 1 (use full noun phrases — avoid pronouns)
 - Fact 2
+(required, ≥2)
 
-## Related pages
+## Related Pages
 - [[dir/page]] — relationship description
+(required, ≥2, every item has a [[link]])
 
-## Related sources
-- [[sources/digests/YYYY-MM-DD-slug]] — what this source contributes
+## Related Sources
+- [[sources/digests/digest-name]] — what this source contributes
 ```
+
+Optional extra sections (e.g. a timeline) may follow `## Key Facts`.
 
 ### Source-digest template (`sources/digests/`)
 
-> All five sections below are **mandatory** — write them even when the
-> source paragraph is short.
+All four sections are **mandatory**, even for a short source.
 
 ```markdown
 ---
 type: source
-source_date: YYYY-MM-DD
-source_article: <source file stem, without path prefix or .md extension>
+source_article: <article stem given in the prompt>
 tags: [tags]
 ---
 
 # Source title
-
-> Source: {origin} | {date}
+> Source: {origin}
 
 ## Summary
-A summary of at most 200 words. (required)
+A short structured summary. (required)
 
-## Core claims
-- Author/origin asserts that … (judgements/opinions, not just encyclopedic facts) (required)
-
-## Key quotes
-- "Direct quotation from the source." — speaker, if applicable (required, ≥1)
-
-## Key facts
+## Key Facts
 - Fact 1
 - Fact 2
 (required, ≥2)
 
-## Mentioned entities
-- [[entity name]]
+## Key Entities
+- Entity name (plain text, no [[links]])
 (required, ≥1)
+
+## Related Context
+- Background that helps connect this source to other pages (required)
 ```
 
 ## Writing style (the wiki is consumed by an LLM for retrieval)
 
-- **Information density first.** Prefer structured fact lists over prose paragraphs.
-- **Use full noun phrases.** Avoid pronouns ("he", "it") — they break entity matching.
-- **Informative headings.** Use "Life and style" rather than "About"; "Structural analysis" rather than "Closer look".
-- **Always declare aliases.** Common nicknames, foreign-language names and alternative spellings go into the frontmatter `aliases` field.
-- **Link sources by full path.** `[[sources/digests/YYYY-MM-DD-slug]]`.
+- **Information density first.** Prefer structured fact lists over prose.
+- **Use full noun phrases.** Avoid pronouns — they break entity matching.
+- **Informative headings** for optional sections.
+- **Always declare aliases** in the frontmatter.
+- **Link with the directory path.** `[[dir/page]]` for knowledge pages,
+  `[[sources/digests/name]]` for digests; links have no `.md` extension.
 
 ## Naming conventions
 
-- Knowledge pages: use the canonical English page name (e.g. `Tan_Dun.md`).
-- Source digest pages: `YYYY-MM-DD-slug.md` under `sources/digests/`.
-- Avoid filesystem-unsafe characters: `/` → `-`, `"` → removed, `|` → `-`.
-- Wiki links use `[[page]]` syntax (no `.md` extension).
+- Knowledge pages: the canonical name of the entity (follow the page-name rule
+  given in the task, e.g. official names; disambiguate homonyms).
+- Source digests: the article stem given in the prompt.
+- Avoid filesystem-unsafe characters: `/` → `-`, `|` → `-`, remove `"`, `#`, `[`, `]`.

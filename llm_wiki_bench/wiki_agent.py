@@ -24,6 +24,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Callable
 
+import bench_config as config
 from wiki_retriever import WIKI_TOOL_SCHEMAS, WikiPage, WikiRetriever
 
 _logger = logging.getLogger("llm_wiki.agent")
@@ -65,6 +66,13 @@ Adaptively choose a strategy based on the question:
 3. You MUST call wiki_read at least once before producing a final answer.
 4. Stop when all reasoning chains have been traced, the tool-call budget is reached, or consecutive empty searches
    exceed the patience threshold. When you stop, output ONLY the final answer text — no tool calls, no preamble.
+{language_hint}"""
+
+_KOREAN_HINT = """
+## Korean wiki
+This Wiki is written in Korean. Search with bare Korean nouns (drop particles such as 은/는/이/가/의/에서),
+one entity per query, and retry with abbreviations or aliases (e.g. 법사위 ↔ 법제사법위원회) when a search is empty.
+Page paths look like `members/조국.md`; links_to entries can be passed to wiki_read as-is.
 """
 
 
@@ -113,6 +121,7 @@ class WikiAgent:
 
         system_prompt = _AGENT_SYSTEM_PROMPT_TEMPLATE.format(
             wiki_map=self.retriever.wiki_map(),
+            language_hint=_KOREAN_HINT if config.is_korean() else "",
         )
         messages: list[dict] = [
             {"role": "system", "content": system_prompt},
@@ -314,6 +323,24 @@ class WikiAgent:
         the presence of 2+ distinct proper-noun phrases.
         """
         q = question.lower()
+
+        korean_cues = ["둘 다", "모두", "같은", "공통", "중 누가", "중 어느", "중 어떤", "보다",
+                       "더 많", "더 적", "먼저", "나중", "각각", "차이", "의 소속", "을 발의한", "를 발의한",
+                       "대표발의", "표결에서", "찬성한", "반대한"]
+        if any(cue in question for cue in korean_cues):
+            return True
+
+        # Two or more Wiki page names / aliases mentioned in the question.
+        mentioned = set()
+        for page in self.retriever.pages.values():
+            if page.dir_name.startswith("sources"):
+                continue
+            for name in (page.name, *page.aliases):
+                if len(name) >= 2 and name in question:
+                    mentioned.add(page.rel_path)
+                    break
+            if len(mentioned) >= 2:
+                return True
 
         comparison_keywords = [
             "both", "same country", "same nationality", "same city",

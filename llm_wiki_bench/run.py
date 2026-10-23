@@ -130,8 +130,8 @@ def main():
     )
     parser.add_argument(
         "--dataset", "-d",
-        choices=["hotpotqa", "musique", "2wikimhqa"],
-        help="Dataset to process. Use --all to run all three.",
+        help="Dataset to process (hotpotqa, musique, 2wikimhqa, or a corpus already "
+             "placed under raw/<name>/articles with --only-ingest). Use --all to run all three.",
     )
     parser.add_argument("--all", action="store_true",
                         help="Run all supported datasets sequentially.")
