@@ -39,3 +39,23 @@ def test_grounding_uses_original_articles(wiki):
     page = "# p\n## Key Facts\n- x\n## Related Sources\n- [[sources/digests/d1]] — d\n"
     srcs = bench_ingest._grounding_sources(page, page.split("\n"), wiki / "sources" / "digests")
     assert srcs == ["원문 전체 텍스트"]
+
+
+def test_merge_related_sources_keeps_old_provenance():
+    old = "# p\n## Key Facts\n- a\n## Related Sources\n- [[sources/digests/의안-1]] — bill\n"
+    new = "# p\n## Key Facts\n- a\n- b\n## Related Sources\n- [[sources/digests/표결-9]] — vote\n"
+    merged = bench_ingest._merge_related_sources(new, old)
+    assert "[[sources/digests/표결-9]]" in merged and "[[sources/digests/의안-1]]" in merged
+    assert merged.index("표결-9") < merged.index("의안-1")
+
+
+def test_resolve_mangled_digest_links(wiki):
+    import bench_config as config
+    d = wiki / "sources" / "digests"
+    d.mkdir(parents=True)
+    (d / "표결-1366-2024-12-10-위헌적-비상계엄-선포를-통한-내란-행위의-진상규명을-위한-특별검사의-수사요구안.md").write_text("x", encoding="utf-8")
+    page = wiki / "votes" / "p.md"
+    page.parent.mkdir()
+    page.write_text("- [[sources/digests/표결-1366-2024-12-10-위헌적-비상계엄-선포를-통한-내란-행위의-진상규명을-위한-특별]]\n", encoding="utf-8")
+    bench_ingest._resolve_digest_links(page)
+    assert "특별검사의-수사요구안]]" in page.read_text(encoding="utf-8")

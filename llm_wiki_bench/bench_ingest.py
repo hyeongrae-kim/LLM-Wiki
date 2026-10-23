@@ -825,7 +825,7 @@ Output format: `---FILE: path---` followed by complete file content.
    - Existing pages: output complete updated content
    - ⚠️ Only modify pages whose content was shown above
    - Links: `[[directory/page_name]]` format
-   - ⚠️ **Related Sources**: only link digests from this batch
+   - ⚠️ **Related Sources**: keep every digest link already listed on an existing page, and add the digests of this batch (link only digests that exist: those already listed or from this batch)
 
 Notes:
 - ⚠️ **Do NOT output any _index.md files**
@@ -1851,10 +1851,18 @@ def auto_fix_bench():
       15. ``.md`` suffix fixes (strip ``.md`` from frontmatter values).
       16. Related Sources format fixes (drop non-digest link lines).
       17. Append a log entry to ``lint_ledger.jsonl``.
+      0. (first) Re-point mangled ``[[sources/digests/…]]`` links at the matching digest.
     """
     wiki_dir = config.WIKI_DIR
     if not wiki_dir or not wiki_dir.exists():
         return {}
+
+    for dir_name, dir_path in config.get_page_dirs().items():
+        if dir_name.startswith("sources") or not dir_path.exists():
+            continue
+        for md in dir_path.glob("*.md"):
+            if md.name != "_index.md":
+                _resolve_digest_links(md)
 
     results = {}
 
@@ -3566,6 +3574,15 @@ Copy each "fact" value EXACTLY as it appears in "Key Facts to Verify" (same lang
             unsupported_facts = [r for r in results if not r.get("supported", True)]
             if not unsupported_facts:
                 continue
+            if len(unsupported_facts) > len(fact_lines) / 2:
+                # Most facts "unsupported" means the linked sources do not cover the
+                # page (missing provenance), not that the page is wrong: keep them.
+                error_book.append_ledger(
+                    issue_type="grounding_skipped", file=f"{dir_name}/{md.stem}", auto_fixed=False,
+                    fix_method="llm_verify_source_grounding",
+                    note=f"{len(unsupported_facts)}/{len(fact_lines)} facts flagged; evidence mismatch, kept",
+                    count=0)
+                continue
 
             unsupported_texts = set()
             for r in unsupported_facts:
@@ -5186,6 +5203,68 @@ def parse_dir_changes(text: str) -> list[dict]:
 
 
 
+_DIGEST_LINK_RE = re.compile(r"\[\[(sources/digests/[^\]|]+)")
+
+
+def _section(text: str, heading: str) -> tuple[int, int] | None:
+    """(start, end) character span of a ``## heading`` section body, or None."""
+    m = re.search(rf"^## {re.escape(heading)}[ \t]*$", text, re.MULTILINE)
+    if not m:
+        return None
+    nxt = re.search(r"^## ", text[m.end():], re.MULTILINE)
+    return m.end(), (m.end() + nxt.start()) if nxt else len(text)
+
+
+def _merge_related_sources(new_text: str, old_text: str) -> str:
+    """Re-add digest links from the old page's Related Sources that the rewrite dropped."""
+    old_span = _section(old_text, "Related Sources")
+    if not old_span:
+        return new_text
+    old_links = list(dict.fromkeys(_DIGEST_LINK_RE.findall(old_text[old_span[0]:old_span[1]])))
+    missing = [link for link in old_links if f"[[{link}]]" not in new_text and f"[[{link}|" not in new_text]
+    if not missing:
+        return new_text
+    lines = "".join(f"- [[{link}]]\n" for link in missing)
+    span = _section(new_text, "Related Sources")
+    if span is None:
+        return new_text.rstrip() + "\n\n## Related Sources\n" + lines
+    end = span[1]
+    body = new_text[span[0]:end].rstrip("\n")
+    return new_text[:span[0]] + body + "\n" + lines + ("\n" if end < len(new_text) else "") + new_text[end:]
+
+
+def _resolve_digest_links(page_path: Path) -> None:
+    """Point [[sources/digests/X]] links with a mangled X at the matching digest.
+
+    The LLM sometimes shortens or re-slugs digest names; match by prefix, or by
+    the leading ID part of the stem (e.g. "표결-1366", "의안-2206291").
+    """
+    digests_dir = config.WIKI_DIR / "sources" / "digests"
+    try:
+        text = page_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        return
+    stems = None
+
+    def _fix(m: re.Match) -> str:
+        nonlocal stems
+        link = m.group(1)
+        name = link[len("sources/digests/"):]
+        if (digests_dir / f"{name}.md").exists():
+            return m.group(0)
+        if stems is None:
+            stems = [p.stem for p in digests_dir.glob("*.md") if p.name != "_index.md"]
+        cands = [s for s in stems if s.startswith(name) or name.startswith(s)]
+        if not cands:
+            key = "-".join(name.split("-")[:2])
+            cands = [s for s in stems if "-".join(s.split("-")[:2]) == key] if len(key) > 3 else []
+        return f"[[sources/digests/{cands[0]}" if len(cands) == 1 else m.group(0)
+
+    new = _DIGEST_LINK_RE.sub(_fix, text)
+    if new != text:
+        page_path.write_text(new, encoding="utf-8")
+
+
 def write_wiki_files(file_outputs: dict[str, str], selected_pages: list[str] = None,
                      batch_digest_stems: list[str] | None = None):
     """Write LLM-generated files into the wiki directory.
@@ -5433,6 +5512,15 @@ def write_wiki_files(file_outputs: dict[str, str], selected_pages: list[str] = N
 
         full_path.parent.mkdir(parents=True, exist_ok=True)
 
+        if (full_path.exists() and not rel_path.endswith("_index.md")
+                and not _is_sources_path(rel_path)):
+            # The LLM rewrites whole pages and tends to keep only the current
+            # batch's sources; provenance must survive (fact grounding uses it).
+            try:
+                content = _merge_related_sources(content, full_path.read_text(encoding="utf-8"))
+            except (OSError, UnicodeDecodeError):
+                pass
+
         if not rel_path.endswith("_index.md"):
             content = _inject_dates(content, full_path.exists(), existing_path=full_path)
 
@@ -5445,6 +5533,9 @@ def write_wiki_files(file_outputs: dict[str, str], selected_pages: list[str] = N
             continue
         written += 1
         print(f"  📄 Written {rel_path} ({len(content)} chars)")
+
+    for rel_path, _ in _new_knowledge_pages:
+        _resolve_digest_links(wiki_dir / rel_path[len("wiki/"):])
 
     if _new_knowledge_pages:
         registered_dirs = set(config.get_page_types().keys())
