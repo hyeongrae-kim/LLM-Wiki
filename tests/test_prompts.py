@@ -59,3 +59,16 @@ def test_resolve_mangled_digest_links(wiki):
     page.write_text("- [[sources/digests/표결-1366-2024-12-10-위헌적-비상계엄-선포를-통한-내란-행위의-진상규명을-위한-특별]]\n", encoding="utf-8")
     bench_ingest._resolve_digest_links(page)
     assert "특별검사의-수사요구안]]" in page.read_text(encoding="utf-8")
+
+
+def test_misnumbered_digest_link_resolved_by_title_or_dropped(wiki):
+    d = wiki / "sources" / "digests"
+    d.mkdir(parents=True)
+    (d / "의안-2200005-한동훈-전-법무부장관의-검사·장관-재직시-비위의혹.md").write_text("x", encoding="utf-8")
+    page = wiki / "committees" / "p.md"
+    page.parent.mkdir()
+    page.write_text("## Related Sources\n- [[sources/digests/의안-2210005-한동훈-전-법무부장관의-검사·장관-재직시-비위의혹]]\n"
+                    "- [[sources/digests/의안-9999999-존재하지-않는-법안-이름입니다]]\n", encoding="utf-8")
+    dropped = bench_ingest._resolve_digest_links(page, drop_unresolved=True)
+    text = page.read_text(encoding="utf-8")
+    assert "의안-2200005-한동훈" in text and "9999999" not in text and dropped == 1
