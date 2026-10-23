@@ -407,8 +407,17 @@ def match_meetings(data: dict) -> dict[str, dict]:
     return out
 
 
+def meeting_name(minute: dict) -> str:
+    """Plenary name from the session fields; `shortinfo` is occasionally wrong in the
+    source (e.g. T52620 is a 국회본회의 labelled '제1차 행정안전위원회')."""
+    if minute["committee"] == "국회본회의" and minute["session"] and minute["period"]:
+        return (f"제{minute['daenum']}대국회 제{minute['session']}회 {minute['type']} "
+                f"제{minute['period']}차 국회본회의")
+    return minute["shortinfo"].strip('"') or minute["title"]
+
+
 def build_meeting(data: dict, minute: dict, votes: list[dict], speeches: list[dict]) -> list[tuple[str, str]]:
-    title_raw = minute["shortinfo"].strip('"') or minute["title"]
+    title_raw = meeting_name(minute)
     try:
         agenda = json.loads(minute["agenda"])
     except json.JSONDecodeError:
@@ -516,7 +525,7 @@ def main() -> None:
     meetings = match_meetings(data)
     minute_ids = {m["minute_id"] for m in meetings.values()}
     speeches = load_speeches(raw, minute_ids, args.keyword)
-    meeting_titles = {rid: f"회의록 {m['minute_id']} {m['shortinfo'].strip(chr(34))}" for rid, m in meetings.items()}
+    meeting_titles = {rid: f"회의록 {m['minute_id']} {meeting_name(m)}" for rid, m in meetings.items()}
 
     names = Counter(m["name"] for m in data["members"].values() if m["is_primary_code"] == "True")
     homonyms = {n for n, c in names.items() if c > 1}

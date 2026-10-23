@@ -19,7 +19,9 @@ conf["ignorePatterns"] = sorted(set(conf.get("ignorePatterns") or []) | {".obsid
 repo = "https://github.com/" + os.environ["QUARTZ_BASE_URL"].replace(".github.io/", "/", 1)
 for plugin in cfg.get("plugins", []):
     name = plugin.get("source", "").rsplit("/", 1)[-1]
-    if name == "crawl-links":            # links are written as [[dir/page]] from the wiki root
+    if name == "created-modified-date":   # wiki pages carry created/updated; content/ is not a git repo
+        plugin.setdefault("options", {})["priority"] = ["frontmatter", "filesystem"]
+    elif name == "crawl-links":            # links are written as [[dir/page]] from the wiki root
         plugin.setdefault("options", {})["markdownLinkResolution"] = "absolute"
     elif name == "footer":
         plugin["options"] = {"links": {

@@ -44,7 +44,9 @@ fi
 QUARTZ_BASE_URL="$QUARTZ_BASE_URL" "$PY" "$ROOT/scripts/quartz_config.py" "$QZ/quartz.config.yaml" "$CORPUS"
 
 if [ ! -f "$QZ/.plugins-installed" ]; then
-  (cd "$QZ" && npx quartz plugin install --from-config) && touch "$QZ/.plugins-installed"
+  # Plugins pinned in quartz.lock.json, then any enabled in the config but not locked.
+  (cd "$QZ" && npx quartz plugin install && npx quartz plugin resolve) || exit 1
+  touch "$QZ/.plugins-installed"
 fi
 
 # Wiki → content/ (Markdown only; yaml/jsonl bookkeeping files are skipped).
