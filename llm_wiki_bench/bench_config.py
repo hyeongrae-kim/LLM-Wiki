@@ -4,13 +4,14 @@ Manages dataset paths, LLM model selection, and wiki directory structure
 for HotpotQA / MuSiQue / 2WikiMultiHopQA. All credentials are read from
 environment variables — no hard-coded keys or internal endpoints.
 
-Environment variables:
+Environment variables (also read from a ``.env`` file in the repo root):
     OPENAI_API_KEY      bearer token
     OPENAI_BASE_URL     API base URL (default: https://api.openai.com/v1)
     LLM_PREMIUM_MODEL   strong model used for synthesis steps
     LLM_FAST_MODEL      fast model used for analysis steps
     LLM_MAX_TOKENS      max tokens per LLM call (default: 16384)
     LLM_TEMPERATURE     sampling temperature (default: 0.2)
+    WIKI_LANG           output language of the compiled wiki: en (default) | ko
 """
 
 import os
@@ -26,6 +27,66 @@ BENCH_DIR = Path(__file__).parent
 BASE_DIR = BENCH_DIR.parent          # release/
 CONFIGS_DIR = BASE_DIR / "configs"
 SCHEMA_FILE = CONFIGS_DIR / "wiki-schema.md"
+
+
+def _load_dotenv(path: Path) -> None:
+    """Minimal ``.env`` loader (KEY=VALUE lines); real env vars take precedence."""
+    if not path.exists():
+        return
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key = key.strip().removeprefix("export ").strip()
+        value = value.strip()
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+            value = value[1:-1]
+        else:
+            value = re.split(r"\s+#", value, maxsplit=1)[0].strip()  # inline comment
+        os.environ.setdefault(key, value)
+
+
+_load_dotenv(BASE_DIR / ".env")
+
+# ---------------------------------------------------------------------------
+# Output language
+# ---------------------------------------------------------------------------
+
+WIKI_LANG = os.environ.get("WIKI_LANG", "en").strip().lower()
+
+
+def is_korean() -> bool:
+    return WIKI_LANG == "ko"
+
+
+def language_directive() -> str:
+    """Instruction appended to every wiki-writing prompt (empty for English)."""
+    if not is_korean():
+        return ""
+    return """## Output Language (MANDATORY)
+- Write ALL wiki content in Korean (한국어): page names, titles, one-line summaries, facts, descriptions, aliases, tags, section labels in indexes, and any free-text values in JSON.
+- Keep these EXACTLY as written in the instructions, in English: markdown section headings (## Summary, ## Key Facts, ## Key Entities, ## Related Context, ## Related Pages, ## Related Sources), frontmatter keys, `type` values (they equal the English directory names), directory names, and output markers such as ---FILE: or ---DIR_CHANGES---.
+- When asked to quote a fact or claim from a page, copy it verbatim in its original language.
+- Use official Korean names for people, organizations, bills and committees; put abbreviations, hanja/English names and other variants into `aliases`."""
+
+
+def page_name_rule() -> str:
+    if is_korean():
+        return ("Use official Korean names as page names (e.g. 법제사법위원회, 조국). "
+                "Disambiguate different people who share a name by appending the birth year, e.g. 박지원(1942)")
+    return "Use English page names"
+
+
+def length_limit(words: int) -> str:
+    """A length limit phrased for the output language (Korean has no clear 'word')."""
+    if is_korean():
+        return f"≤{words * 2} Korean characters"
+    return f"≤{words} word"
+
+
+def source_label() -> str:
+    return "source document" if is_korean() else "Wikipedia paragraph"
 
 # ---------------------------------------------------------------------------
 # LLM model configuration (all overridable via environment variables)
@@ -69,7 +130,7 @@ def get_llm_headers() -> dict:
 # ---------------------------------------------------------------------------
 
 INGEST_BATCH_SIZE         = 10
-INGEST_MAX_CONTENT_LEN    = 15000
+INGEST_MAX_CONTENT_LEN    = int(os.environ.get("INGEST_MAX_CONTENT_LEN", "8000" if is_korean() else "15000"))
 INGEST_MIN_CONTENT_LEN    = 50
 INGEST_CONSOLIDATE_EVERY  = 9999   # periodic maintenance disabled in bench mode
 INGEST_OVERVIEW_EVERY     = 9999
@@ -144,6 +205,27 @@ def set_dataset(dataset_name: str) -> None:
 
 def get_dataset() -> str | None:
     return _current_dataset
+
+
+def append_log(op: str, title: str, details: list[str] | None = None) -> None:
+    """Append an entry to the wiki's append-only ``log.md``.
+
+    Entries use a grep-friendly prefix, e.g. ``## [2026-10-23 14:05] ingest | 제목``.
+    """
+    if WIKI_LOG is None:
+        return
+    from datetime import datetime
+    stamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+    lines = [f"\n## [{stamp}] {op} | {title}\n"]
+    lines += [f"- {d}\n" for d in (details or [])]
+    try:
+        if not WIKI_LOG.exists():
+            WIKI_LOG.write_text("# Log\n\n> Append-only record of ingest / lint / repair operations.\n",
+                                encoding="utf-8")
+        with open(WIKI_LOG, "a", encoding="utf-8") as f:
+            f.writelines(lines)
+    except OSError:
+        pass
 
 
 # Aliases expected by the ingestion engine.
