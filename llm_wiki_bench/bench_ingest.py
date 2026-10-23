@@ -1770,8 +1770,8 @@ def quick_lint_bench() -> dict:
 
     completeness_issues = []
     for dir_name, dir_path in config.get_page_dirs().items():
-        if not dir_path.exists():
-            continue
+        if not dir_path.exists() or dir_name == "sources/articles":
+            continue  # archived originals are verbatim copies; auto-fix skips them too
         for md in dir_path.glob("*.md"):
             if md.name == "_index.md":
                 continue
@@ -3217,6 +3217,18 @@ def _inject_related_sources_for_page(page_path: Path, page_name: str):
         print(f"    📎 Injected Related Sources for {page_name}")
 
 
+def _unlink_missing(content: str, existing: set[str]) -> str:
+    """Turn [[links]] whose target is not in ``existing`` into plain text."""
+    def _sub(m: re.Match) -> str:
+        target, _, label = m.group(1).partition("|")
+        target = target.strip()
+        bare = target.rsplit("/", 1)[-1]
+        if target in existing or bare in existing or target.startswith("sources/"):
+            return m.group(0)
+        return label.strip() or bare
+    return re.sub(r"\[\[([^\]]+)\]\]", _sub, content)
+
+
 def llm_fix_broken_links() -> int:
     """Read broken-link records from the error book and have the LLM create the missing knowledge pages in batches.
 
@@ -3314,6 +3326,8 @@ def llm_fix_broken_links() -> int:
 
     page_types = config.get_page_types()
     dir_list = "\n".join(f"- {name}: {info.get('description', '')}" for name, info in page_types.items())
+    existing_links = sorted(p for p in all_pages if "/" in p and not p.startswith("sources"))
+    existing_text = "\n".join(f"- [[{p}]]" for p in existing_links[:400])
 
     fixed = 0
     fixed_names = []
@@ -3339,8 +3353,12 @@ def llm_fix_broken_links() -> int:
 
 {"## Suggested Directory: " + target_dir if target_dir else "Please choose the most appropriate directory from the list above."}
 
+## Existing Pages (the ONLY valid link targets)
+{existing_text}
+
 Please generate a complete knowledge page. Requirements:
-- ## Related Pages MUST have at least 2 links in format `[[directory/page_name]]` — link to pages from the reference context above
+- ## Related Pages MUST have at least 2 links in format `[[directory/page_name]]`, chosen from "Existing Pages" above
+- Do NOT link to any page that is not in "Existing Pages" (write the name as plain text instead)
 - ## Related Sources can be empty if no specific digest is known
 
 Output format:
@@ -3376,6 +3394,10 @@ Output format:
                 else:
                     chosen_dir = list(page_types.keys())[0] if page_types else "entities"
 
+            # Links to pages that do not exist would start a cascade of further
+            # repair rounds (each new page inventing more targets): keep them as text.
+            content = _unlink_missing(content, all_pages | {clean, f"{chosen_dir}/{clean}"})
+
             target_path = wiki_dir / chosen_dir / f"{clean}.md"
             target_path.parent.mkdir(parents=True, exist_ok=True)
             if not target_path.exists():
@@ -3395,6 +3417,46 @@ Output format:
             pass
 
     return fixed
+
+
+_GROUNDING_SOURCE_CHARS = int(os.environ.get("GROUNDING_SOURCE_CHARS", "20000"))
+
+
+def _grounding_sources(text: str, lines: list[str], digests_dir: Path) -> list[str]:
+    """Evidence for a page: each linked digest plus the original article it was made from.
+
+    Checking facts against digests alone (summaries, truncated to a few thousand
+    characters) flags most facts of pages that cite several sources as unsupported.
+    """
+    articles_dir = digests_dir.parent / "articles"
+    sources: list[str] = []
+    in_sources = False
+    for line in lines:
+        if line.strip() == "## Related Sources":
+            in_sources = True
+            continue
+        if in_sources and line.strip().startswith("## "):
+            break
+        if not in_sources:
+            continue
+        for m in re.finditer(r'\[\[sources/digests/([^\]|]+)', line):
+            digest_path = digests_dir / f"{m.group(1)}.md"
+            if not digest_path.exists():
+                continue
+            try:
+                digest = digest_path.read_text(encoding="utf-8")
+            except (OSError, UnicodeDecodeError):
+                continue
+            am = re.search(r'^source_article:\s*(.+)$', digest, re.MULTILINE)
+            article_path = articles_dir / f"{am.group(1).strip()}.md" if am else None
+            if article_path is not None and article_path.exists():
+                try:
+                    sources.append(article_path.read_text(encoding="utf-8"))
+                    continue
+                except (OSError, UnicodeDecodeError):
+                    pass
+            sources.append(digest)
+    return sources
 
 
 def llm_verify_source_grounding(sample_size: int = 30) -> int:
@@ -3461,33 +3523,20 @@ def llm_verify_source_grounding(sample_size: int = 30) -> int:
         if not fact_lines:
             continue
 
-        source_content = ""
-        if "## Related Sources" in text:
-            in_sources = False
-            for line in lines:
-                if line.strip() == "## Related Sources":
-                    in_sources = True
-                    continue
-                if in_sources and line.strip().startswith("## "):
-                    break
-                if in_sources:
-                    # Extract [[sources/digests/...]] links.
-                    for m in re.finditer(r'\[\[sources/digests/([^\]]+)\]\]', line):
-                        digest_name = m.group(1)
-                        digest_path = digests_dir / f"{digest_name}.md"
-                        if digest_path.exists():
-                            try:
-                                source_content += digest_path.read_text(encoding="utf-8") + "\n\n"
-                            except (OSError, UnicodeDecodeError):
-                                pass
-
-        if not source_content:
+        sources = _grounding_sources(text, lines, digests_dir)
+        if not sources:
             continue
+        per_source = max(_GROUNDING_SOURCE_CHARS // len(sources), 1500)
+        truncated = any(len(src) > per_source for src in sources)
+        source_content = "\n\n---\n\n".join(src[:per_source] for src in sources)
 
         facts_text = "\n".join(fact_lines)
+        truncation_note = (
+            "Some sources above are truncated. If a fact cannot be checked because the relevant "
+            "part may have been cut off, mark it supported." if truncated else "")
         sys_prompt = "You are a fact-checking expert. Verify whether each Key Fact is supported by the provided source content."
-        user_prompt = f"""## Source Digest Content
-{source_content[:3000]}
+        user_prompt = f"""## Source Content (original documents and their digests)
+{source_content}
 
 ## Key Facts to Verify
 {facts_text}
@@ -3506,7 +3555,8 @@ Output JSON format:
   ]
 }}
 
-Copy each "fact" value EXACTLY as it appears in "Key Facts to Verify" (same language, same wording)."""
+Copy each "fact" value EXACTLY as it appears in "Key Facts to Verify" (same language, same wording).
+{truncation_note}"""
 
         try:
             result = call_llm_json(sys_prompt, user_prompt,
@@ -3536,11 +3586,11 @@ Copy each "fact" value EXACTLY as it appears in "Key Facts to Verify" (same lang
 
                 if in_facts and line.strip().startswith("- "):
                     fact_content = line.strip().lstrip("- ").strip()
-                    is_unsupported = False
-                    for ut in unsupported_texts:
-                        if ut in fact_content or fact_content in ut:
-                            is_unsupported = True
-                            break
+                    # Exact match, or a long fragment of the line — a short or empty
+                    # string echoed by the LLM must not wipe unrelated facts.
+                    is_unsupported = any(
+                        ut == fact_content or (len(ut) >= 15 and ut in fact_content)
+                        for ut in unsupported_texts)
                     if is_unsupported:
                         removed_in_page += 1
                         continue  # skip this line (drop it)
@@ -3563,7 +3613,7 @@ Copy each "fact" value EXACTLY as it appears in "Key Facts to Verify" (same lang
             continue
 
     if removed_count > 0:
-        print(f"    ✂️ Removed {removed_count} unsupported facts from {sample_size} sampled pages")
+        print(f"    ✂️ Removed {removed_count} unsupported facts from {len(sample)} sampled pages")
 
     return removed_count
 
@@ -5735,6 +5785,7 @@ def _save_article_original(title: str, content: str, source_path: Path) -> str |
         md = f"""---
 type: source
 source_title: "{escaped_title}"
+tags: [article]
 ---
 
 # {title}

@@ -588,12 +588,11 @@ def print_error_book():
                 print(f"    [{eid}] {desc}")
                 print(f"         total={total}, created={by_creation}, removed={by_removal}, still_active={still_active}")
             else:
-                # Legacy schema or other types.
-                count = _get_count(e)
+                samples = _get_samples(e)
                 unfixed = get_unfixed_samples(e)
-                fixed_count = count - len(unfixed)
                 print(f"    [{eid}] {desc}")
-                print(f"         {count} total, {fixed_count} fixed, {len(unfixed)} remaining")
+                print(f"         {len(samples)} sampled, {len(samples) - len(unfixed)} fixed, "
+                      f"{len(unfixed)} remaining · clean checks {e.get('pass_count', 0)}/2")
 
             for s in _get_samples(e)[:3]:
                 tag = "✅" if _sample_is_fixed(s) else "❌"
