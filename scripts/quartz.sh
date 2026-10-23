@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 # Publish the compiled wiki with Quartz 5 (https://quartz.jzhao.xyz).
 #
-#   scripts/quartz.sh serve [corpus]   live preview on http://localhost:8080
+#   scripts/quartz.sh serve [corpus]   live preview on http://localhost:${QUARTZ_PORT:-8080}
 #   scripts/quartz.sh build [corpus]   static site in .quartz/public
 #
 # Quartz is cloned once into .quartz/ (git-ignored). Requires Node >= 22 and
-# npm >= 10.9.2. Overrides: QUARTZ_REF, QUARTZ_BASE_URL, QUARTZ_TITLE.
+# npm >= 10.9.2. Overrides: QUARTZ_REF, QUARTZ_BASE_URL, QUARTZ_TITLE,
+# QUARTZ_CNAME (set only when serving from a custom domain).
 set -euo pipefail
 
 ACTION=${1:-serve}
@@ -53,10 +54,11 @@ fi
 rm -rf "$QZ/content"
 mkdir -p "$QZ/content"
 rsync -a --exclude '*.yaml' --exclude '*.jsonl' --exclude '.DS_Store' "$WIKI/" "$QZ/content/"
+"$PY" "$ROOT/scripts/quartz_content.py" "$QZ/content" "${QUARTZ_TITLE:-LLM-Wiki · $CORPUS}"
 
 cd "$QZ"
 if [ "$ACTION" = "serve" ]; then
-  npx quartz build --serve
+  npx quartz build --serve --port "${QUARTZ_PORT:-8080}"
 else
   npx quartz build
   echo "✅ Site built: $QZ/public"

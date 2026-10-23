@@ -8,6 +8,8 @@ EXAMPLES ?= examples/assembly_spc
 CONFIG   ?= corpora/assembly
 PRESET   ?= full
 RAW      ?= raw
+PORT     ?= 8080
+TITLE    ?= LLM-Wiki · 22대 국회 특별검사법
 Q        ?= 순직 해병 특검법 첫 본회의 표결에서 국민의힘 소속으로 찬성한 의원은?
 
 BIN := $(VENV)/bin
@@ -71,8 +73,8 @@ demo-reset:  ## Restore the wiki to the "built" snapshot
 test:  ## Offline tests (no API calls)
 	$(BIN)/pytest -q
 
-site:  ## Serve the wiki with Quartz on http://localhost:8080
-	scripts/quartz.sh serve $(CORPUS)
+site:  ## Serve the wiki with Quartz on http://localhost:$(PORT) (PORT=8090 if 8080 is taken)
+	QUARTZ_PORT=$(PORT) QUARTZ_TITLE="$(TITLE)" scripts/quartz.sh serve $(CORPUS)
 
 deploy-pages:  ## Build the Quartz site and publish it to the gh-pages branch
-	scripts/deploy_pages.sh $(CORPUS)
+	QUARTZ_TITLE="$(TITLE)" scripts/deploy_pages.sh $(CORPUS)

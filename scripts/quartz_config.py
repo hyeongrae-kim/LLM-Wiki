@@ -21,6 +21,8 @@ for plugin in cfg.get("plugins", []):
     name = plugin.get("source", "").rsplit("/", 1)[-1]
     if name == "created-modified-date":   # wiki pages carry created/updated; content/ is not a git repo
         plugin.setdefault("options", {})["priority"] = ["frontmatter", "filesystem"]
+    elif name == "cname":                 # only for a custom domain; a github.io CNAME breaks Pages
+        plugin["enabled"] = bool(os.environ.get("QUARTZ_CNAME"))
     elif name == "crawl-links":            # links are written as [[dir/page]] from the wiki root
         plugin.setdefault("options", {})["markdownLinkResolution"] = "absolute"
     elif name == "footer":

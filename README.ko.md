@@ -41,7 +41,7 @@ git clone https://github.com/hyeongrae-kim/LLM-Wiki.git && cd LLM-Wiki
 make setup                 # .venv 생성, 패키지 설치(editable), .env 생성
 # .env 의 OPENAI_API_KEY 입력 (모델·언어 기본값: gpt-6-luna, WIKI_LANG=ko)
 
-make quickstart            # 문서 27개(small preset)로 구축 — 약 20분
+make quickstart            # 문서 27개(small preset)로 구축 — 약 20분 (전체 154개는 약 80분)
 make ask Q="순직 해병 특검법 첫 본회의 표결에서 국민의힘 소속으로 찬성한 의원은?"
 ```
 
@@ -103,7 +103,7 @@ make convert               # 기본값: --keyword 특별검사 --add-keyword 지
 ## 위키 보기: Obsidian · Quartz · GitHub Pages
 
 - **Obsidian:** `wiki_output/<corpus>/wiki` 폴더를 vault로 연다. 그래프 뷰로 페이지 간 링크를 볼 수 있다.
-- **Quartz:** `make site`를 실행하면 http://localhost:8080 에서 볼 수 있다.
+- **Quartz:** `make site`를 실행하면 http://localhost:8080 에서 볼 수 있다. 포트가 사용 중이면 `make site PORT=8090`으로 바꾼다.
   처음 실행할 때 Quartz v5와 플러그인을 `.quartz/`에 설치한다.
 - **GitHub Pages:** `make deploy-pages`를 실행하면 정적 사이트만 `gh-pages` 브랜치에 push하고 Pages를 활성화한다.
   위키 Markdown 원본은 main에 커밋하지 않는다.

@@ -4,13 +4,24 @@
 새 데이터를 **추가**하면 기존 페이지가 갱신되며, **Error Book**이 결함을 기록하고 → 주입하고 → 수리하고 → 종료하는
 전 과정을 보여준다.
 
+## 소요 시간 (2026-10-24 리허설 실측, gpt-6-luna)
+
+| 단계 | 시간 |
+|---|---|
+| 전체 구축 `make build` (154개 문서) | 약 80분 (사전 실행) |
+| `make demo-errorbook` (결함 심기, lint, 제약 표시) | 1초 미만 |
+| `make demo-add` (문서 5개, light finalize) | 약 4분 |
+| 검증 lint 1회 | 1초 미만 |
+| `make ask` 질문 1개 | 8~15초 (도구 호출 2~5회) |
+| `make demo-reset` | 1초 미만 |
+
 ## 0. 사전 준비 (시연 전날)
 
 ```bash
 make setup                         # .venv + .env (OPENAI_API_KEY 입력)
 make prepare PRESET=full           # 예제 문서 154개 → raw/assembly_spc/articles
 make build                         # 위키 구축 + "built" 스냅샷 저장
-make site                          # (별도 터미널) Quartz → http://localhost:8080
+make site                          # (별도 터미널) Quartz → http://localhost:8080 (포트가 사용 중이면 make site PORT=8090)
 ```
 
 - Obsidian에서 `wiki_output/assembly_spc/wiki`를 vault로 열고, 그래프 뷰를 띄워 둔다.
@@ -83,7 +94,9 @@ make demo-add           # 2026년 7~9월 '지방선거 투표용지 부족 사�
 ```
 
 - `📔 Error Book: injecting N active constraint(s) into the Step 2 prompt`: 앞에서 기록한 제약이 새 문서를 생성하는 프롬프트에 들어간다.
-- `🔍 Selected … members/김용민 …`: 새 법안의 대표발의자인 **기존** 의원 페이지를 Step 1이 골라 갱신한다.
+- `🔍 Selected 3 pages: ['김용민', '법제사법위원회', …]`: Step 1이 새 법안의 대표발의자인 **기존** 의원 페이지를 고른다.
+  Step 2는 `📄 Written wiki/members/김용민.md`로 그 페이지에 새 법안 사실을 병합한다.
+- 배치 사이 lint에서 E02(잘못된 디렉터리)는 코드가 수리한 뒤 2회 연속 통과해 **closed**된다.
 - light finalize가 실행되면 다음이 수리된다.
   - **코드 수리:** 디렉터리가 잘못된 페이지를 원래 위치로 옮긴다.
   - **LLM 수리:** 한 줄 요약을 다시 생성하고, 깨진 링크의 대상 의원 페이지를 새로 만든다.
@@ -103,10 +116,18 @@ make ask Q="의안번호 2221376 투표용지 부족 사태 특검법 개정안�
 ## 7. Error Book ② 검증 후 종료 (라이브)
 
 ```bash
-.venv/bin/llm-wiki lint     # 1회 통과
-.venv/bin/llm-wiki lint     # 2회 연속 통과 → "📔 Error E.. closed"
-.venv/bin/llm-wiki errorbook export
+.venv/bin/llm-wiki lint --corpus assembly_spc   # 1회 더 통과하면 E01, E03 closed (light finalize의 lint가 첫 번째 통과)
+.venv/bin/llm-wiki errorbook --corpus assembly_spc export
 ```
+
+리허설 결과: `📔 Error E01 (broken_link) … closed`, `📔 Error E03 (missing_summary) … closed`
+→ `Error Book (0 active / 3 closed)`.
+
+새 데이터를 써야 답할 수 있는 질문(6절)은 다음 경로로 답했다 (도구 호출 3회, 8.5초).
+1. `search "2221376"`
+2. `read 의안-2221376`: 새로 추가된 페이지
+3. `read 김용민`: 링크를 따라간 기존 페이지
+4. 답: **법제사법위원회**
 
 Quartz나 Obsidian에서 `error-book.md`를 연다. 활성·종료 항목, 남은 제약, 수리 이력(`lint_ledger.jsonl`)을 보여준다.
 
