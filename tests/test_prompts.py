@@ -72,3 +72,14 @@ def test_misnumbered_digest_link_resolved_by_title_or_dropped(wiki):
     dropped = bench_ingest._resolve_digest_links(page, drop_unresolved=True)
     text = page.read_text(encoding="utf-8")
     assert "의안-2200005-한동훈" in text and "9999999" not in text and dropped == 1
+
+
+def test_resolve_article_links(wiki):
+    a = wiki / "sources" / "articles"
+    a.mkdir(parents=True)
+    (a / "표결-770034-2026-09-17-제9회-전국동시지방선거-투표용지-부족-사태-등.md").write_text("x", encoding="utf-8")
+    page = wiki / "sources" / "digests" / "d.md"
+    page.parent.mkdir(parents=True)
+    page.write_text("- [[sources/articles/표결-770034-2026-09-17-제9회-전국동시지방선거-투표용지-부족-사태-등-국민참정권]]\n", encoding="utf-8")
+    bench_ingest._resolve_digest_links(page)
+    assert "[[sources/articles/표결-770034-2026-09-17-제9회-전국동시지방선거-투표용지-부족-사태-등]]" in page.read_text(encoding="utf-8")

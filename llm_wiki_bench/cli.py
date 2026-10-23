@@ -439,7 +439,8 @@ def main(argv: list[str] | None = None) -> None:
 
     p = sub.add_parser("add", parents=[common], help="Add new documents to an existing wiki")
     p.add_argument("files", nargs="+")
-    p.add_argument("--batch-size", type=int, default=1)
+    p.add_argument("--batch-size", type=int, default=2,
+                   help="Articles per LLM call (batch mode fixes digest names to the article stems)")
     p.add_argument("--finalize", choices=["full", "light", "none"], default="light")
     p.set_defaults(func=cmd_add)
 

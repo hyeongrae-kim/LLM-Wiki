@@ -130,7 +130,7 @@ def get_active_constraints() -> str:
         if e.get("brief") or category == "broken_link":
             # Short mode: emit only the running counts.
             count = _get_count(e)
-            samples = _get_samples(e)
+            samples = [x for x in _get_samples(e) if not _sample_is_fixed(x)]  # still broken
             sample_names = [_sample_name(s) for s in samples[:3]]
             sample_str = ", ".join(sample_names) if sample_names else ""
             if count > 0:
