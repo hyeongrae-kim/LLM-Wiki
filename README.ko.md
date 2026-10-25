@@ -104,7 +104,7 @@ make convert               # 기본값: --keyword 특별검사 --add-keyword 지
 
 - **Obsidian:** `wiki_output/<corpus>/wiki` 폴더를 vault로 연다. 그래프 뷰로 페이지 간 링크를 볼 수 있다.
 - **Quartz:** `make site`를 실행하면 http://localhost:8080 에서 볼 수 있다. 포트가 사용 중이면 `make site PORT=8090`으로 바꾼다.
-  처음 실행할 때 Quartz v5와 플러그인을 `.quartz/`에 설치한다.
+  처음 실행할 때 Quartz v5와 플러그인을 `.quartz/`에 설치한다. 고정 버전(`QUARTZ_REF`)이 바뀌면 자동으로 다시 설치한다.
 - **GitHub Pages:** `make deploy-pages`를 실행하면 정적 사이트만 `gh-pages` 브랜치에 push하고 Pages를 활성화한다.
   위키 Markdown 원본은 main에 커밋하지 않는다.
 

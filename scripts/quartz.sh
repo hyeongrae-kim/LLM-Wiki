@@ -4,9 +4,16 @@
 #   scripts/quartz.sh serve [corpus]   live preview on http://localhost:${QUARTZ_PORT:-8080}
 #   scripts/quartz.sh build [corpus]   static site in .quartz/public
 #
-# Quartz is cloned once into .quartz/ (git-ignored). Requires Node >= 22 and
-# npm >= 10.9.2. Overrides: QUARTZ_REF, QUARTZ_BASE_URL, QUARTZ_TITLE,
-# QUARTZ_CNAME (set only when serving from a custom domain).
+# Quartz is cloned once into .quartz/ (git-ignored) and re-installed when
+# QUARTZ_REF changes. Requires Node >= 22 and npm >= 10.9.2. Overrides:
+# QUARTZ_REF, QUARTZ_BASE_URL, QUARTZ_TITLE, QUARTZ_CNAME (set only when
+# serving from a custom domain).
+#
+# QUARTZ_REF is a commit of the v5 branch after the plugin 1.0 release: the
+# v5.0.0 tag ships explorer/graph/search plugins that fetch
+# /static/contentIndex.json and build links from the domain root, so on a
+# project site (<user>.github.io/<repo>/) the graph is empty and the explorer
+# and search links 404.
 set -euo pipefail
 
 ACTION=${1:-serve}
@@ -14,7 +21,7 @@ CORPUS=${2:-${WIKI_CORPUS:-assembly_spc}}
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 WIKI="$ROOT/wiki_output/$CORPUS/wiki"
 QZ="$ROOT/.quartz"
-QUARTZ_REF=${QUARTZ_REF:-v5.0.0}
+QUARTZ_REF=${QUARTZ_REF:-97a2d05f80c4c50534959b1d0d41cc4b3895625e}   # v5 branch, 2026-09-20
 PY="$ROOT/.venv/bin/python"; [ -x "$PY" ] || PY=python3
 
 [ -d "$WIKI" ] || { echo "❌ No wiki at $WIKI — run 'make build' first"; exit 1; }
@@ -32,10 +39,18 @@ if [ -z "${QUARTZ_BASE_URL:-}" ]; then
   QUARTZ_BASE_URL="${slug%%/*}.github.io/${slug##*/}"
 fi
 
+# .quartz/ holds only generated files (config, content copy, build output).
+if [ -d "$QZ" ] && [ "$(cat "$QZ/.quartz-ref" 2>/dev/null)" != "$QUARTZ_REF" ]; then
+  echo "♻️  Quartz version changed → reinstalling .quartz/"
+  rm -rf "$QZ"
+fi
 if [ ! -d "$QZ" ]; then
   echo "⬇️  Installing Quartz $QUARTZ_REF into .quartz/ ..."
-  git clone -q --depth 1 --branch "$QUARTZ_REF" https://github.com/jackyzha0/quartz.git "$QZ"
+  git init -q "$QZ"
+  git -C "$QZ" fetch -q --depth 1 https://github.com/jackyzha0/quartz.git "$QUARTZ_REF"
+  git -C "$QZ" checkout -q FETCH_HEAD
   (cd "$QZ" && npm ci --no-audit --no-fund)
+  echo "$QUARTZ_REF" > "$QZ/.quartz-ref"
 fi
 if [ ! -f "$QZ/quartz.config.yaml" ]; then
   (cd "$QZ" && npx quartz create -t default -X new -l absolute -b "$QUARTZ_BASE_URL")
@@ -45,8 +60,8 @@ fi
 QUARTZ_BASE_URL="$QUARTZ_BASE_URL" "$PY" "$ROOT/scripts/quartz_config.py" "$QZ/quartz.config.yaml" "$CORPUS"
 
 if [ ! -f "$QZ/.plugins-installed" ]; then
-  # Plugins pinned in quartz.lock.json, then any enabled in the config but not locked.
-  (cd "$QZ" && npx quartz plugin install && npx quartz plugin resolve) || exit 1
+  # Plugins come from npm (package.json); this adds any enabled in the config but missing.
+  (cd "$QZ" && npx quartz plugin install --from-config) || exit 1
   touch "$QZ/.plugins-installed"
 fi
 
