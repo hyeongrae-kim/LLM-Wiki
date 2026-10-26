@@ -1,0 +1,54 @@
+{"ts": "2026-10-23T21:37", "issue_type": "broken_link", "file": "", "auto_fixed": true, "fix_method": "auto_fix_broken_links", "note": "", "count": 1}
+{"ts": "2026-10-23T21:38", "issue_type": "broken_link", "file": "", "auto_fixed": true, "fix_method": "auto_fix_broken_links", "note": "", "count": 1}
+{"ts": "2026-10-23T21:40", "issue_type": "broken_link", "file": "", "auto_fixed": true, "fix_method": "auto_fix_broken_links", "note": "", "count": 1}
+{"ts": "2026-10-23T21:48", "issue_type": "broken_link", "file": "", "auto_fixed": true, "fix_method": "auto_fix_broken_links", "note": "", "count": 1}
+{"ts": "2026-10-23T21:48", "issue_type": "related_source_format", "file": "", "auto_fixed": true, "fix_method": "auto_fix_related_source_text", "note": "", "count": 2}
+{"ts": "2026-10-23T21:53", "issue_type": "broken_link", "file": "", "auto_fixed": true, "fix_method": "auto_fix_broken_links", "note": "", "count": 4}
+{"ts": "2026-10-23T21:57", "issue_type": "related_source_format", "file": "", "auto_fixed": true, "fix_method": "auto_fix_related_source_text", "note": "", "count": 1}
+{"ts": "2026-10-23T21:58", "issue_type": "unsupported_facts", "file": "bills/의안-2210129", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-23T21:58", "issue_type": "unsupported_facts", "file": "members/박성준", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 2 unsupported facts", "count": 2}
+{"ts": "2026-10-23T21:59", "issue_type": "unsupported_facts", "file": "votes/표결-1217", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-23T21:59", "issue_type": "unsupported_facts", "file": "bills/의안-2212184", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-23T21:59", "issue_type": "grounding_skipped", "file": "meetings/제418회-국회-정기회-제8차-본회의", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "2/3 facts flagged; evidence mismatch, kept", "count": 0}
+{"ts": "2026-10-23T21:59", "issue_type": "grounding_skipped", "file": "bills/의안-2212283", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "4/5 facts flagged; evidence mismatch, kept", "count": 0}
+{"ts": "2026-10-23T22:00", "issue_type": "unsupported_facts", "file": "bills/의안-2212044", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T00:32", "issue_type": "related_source_format", "file": "", "auto_fixed": true, "fix_method": "auto_fix_related_source_text", "note": "", "count": 1}
+{"ts": "2026-10-24T00:33", "issue_type": "broken_link", "file": "", "auto_fixed": true, "fix_method": "auto_fix_broken_links", "note": "", "count": 1}
+{"ts": "2026-10-24T00:38", "issue_type": "broken_link", "file": "", "auto_fixed": true, "fix_method": "auto_fix_broken_links", "note": "", "count": 2}
+{"ts": "2026-10-24T00:40", "issue_type": "related_source_format", "file": "", "auto_fixed": true, "fix_method": "auto_fix_related_source_text", "note": "", "count": 1}
+{"ts": "2026-10-24T00:40", "issue_type": "broken_link", "file": "", "auto_fixed": true, "fix_method": "auto_fix_broken_links", "note": "", "count": 1}
+{"ts": "2026-10-24T00:43", "issue_type": "broken_link", "file": "", "auto_fixed": true, "fix_method": "auto_fix_broken_links", "note": "", "count": 1}
+{"ts": "2026-10-24T00:47", "issue_type": "broken_link", "file": "", "auto_fixed": true, "fix_method": "auto_fix_broken_links", "note": "", "count": 2}
+{"ts": "2026-10-24T00:54", "issue_type": "unsupported_facts", "file": "bills/의안-2210480", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T00:54", "issue_type": "grounding_skipped", "file": "meetings/제423회-국회-임시회-제2차-본회의", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "2/3 facts flagged; evidence mismatch, kept", "count": 0}
+{"ts": "2026-10-24T00:55", "issue_type": "grounding_skipped", "file": "committees/국토교통위원회", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "3/4 facts flagged; evidence mismatch, kept", "count": 0}
+{"ts": "2026-10-24T00:55", "issue_type": "unsupported_facts", "file": "bills/의안-2209631", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T00:55", "issue_type": "unsupported_facts", "file": "parties/조국혁신당", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 2 unsupported facts", "count": 2}
+{"ts": "2026-10-24T00:57", "issue_type": "unsupported_facts", "file": "cases/김건희-주가조작-및-가족-비위-의혹", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 3 unsupported facts", "count": 3}
+{"ts": "2026-10-24T00:57", "issue_type": "cross_page_contradiction", "file": "parties/조국혁신당", "auto_fixed": false, "fix_method": "llm_detect_contradictions", "note": "Fixed contradiction: '- 조국혁신당 소속 국회의원: [[members/김선민]], [[members/박은정]], [[members/서왕진]], [[members/차규근]], [[members/황운하]]' → '황운하의 조국혁신당 소속 기간은 2024년 5월 30일부터 2026년 10월 13일까지로 기재돼 있다.'", "count": 1}
+{"ts": "2026-10-24T00:58", "issue_type": "broken_link", "file": "", "auto_fixed": true, "fix_method": "auto_fix_broken_links", "note": "", "count": 1}
+{"ts": "2026-10-24T00:58", "issue_type": "related_source_format", "file": "", "auto_fixed": true, "fix_method": "auto_fix_related_source_text", "note": "", "count": 1}
+{"ts": "2026-10-24T00:59", "issue_type": "broken_link", "file": "", "auto_fixed": true, "fix_method": "auto_fix_broken_links", "note": "", "count": 2}
+{"ts": "2026-10-24T01:01", "issue_type": "broken_link", "file": "", "auto_fixed": true, "fix_method": "auto_fix_broken_links", "note": "", "count": 1}
+{"ts": "2026-10-24T01:02", "issue_type": "broken_link", "file": "", "auto_fixed": true, "fix_method": "auto_fix_broken_links", "note": "", "count": 1}
+{"ts": "2026-10-24T01:09", "issue_type": "related_source_format", "file": "", "auto_fixed": true, "fix_method": "auto_fix_related_source_text", "note": "", "count": 2}
+{"ts": "2026-10-24T01:10", "issue_type": "unsupported_facts", "file": "votes/표결-27492", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T01:11", "issue_type": "unsupported_facts", "file": "members/이성윤", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T01:11", "issue_type": "unsupported_facts", "file": "meetings/제421회-국회-임시회-제1차-본회의", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T01:11", "issue_type": "unsupported_facts", "file": "members/신동욱", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T01:12", "issue_type": "unsupported_facts", "file": "members/박준태", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 2 unsupported facts", "count": 2}
+{"ts": "2026-10-24T01:12", "issue_type": "unsupported_facts", "file": "bills/의안-2204851", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T01:13", "issue_type": "unsupported_facts", "file": "bills/의안-2206291", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T01:14", "issue_type": "unsupported_facts", "file": "members/박찬대", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T01:18", "issue_type": "unsupported_facts", "file": "members/김병기", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T01:18", "issue_type": "unsupported_facts", "file": "members/전용기", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T01:18", "issue_type": "unsupported_facts", "file": "bills/의안-2215551", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T01:18", "issue_type": "cross_page_contradiction", "file": "bills/의안-2217766", "auto_fixed": false, "fix_method": "llm_detect_contradictions", "note": "Fixed contradiction: '파견공무원 상한을 130명에서 150명으로 확대하고, 변호사 자격 특별수사관과 파견 군검사의 공소유지 권한을 제안했다.' → '기존 법률은 파견공무원 상한을 70명 이내로 규정한다.'", "count": 1}
+{"ts": "2026-10-24T01:19", "issue_type": "unsupported_facts", "file": "bills/의안-2212281", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T01:19", "issue_type": "unsupported_facts", "file": "members/김승원", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T01:20", "issue_type": "unsupported_facts", "file": "committees/법제사법위원회", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 4 unsupported facts", "count": 4}
+{"ts": "2026-10-24T01:21", "issue_type": "grounding_skipped", "file": "bills/의안-2212283", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "4/5 facts flagged; evidence mismatch, kept", "count": 0}
+{"ts": "2026-10-24T01:22", "issue_type": "grounding_skipped", "file": "committees/국토교통위원회", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "3/4 facts flagged; evidence mismatch, kept", "count": 0}
+{"ts": "2026-10-24T01:22", "issue_type": "unsupported_facts", "file": "cases/국정기획위원-차명계좌-불공정거래-의혹", "auto_fixed": false, "fix_method": "llm_verify_source_grounding", "note": "Removed 1 unsupported facts", "count": 1}
+{"ts": "2026-10-24T01:23", "issue_type": "cross_page_contradiction", "file": "votes/표결-1217", "auto_fixed": false, "fix_method": "llm_detect_contradictions", "note": "Fixed contradiction: '제421회 국회 임시회 제1차 본회의에서 진행됐으며, 회의 안건표는 원안가결로 요약한다. 기존 의안 기록과 표결 자료에는 수정가결 표기도 있어 처리 구분에 차이가 있다.' → '회의 안건표와 표결 자료는 원안가결로 기록하고, 기존 의안 기록은 수정가결로 기재한다.'", "count": 1}
+{"ts": "2026-10-24T01:24", "issue_type": "broken_link", "file": "committees/법제사법위원회", "auto_fixed": true, "fix_method": "drop_invented_digest_link", "note": "Related Sources linked a digest that does not exist", "count": 1}

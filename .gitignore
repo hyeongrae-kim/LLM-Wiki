@@ -14,11 +14,18 @@ datasets/
 results/
 logs/
 *.log
+# ... except the reference logs quoted by docs/DEMO_KO.md
+!/docs/logs/
+!/docs/logs/*.log
 
 # Local settings, demo state, generated per-corpus files
 .env
-.snapshots/
 .quartz/
+# Snapshots stay local, except the demo baseline restored by `make demo-reset`
+/.snapshots/*
+!/.snapshots/assembly_spc/
+/.snapshots/assembly_spc/*
+!/.snapshots/assembly_spc/built/
 /purpose_*.md
 
 # OS / editor

@@ -124,4 +124,8 @@
   - 코드가 만드는 `_index.md`의 짧은 링크(`[[의안-…]]`)를 사본에서 `[[bills/의안-…]]`로 바꾼다.
     Obsidian은 짧은 링크를 찾아가지만 Quartz는 루트 기준으로 해석해서 384개가 깨졌다.
     홈의 디렉터리 목록도 폴더 페이지 링크로 바꿔 홈 그래프에 연결이 보이게 했다.
+- 시연 기준 위키를 레포에 넣어 클론만으로 시연할 수 있게 했다.
+  - `built` 스냅샷(`.snapshots/assembly_spc/built/`)만 커밋하고, `make demo-reset`으로 복원한다. 작업 중인 위키(`wiki_output/`)는 계속 git 밖에 둔다.
+  - 스냅샷과 복원에 `purpose_<corpus>.md`를 포함했다. 이 파일이 없으면 다음 ingest가 LLM에게 영어 "Wikipedia QA"용 purpose를 새로 만들게 해서, 구축 때와 다른 설정으로 추가가 진행된다.
+  - `make quickstart`는 결과를 `small` 스냅샷으로 저장해 `built` 기준본을 덮어쓰지 않는다. 처음부터 다시 구축할 때 쓰는 `make clean-wiki`를 추가했다.
 - 오프라인 테스트(`tests/`, API 호출 없음).

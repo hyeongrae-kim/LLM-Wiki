@@ -1,0 +1,1631 @@
+.venv/bin/llm-wiki build --corpus assembly_spc
+📋 Batch ingestion | Total: 154 | Batch size: 2 | Skipped: 0
+
+==================================================
+  Batch 1/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2200005 한동훈 전 법무부장관의 검사·장관 , 의안 2200038 순직 해병 수사 방해 및 사건 은폐]
+  🔍 Selected 0 pages: [] (2.8s)
+  📄 Written wiki/sources/digests/의안-2200005-한동훈-전-법무부장관의-검사·장관-재직시-비위의혹-및-자녀-논문대필-등-가족의-비위-의혹.md (944 chars)
+  📄 Written wiki/sources/digests/의안-2200038-순직-해병-수사-방해-및-사건-은폐-등의-진상규명을-위한-특별검사의-임명-등에-관한-법률.md (900 chars)
+  📄 Written wiki/bills/의안-2200005.md (897 chars)
+  📄 Written wiki/cases/한동훈-전-법무부장관-및-가족-비위-의혹.md (661 chars)
+  📄 Written wiki/bills/의안-2200038.md (900 chars)
+  📄 Written wiki/cases/순직-해병-수사-방해-및-사건-은폐-의혹.md (710 chars)
+  📄 Written wiki/votes/표결-1627.md (569 chars)
+  📄 Written wiki/committees/법제사법위원회.md (692 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 8 files for 2 articles (select 2.8s + generate 36.3s)
+  ⏳ [░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 2/154 (1.3%) | elapsed: 39s | ETA: 49m37s | avg: 19.6s/article
+==================================================
+  Batch 2/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2200049 대통령 윤석열의 배우자 김건희의 주, 의안 2200078 ‘김성태 대북송금 사건’ 관련 이화]
+  🔍 Selected 1 pages: ['법제사법위원회'] (4.1s)
+  📄 Written wiki/sources/digests/의안-2200049-대통령-윤석열의-배우자-김건희의-주가조작-의혹-등과-관련된-진상규명을-위한-특별검사-임명.md (882 chars)
+  📄 Written wiki/sources/digests/의안-2200078-‘김성태-대북송금-사건’-관련-이화영,-김성태에-대한-검찰의-허위진술-강요-등-진상규명을.md (878 chars)
+  📄 Written wiki/bills/의안-2200049.md (941 chars)
+  📄 Written wiki/bills/의안-2200078.md (985 chars)
+  📄 Written wiki/cases/김건희-주가조작-및-가족-비위-의혹.md (773 chars)
+  📄 Written wiki/cases/김성태-대북송금-사건-및-검찰-수사-의혹.md (768 chars)
+  📄 Written wiki/members/이성윤.md (726 chars)
+  📄 Written wiki/committees/법제사법위원회.md (1130 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 8 files for 2 articles (select 4.1s + generate 36.4s)
+  ⏳ [░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 4/154 (2.6%) | elapsed: 1m19s | ETA: 49m51s | avg: 19.9s/article
+==================================================
+  Batch 3/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2200092 문재인 전 대통령 배우자 김정숙의 , 의안 2200305 특별검사의 임명 등에 관한 법률 일]
+  🔍 Selected 1 pages: ['법제사법위원회'] (8.1s)
+  📄 Written wiki/sources/digests/의안-2200092-문재인-전-대통령-배우자-김정숙의-호화-외유성-순방,-특수활동비-유용-및-직권남용-의혹.md (865 chars)
+  📄 Written wiki/sources/digests/의안-2200305-특별검사의-임명-등에-관한-법률-일부개정법률안.md (933 chars)
+  📄 Written wiki/bills/의안-2200092.md (904 chars)
+  📄 Written wiki/bills/의안-2200305.md (865 chars)
+  📄 Written wiki/cases/김정숙-관련-의혹.md (753 chars)
+  📄 Written wiki/committees/법제사법위원회.md (1552 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 8.1s + generate 30.1s)
+  ⏳ [█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 6/154 (3.9%) | elapsed: 1m57s | ETA: 48m29s | avg: 19.7s/article
+==================================================
+  Batch 4/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2200459 윤석열 대통령 배우자 김건희의 주가, 의안 2202143 한동훈 전 법무부장관의 검사ㆍ장관 ]
+  🔍 Selected 5 pages: ['의안-2200049', '의안-2200005', '김건희-주가조작-및-가족-비위-의혹', '한동훈-전-법무부장관-및-가족-비위-의혹', '법제사법위원회'] (5.9s)
+  📄 Written wiki/sources/digests/의안-2200459-윤석열-대통령-배우자-김건희의-주가조작-사건-등의-진상규명을-위한-특별검사-임명-등에-관.md (907 chars)
+  📄 Written wiki/sources/digests/의안-2202143-한동훈-전-법무부장관의-검사ㆍ장관-재직시-비위의혹과-자녀-논문대필-등-가족의-비위-의혹.md (863 chars)
+  📄 Written wiki/bills/의안-2200459.md (1007 chars)
+  📄 Written wiki/bills/의안-2202143.md (1020 chars)
+  📄 Written wiki/cases/김건희-주가조작-및-가족-비위-의혹.md (1128 chars)
+  📄 Written wiki/cases/한동훈-전-법무부장관-및-가족-비위-의혹.md (978 chars)
+  📄 Written wiki/committees/법제사법위원회.md (2003 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 5.9s + generate 38.4s)
+  ⏳ [█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 8/154 (5.2%) | elapsed: 2m42s | ETA: 49m22s | avg: 20.3s/article
+==================================================
+  Batch 5/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2202162 대통령 윤석열의 검사·대통령 재직시, 의안 2202260 순직 해병 수사 외압 관련 윤석열 ]
+  🔍 Selected 8 pages: ['의안-2202162', '의안-2202260', '의안-2203920', '의안-2200038', '순직-해병-수사-방해-및-사건-은폐-의혹']... (3.1s)
+  📄 Written wiki/sources/digests/의안-2202162-대통령-윤석열의-검사·대통령-재직시-중대비위의혹-및-배우자-김건희의-국정농단-의혹-등의.md (922 chars)
+  📄 Written wiki/sources/digests/의안-2202260-순직-해병-수사-외압-관련-윤석열-대통령의-직권남용권리행사방해-등-범죄혐의의-진상규명을.md (829 chars)
+  📄 Written wiki/bills/의안-2202162.md (928 chars)
+  📄 Written wiki/bills/의안-2202260.md (871 chars)
+  📄 Written wiki/cases/순직-해병-수사-방해-및-사건-은폐-의혹.md (1048 chars)
+  📄 Written wiki/cases/김건희-주가조작-및-가족-비위-의혹.md (1408 chars)
+  📄 Written wiki/committees/법제사법위원회.md (2489 chars)
+  📄 Written wiki/members/박은정.md (745 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 8 files for 2 articles (select 3.1s + generate 44.6s)
+  ⏳ [█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 10/154 (6.5%) | elapsed: 3m30s | ETA: 50m24s | avg: 21.0s/article
+==================================================
+  Batch 6/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2202476 대통령 배우자 김건희의 명품백 수수, 의안 2202651 순직 해병 수사 방해 및 사건 은폐]
+  🔍 Selected 6 pages: ['의안-2200459', '의안-2202260', '의안-2200038', '순직-해병-수사-방해-및-사건-은폐-의혹', '김건희-주가조작-및-가족-비위-의혹']... (3.6s)
+  📄 Written wiki/sources/digests/의안-2202476-대통령-배우자-김건희의-명품백-수수사건-관련-국민권익위원회의-직무유기-의혹-및-김건희와.md (1049 chars)
+  📄 Written wiki/sources/digests/의안-2202651-순직-해병-수사-방해-및-사건-은폐-등의-진상규명을-위한-특별검사의-임명-등에-관한-법률.md (1006 chars)
+  📄 Written wiki/bills/의안-2202476.md (1077 chars)
+  📄 Written wiki/bills/의안-2202651.md (1093 chars)
+  📄 Written wiki/cases/김건희-주가조작-및-가족-비위-의혹.md (1766 chars)
+  📄 Written wiki/cases/순직-해병-수사-방해-및-사건-은폐-의혹.md (1441 chars)
+  📄 Written wiki/committees/법제사법위원회.md (3029 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 3.6s + generate 48.6s)
+  ⏳ [██░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 12/154 (7.8%) | elapsed: 4m22s | ETA: 51m44s | avg: 21.9s/article
+==================================================
+  Batch 7/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2202892 윤석열 대통령 배우자 김건희의 주가, 의안 2203576 순직 해병 수사 방해 및 사건 은폐]
+  🔍 Selected 7 pages: ['의안-2200459', '의안-2202476', '의안-2202651', '의안-2202260', '김건희-주가조작-및-가족-비위-의혹']... (6.4s)
+  📄 Written wiki/sources/digests/의안-2202892-윤석열-대통령-배우자-김건희의-주가조작-사건-등의-진상규명을-위한-특별검사-임명-등에-관.md (968 chars)
+  📄 Written wiki/sources/digests/의안-2203576-순직-해병-수사-방해-및-사건-은폐-등의-진상규명을-위한-특별검사의-임명-등에-관한-법률.md (1021 chars)
+  📄 Written wiki/bills/의안-2202892.md (1089 chars)
+  📄 Written wiki/bills/의안-2203576.md (1111 chars)
+  📄 Written wiki/cases/김건희-주가조작-및-가족-비위-의혹.md (2136 chars)
+  📄 Written wiki/cases/순직-해병-수사-방해-및-사건-은폐-의혹.md (1778 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 6.4s + generate 36.7s)
+  ⏳ [██░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 14/154 (9.1%) | elapsed: 5m05s | ETA: 50m54s | avg: 21.8s/article
+==================================================
+  Batch 8/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2203756 윤석열 대통령 배우자 김건희의 주가, 의안 2203920 순직 해병 수사 방해 및 사건 은폐]
+  🔍 Selected 10 pages: ['의안-2203576', '의안-2202651', '의안-2202260', '의안-2200038', '의안-2202892']... (6.1s)
+  📄 Written wiki/sources/digests/의안-2203756-윤석열-대통령-배우자-김건희의-주가조작-사건-등의-진상규명을-위한-특별검사-임명-등에-관.md (950 chars)
+  📄 Written wiki/sources/digests/의안-2203920-순직-해병-수사-방해-및-사건-은폐-등의-진상규명을-위한-특별검사의-임명-등에-관한-법률.md (1032 chars)
+  📄 Written wiki/bills/의안-2203756.md (1270 chars)
+  📄 Written wiki/bills/의안-2203920.md (1082 chars)
+  📄 Written wiki/votes/표결-1590.md (680 chars)
+  📄 Written wiki/committees/법제사법위원회.md (3667 chars)
+  📄 Written wiki/cases/김건희-주가조작-및-가족-비위-의혹.md (2446 chars)
+  📄 Written wiki/cases/순직-해병-수사-방해-및-사건-은폐-의혹.md (2063 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 8 files for 2 articles (select 6.1s + generate 61.1s)
+  ⏳ [███░░░░░░░░░░░░░░░░░░░░░░░░░░░] 16/154 (10.4%) | elapsed: 6m12s | ETA: 53m34s | avg: 23.3s/article  📔 New error E01: Broken links: wikilinks pointing to non-existent pages (auto-deleted, pending LLM fix to create missing pages) (1 issues)
+
+  🔧 Quick fix: broken_links=1
+
+==================================================
+  Batch 9/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2203925 윤석열 대통령 배우자 김건희의 주가, 의안 2204595 특별검사후보추천위원회의 구성 및 운]
+  🔍 Selected 7 pages: ['의안-2203756', '의안-2202892', '의안-2202476', '의안-2200459', '의안-2200305']... (6.3s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2203925-윤석열-대통령-배우자-김건희의-주가조작-사건-등의-진상규명을-위한-특별검사-임명-등에-관.md (1363 chars)
+  📄 Written wiki/sources/digests/의안-2204595-특별검사후보추천위원회의-구성-및-운영-등에-관한-규칙-일부개정규칙안.md (1039 chars)
+  📄 Written wiki/bills/의안-2203925.md (1322 chars)
+  📄 Written wiki/bills/의안-2204595.md (1005 chars)
+  📄 Written wiki/committees/법제사법위원회.md (3939 chars)
+  📄 Written wiki/committees/국회운영위원회.md (581 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 6.3s + generate 44.8s)
+  ⏳ [███░░░░░░░░░░░░░░░░░░░░░░░░░░░] 18/154 (11.7%) | elapsed: 7m03s | ETA: 53m22s | avg: 23.5s/article
+  🔧 Quick fix: broken_links=1
+
+==================================================
+  Batch 10/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2204611 대통령실 수사외압 등 권력형 비리 , 의안 2204739 윤석열 대통령 배우자 김건희의 주가]
+  🔍 Selected 3 pages: ['의안-2203925', '김건희-주가조작-및-가족-비위-의혹', '법제사법위원회'] (5.1s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2204611-대통령실-수사외압-등-권력형-비리-진상규명을-위한-특별검사의-수사요구안.md (770 chars)
+  📄 Written wiki/sources/digests/의안-2204739-윤석열-대통령-배우자-김건희의-주가조작-사건-등의-진상규명을-위한-특별검사-임명-등에-관.md (1061 chars)
+  📄 Written wiki/bills/의안-2204611.md (737 chars)
+  📄 Written wiki/bills/의안-2204739.md (1232 chars)
+  📄 Written wiki/cases/김건희-주가조작-및-가족-비위-의혹.md (2839 chars)
+  📄 Written wiki/committees/법제사법위원회.md (4402 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 5.1s + generate 48.4s)
+  ⏳ [███░░░░░░░░░░░░░░░░░░░░░░░░░░░] 20/154 (13.0%) | elapsed: 7m57s | ETA: 53m18s | avg: 23.9s/article
+==================================================
+  Batch 11/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2204851 쌍방울 대북송금 사건 진상규명을 위, 의안 2206172 검찰 특수활동비 오ㆍ남용 및 자료폐]
+  🔍 Selected 3 pages: ['의안-2200078', '김성태-대북송금-사건-및-검찰-수사-의혹', '법제사법위원회'] (5.3s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2204851-쌍방울-대북송금-사건-진상규명을-위한-특별검사-수사요구안.md (758 chars)
+  📄 Written wiki/sources/digests/의안-2206172-검찰-특수활동비-오ㆍ남용-및-자료폐기ㆍ정보은폐-의혹-진상규명을-위한-특별검사의-수사요구안.md (807 chars)
+  📄 Written wiki/bills/의안-2204851.md (851 chars)
+  📄 Written wiki/bills/의안-2206172.md (907 chars)
+  📄 Written wiki/cases/검찰-특수활동비-오남용-및-자료폐기-정보은폐-의혹.md (772 chars)
+  📄 Written wiki/cases/김성태-대북송금-사건-및-검찰-수사-의혹.md (1080 chars)
+  📄 Written wiki/committees/법제사법위원회.md (4907 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 5.3s + generate 45.2s)
+  ⏳ [████░░░░░░░░░░░░░░░░░░░░░░░░░░] 22/154 (14.3%) | elapsed: 8m47s | ETA: 52m47s | avg: 24.0s/article
+==================================================
+  Batch 12/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2206226 위헌적 비상계엄 선포를 통한 내란 , 의안 2206262 윤석열 대통령과 국무위원 등의 내란]
+  🔍 Selected 1 pages: ['법제사법위원회'] (5.1s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2206226-위헌적-비상계엄-선포를-통한-내란-행위의-진상규명을-위한-특별검사의-수사요구안.md (1051 chars)
+  📄 Written wiki/sources/digests/의안-2206262-윤석열-대통령과-국무위원-등의-내란죄-진상규명을-위한-특별검사의-수사요구안.md (807 chars)
+  📄 Written wiki/bills/의안-2206226.md (949 chars)
+  📄 Written wiki/bills/의안-2206262.md (733 chars)
+  📄 Written wiki/votes/표결-1366.md (659 chars)
+  📄 Written wiki/cases/비상계엄-선포-및-내란-행위-진상규명-의혹.md (866 chars)
+  📄 Written wiki/committees/법제사법위원회.md (5376 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 5.1s + generate 45.7s)
+  ⏳ [████░░░░░░░░░░░░░░░░░░░░░░░░░░] 24/154 (15.6%) | elapsed: 9m38s | ETA: 52m15s | avg: 24.1s/article
+  🔧 Quick fix: broken_links=1
+
+==================================================
+  Batch 13/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2206291 윤석열 정부의 위헌적 비상계엄 선포, 의안 2206292 윤석열 대통령 배우자 김건희의 주가]
+  🔍 Selected 6 pages: ['의안-2204739', '의안-2206226', '표결-1366', '법제사법위원회', '비상계엄-선포-및-내란-행위-진상규명-의혹']... (6.2s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2206291-윤석열-정부의-위헌적-비상계엄-선포를-통한-내란-행위의-진상규명을-위한-특별검사-임명-등.md (931 chars)
+  📄 Written wiki/sources/digests/의안-2206292-윤석열-대통령-배우자-김건희의-주가조작-사건-등의-진상규명을-위한-특별검사-임명-등에-관.md (928 chars)
+  📄 Written wiki/bills/의안-2206291.md (1098 chars)
+  📄 Written wiki/votes/표결-1346.md (674 chars)
+  📄 Written wiki/bills/의안-2206292.md (1116 chars)
+  📄 Written wiki/votes/표결-1345.md (669 chars)
+  📄 Written wiki/cases/비상계엄-선포-및-내란-행위-진상규명-의혹.md (1191 chars)
+  📄 Written wiki/cases/김건희-주가조작-및-가족-비위-의혹.md (3298 chars)
+  📄 Written wiki/committees/법제사법위원회.md (5799 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 9 files for 2 articles (select 6.2s + generate 66.1s)
+  ⏳ [█████░░░░░░░░░░░░░░░░░░░░░░░░░] 26/154 (16.9%) | elapsed: 10m51s | ETA: 53m26s | avg: 25.1s/article
+==================================================
+  Batch 14/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2206299 특별검사의 임명 등에 관한 법률 일, 의안 2207381 윤석열 정부의 내란ㆍ외환 행위의 진]
+  🔍 Selected 5 pages: ['의안-2206291', '의안-2200305', '표결-1346', '법제사법위원회', '비상계엄-선포-및-내란-행위-진상규명-의혹'] (5.8s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2206299-특별검사의-임명-등에-관한-법률-일부개정법률안.md (875 chars)
+  📄 Written wiki/sources/digests/의안-2207381-윤석열-정부의-내란ㆍ외환-행위의-진상규명을-위한-특별검사-임명-등에-관한-법률안.md (1028 chars)
+  📄 Written wiki/bills/의안-2206299.md (950 chars)
+  📄 Written wiki/bills/의안-2207381.md (1202 chars)
+  📄 Written wiki/votes/표결-1217.md (699 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 5.8s + generate 22.7s)
+  ⏳ [█████░░░░░░░░░░░░░░░░░░░░░░░░░] 28/154 (18.2%) | elapsed: 11m19s | ETA: 50m59s | avg: 24.3s/article
+==================================================
+  Batch 15/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2207409 윤석열 정부의 내란·외환 행위의 진, 의안 2207608 윤석열 정부의 비상계엄 선포 진상규]
+  🔍 Selected 5 pages: ['의안-2207381', '의안-2206291', '의안-2206226', '법제사법위원회', '비상계엄-선포-및-내란-행위-진상규명-의혹'] (5.1s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2207409-윤석열-정부의-내란·외환-행위의-진상규명을-위한-특별검사-임명-등에-관한-법률안.md (979 chars)
+  📄 Written wiki/sources/digests/의안-2207608-윤석열-정부의-비상계엄-선포-진상규명을-위한-특별검사-임명-등에-관한-법률안.md (860 chars)
+  📄 Written wiki/bills/의안-2207409.md (1031 chars)
+  📄 Written wiki/bills/의안-2207608.md (838 chars)
+  📄 Written wiki/cases/비상계엄-선포-및-내란-행위-진상규명-의혹.md (1809 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 5.1s + generate 26.7s)
+  ⏳ [█████░░░░░░░░░░░░░░░░░░░░░░░░░] 30/154 (19.5%) | elapsed: 11m51s | ETA: 49m02s | avg: 23.7s/article
+──────────────────────────────────────────────────
+  🔄 Periodic LLM maintenance (every 30 articles)
+──────────────────────────────────────────────────
+
+  🤖 LLM Fix (Structural): Incomplete digests...
+  🤖 LLM Fix (Structural): Missing summaries...
+  🤖 LLM Fix (Structural): Missing sections...
+  🤖 LLM Fix (Structural): Broken links (create pages)...
+  🔗 Creating 3 missing pages for broken links...
+    ✅ Created meetings/제418회-국회-정기회-제18차-본회의
+    📎 Injected Related Sources for 제418회-국회-정기회-제18차-본회의
+    ✅ Created members/박성준
+    📎 Injected Related Sources for 박성준
+    ✅ Created meetings/제418회-국회-정기회-제8차-본회의
+    📎 Injected Related Sources for 제418회-국회-정기회-제8차-본회의
+  📔 Marked 3 broken_link sample(s) as fixed
+  🤖 LLM Fix (Structural): Empty Related Pages...
+  ✅ No empty Related Pages found.
+  🤖 Structural LLM fixed 3 issues (pages_created=3)
+
+  📂 bills/: 「## Unsorted」30 entries, 0 existing sections
+    → Moved to existing: 0, new sections: 5 (30 entries)
+       New: 김건희특검(9), 기타특검(7), 내란특검(6), 해병특검(5), 특검제도(3)
+    ✅ Updated bills/_index.md
+
+  📂 votes/: 「## Unsorted」6 entries, 0 existing sections
+    → Moved to existing: 0, new sections: 2 (6 entries)
+       New: 정국특검(4), 해병특검(2)
+    ✅ Updated votes/_index.md
+
+  📂 members/: 「## Unsorted」3 entries, 0 existing sections
+    ⏭️  Too few entries (3) and no existing sections, skip LLM
+
+  📂 committees/: 「## Unsorted」2 entries, 0 existing sections
+    ⏭️  Too few entries (2) and no existing sections, skip LLM
+
+  📂 cases/: 「## Unsorted」7 entries, 0 existing sections
+    → Moved to existing: 0, new sections: 3 (7 entries)
+       New: 수사논란(3), 정치인비위(3), 내란의혹(1)
+    ✅ Updated cases/_index.md
+
+  📂 meetings/: 「## Unsorted」2 entries, 0 existing sections
+    ⏭️  Too few entries (2) and no existing sections, skip LLM
+  📑 Relocated 43 entries from Unsorted
+  🔍 Checking for duplicate pages...
+    ✅ No duplicate pages found
+  🔍 Checking for alias overlaps...
+    ⚠️ Found 21 alias overlap pairs
+    🔧 Removed alias '윤석열 정부 비상계엄 특검법' from bills/의안-2207608
+    🔧 Removed alias '순직 해병 특검법' from bills/의안-2200038
+    🔧 Removed alias '김건희 특검법' from bills/의안-2200049
+    🔧 Removed alias '김건희 특검법' from bills/의안-2202892
+    🔧 Removed alias '김건희 주가조작 특검법' from bills/의안-2202892
+    🔧 Removed alias '김건희 특검법' from bills/의안-2200459
+    🔧 Removed alias '김건희 주가조작 특검법' from bills/의안-2200459
+    🔧 Removed alias '김건희 특별검사법안' from bills/의안-2200049
+    🔧 Removed alias '김건희 특검법' from bills/의안-2206292
+    🔧 Removed alias '김건희 주가조작 특검법' from bills/의안-2206292
+    🔧 Removed alias '김건희 특검법' from bills/의안-2204739
+    🔧 Removed alias '김건희 주가조작 특검법' from bills/의안-2204739
+    🔧 Removed alias '한동훈 특검법' from bills/의안-2200005
+    🔧 Removed alias '순직 해병 수사 방해 특검법' from bills/의안-2202651
+    🔧 Removed alias '순직 해병 특검법' from bills/의안-2202651
+    🔧 Removed alias '윤석열 정부 내란·외환 특검법' from bills/의안-2207409
+    🔧 Removed alias '내란·외환 행위 진상규명 특별검사법안' from bills/의안-2207409
+    ✅ Fixed 17 alias overlaps
+  ✅ Periodic maintenance complete
+
+==================================================
+  Batch 16/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2208057 명태균과 관련한 불법 선거개입 및 , 의안 2208058 인천세관 마약 수사외압 의혹 사건 ]
+  🔍 Selected 1 pages: ['법제사법위원회'] (6.7s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2208057-명태균과-관련한-불법-선거개입-및-국정농단-사건-등의-진상규명을-위한-특별검사의-임명-등.md (1057 chars)
+  📄 Written wiki/sources/digests/의안-2208058-인천세관-마약-수사외압-의혹-사건-등-진상규명을-위한-특별검사-수사요구안.md (886 chars)
+  📄 Written wiki/bills/의안-2208057.md (1109 chars)
+  📄 Written wiki/cases/명태균-관련-불법-선거개입-및-국정농단-의혹.md (774 chars)
+  📄 Written wiki/votes/표결-1158.md (624 chars)
+  📄 Written wiki/bills/의안-2208058.md (783 chars)
+  📄 Written wiki/cases/인천세관-마약-수사외압-의혹-사건.md (611 chars)
+  📄 Written wiki/votes/표결-1051.md (619 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 8 files for 2 articles (select 6.7s + generate 30.9s)
+  ⏳ [██████░░░░░░░░░░░░░░░░░░░░░░░░] 32/154 (20.8%) | elapsed: 13m21s | ETA: 50m56s | avg: 25.1s/article
+==================================================
+  Batch 17/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2208356 윤석열 대통령 배우자 김건희의 주가, 의안 2208594 순직 해병 수사 방해 및 사건 은폐]
+  🔍 Selected 5 pages: ['의안-2206292', '의안-2203920', '김건희-주가조작-및-가족-비위-의혹', '순직-해병-수사-방해-및-사건-은폐-의혹', '법제사법위원회'] (5.0s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2208356-윤석열-대통령-배우자-김건희의-주가조작-사건-등의-진상규명을-위한-특별검사-수사요구안.md (886 chars)
+  📄 Written wiki/sources/digests/의안-2208594-순직-해병-수사-방해-및-사건-은폐-등의-진상규명을-위한-특별검사의-임명-등에-관한-법률.md (1056 chars)
+  📄 Written wiki/bills/의안-2208356.md (811 chars)
+  📄 Written wiki/bills/의안-2208594.md (1145 chars)
+  📄 Written wiki/votes/표결-1050.md (551 chars)
+  📄 Written wiki/votes/표결-957.md (559 chars)
+  📄 Written wiki/cases/김건희-주가조작-및-가족-비위-의혹.md (3626 chars)
+  📄 Written wiki/cases/순직-해병-수사-방해-및-사건-은폐-의혹.md (2588 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 8 files for 2 articles (select 5.0s + generate 48.5s)
+  ⏳ [██████░░░░░░░░░░░░░░░░░░░░░░░░] 34/154 (22.1%) | elapsed: 14m15s | ETA: 50m19s | avg: 25.2s/article  📔 Error E01 (broken_link) not seen for 2 checks, closed
+
+==================================================
+  Batch 18/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2208972 고위공직자범죄수사처의 불법적 수사행, 의안 2209631 심우정 검찰총장의 내란가담 및 자녀]
+  🔍 Selected 3 pages: ['의안-2206262', '법제사법위원회', '비상계엄-선포-및-내란-행위-진상규명-의혹'] (5.4s)
+  📄 Written wiki/sources/digests/의안-2208972-고위공직자범죄수사처의-불법적-수사행위-진상조사를-위한-특별검사-임명-등에-관한-법률안.md (1044 chars)
+  📄 Written wiki/sources/digests/의안-2209631-심우정-검찰총장의-내란가담-및-자녀-채용비리-등의-진상규명을-위한-특별검사의-수사요구안.md (802 chars)
+  📄 Written wiki/bills/의안-2208972.md (901 chars)
+  📄 Written wiki/bills/의안-2209631.md (748 chars)
+  📄 Written wiki/cases/공수처-불법수사-및-은폐-의혹.md (750 chars)
+  📄 Written wiki/cases/비상계엄-선포-및-내란-행위-진상규명-의혹.md (2078 chars)
+  📄 Written wiki/committees/법제사법위원회.md (6234 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 5.4s + generate 54.2s)
+  ⏳ [███████░░░░░░░░░░░░░░░░░░░░░░░] 36/154 (23.4%) | elapsed: 15m15s | ETA: 49m59s | avg: 25.4s/article
+==================================================
+  Batch 19/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2210087 특별검사의 임명 등에 관한 법률 일, 의안 2210129 윤석열 전 대통령 등에 의한 내란ㆍ]
+  🔍 Selected 6 pages: ['의안-2206299', '의안-2207381', '의안-2206291', '의안-2206226', '비상계엄-선포-및-내란-행위-진상규명-의혹']... (5.8s)
+  📄 Written wiki/sources/digests/의안-2210087-특별검사의-임명-등에-관한-법률-일부개정법률안.md (1016 chars)
+  📄 Written wiki/sources/digests/의안-2210129-윤석열-전-대통령-등에-의한-내란ㆍ외환-행위의-진상규명을-위한-특별검사-임명-등에-관한.md (1217 chars)
+  📄 Written wiki/bills/의안-2210087.md (999 chars)
+  📄 Written wiki/bills/의안-2210129.md (1301 chars)
+  📄 Written wiki/cases/비상계엄-선포-및-내란-행위-진상규명-의혹.md (2469 chars)
+  📄 Written wiki/committees/법제사법위원회.md (6713 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 5.8s + generate 60.6s)
+  ⏳ [███████░░░░░░░░░░░░░░░░░░░░░░░] 38/154 (24.7%) | elapsed: 16m21s | ETA: 49m57s | avg: 25.8s/article
+==================================================
+  Batch 20/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2210136 김건희와 명태균ㆍ건진법사 관련 국정, 의안 2210146 윤석열 정부 12ㆍ3 내란 행위의 ]
+  🔍 Selected 11 pages: ['의안-2210136', '의안-2210146', '표결-955', '서영교', '정춘생']... (3.4s)
+  📄 Written wiki/sources/digests/의안-2210136-김건희와-명태균ㆍ건진법사-관련-국정농단-및-불법-선거-개입-사건-등-진상규명을-위한-특별.md (1270 chars)
+  📄 Written wiki/sources/digests/의안-2210146-윤석열-정부-12ㆍ3-내란-행위의-진상규명을-위한-특별검사-임명-등에-관한-법률안.md (1099 chars)
+  📄 Written wiki/bills/의안-2210136.md (1240 chars)
+  📄 Written wiki/votes/표결-955.md (536 chars)
+  📄 Written wiki/bills/의안-2210146.md (989 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 3.4s + generate 29.1s)
+  ⏳ [███████░░░░░░░░░░░░░░░░░░░░░░░] 40/154 (26.0%) | elapsed: 16m54s | ETA: 48m11s | avg: 25.4s/article  📔 Error E01 reappeared, reopened
+
+  🔧 Quick fix: broken_links=1, related_source_text=2
+
+==================================================
+  Batch 21/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2210147 윤석열 전 대통령 배우자 김건희의 , 의안 2210466 12.3 내란 은폐 목적 공공기관장]
+  🔍 Selected 7 pages: ['의안-2210146', '의안-2210136', '의안-2208356', '이성윤', '법제사법위원회']... (6.4s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2210147-윤석열-전-대통령-배우자-김건희의-주가조작-사건-등의-진상규명을-위한-특별검사-임명-등에.md (1045 chars)
+  📄 Written wiki/sources/digests/의안-2210466-12.3-내란-은폐-목적-공공기관장-알박기-의혹-진상규명을-위한-특별검사-수사요구안.md (795 chars)
+  📄 Written wiki/bills/의안-2210147.md (1191 chars)
+  📄 Written wiki/bills/의안-2210466.md (788 chars)
+  📄 Written wiki/members/이성윤.md (1049 chars)
+  📄 Written wiki/cases/김건희-주가조작-및-가족-비위-의혹.md (3983 chars)
+  📄 Written wiki/cases/비상계엄-선포-및-내란-행위-진상규명-의혹.md (2792 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 6.4s + generate 55.2s)
+  ⏳ [████████░░░░░░░░░░░░░░░░░░░░░░] 42/154 (27.3%) | elapsed: 17m56s | ETA: 47m49s | avg: 25.6s/article
+==================================================
+  Batch 22/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2210480 조희대 대법원장 등에 의한 사법 남, 의안 2211806 감사원의 감사권 오남용 관련 진상규]
+  🔍 Selected 1 pages: ['법제사법위원회'] (4.3s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2210480-조희대-대법원장-등에-의한-사법-남용의-진상규명을-위한-특별검사-임명-등에-관한-법률안.md (961 chars)
+  📄 Written wiki/sources/digests/의안-2211806-감사원의-감사권-오남용-관련-진상규명을-위한-특별검사의-수사요구안.md (727 chars)
+  📄 Written wiki/bills/의안-2210480.md (1068 chars)
+  📄 Written wiki/cases/조희대-대법원장-등-사법권-남용-의혹.md (820 chars)
+  📄 Written wiki/bills/의안-2211806.md (732 chars)
+  📄 Written wiki/cases/감사원-감사권-오남용-의혹.md (614 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 4.3s + generate 28.7s)
+  ⏳ [████████░░░░░░░░░░░░░░░░░░░░░░] 44/154 (28.6%) | elapsed: 18m29s | ETA: 46m13s | avg: 25.2s/article
+==================================================
+  Batch 23/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2212044 이춘석 등 국정기획위원의 차명계좌를, 의안 2212100 김충식 관련 의혹 진상규명을 위한 ]
+  🔍 Selected 5 pages: ['법제사법위원회', '의안-2210136', '의안-2208058', '김건희-주가조작-및-가족-비위-의혹', '인천세관-마약-수사외압-의혹-사건'] (5.5s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2212044-이춘석-등-국정기획위원의-차명계좌를-통한-미공개-정보-이용-등-불공정거래-행위의-진상규명.md (928 chars)
+  📄 Written wiki/sources/digests/의안-2212100-김충식-관련-의혹-진상규명을-위한-특별검사-임명-등에-관한-법률안.md (1015 chars)
+  📄 Written wiki/bills/의안-2212044.md (892 chars)
+  📄 Written wiki/bills/의안-2212100.md (872 chars)
+  📄 Written wiki/cases/국정기획위원-차명계좌-불공정거래-의혹.md (741 chars)
+  📄 Written wiki/cases/김충식-관련-권력형-비리-의혹.md (893 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 5.5s + generate 29.8s)
+  ⏳ [████████░░░░░░░░░░░░░░░░░░░░░░] 46/154 (29.9%) | elapsed: 19m04s | ETA: 44m47s | avg: 24.9s/article
+==================================================
+  Batch 24/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2212184 윤석열 전 대통령 등에 의한 내란·, 의안 2212199 김건희와 명태균·건진법사 관련 국정]
+  🔍 Selected 7 pages: ['의안-2210129', '의안-2210136', '이성윤', '법제사법위원회', '비상계엄-선포-및-내란-행위-진상규명-의혹']... (4.9s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2212184-윤석열-전-대통령-등에-의한-내란·외환-행위의-진상규명을-위한-특별검사-임명-등에-관한.md (1086 chars)
+  📄 Written wiki/sources/digests/의안-2212199-김건희와-명태균·건진법사-관련-국정농단-및-불법-선거-개입-사건-등-진상규명을-위한-특별.md (1058 chars)
+  📄 Written wiki/bills/의안-2212184.md (959 chars)
+  📄 Written wiki/bills/의안-2212199.md (1060 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 4 files for 2 articles (select 4.9s + generate 24.2s)
+  ⏳ [█████████░░░░░░░░░░░░░░░░░░░░░] 48/154 (31.2%) | elapsed: 19m34s | ETA: 43m12s | avg: 24.5s/article
+==================================================
+  Batch 25/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2212280 김건희와 명태균·건진법사 관련 국정, 의안 2212281 윤석열 전 대통령 등에 의한 내란·]
+  🔍 Selected 8 pages: ['의안-2212199', '의안-2212184', '의안-2210136', '의안-2210129', '법제사법위원회']... (5.7s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2212280-김건희와-명태균·건진법사-관련-국정농단-및-불법-선거-개입-사건-등-진상규명을-위한-특별.md (1068 chars)
+  📄 Written wiki/sources/digests/의안-2212281-윤석열-전-대통령-등에-의한-내란·외환-행위의-진상규명을-위한-특별검사-임명-등에-관한.md (1112 chars)
+  📄 Written wiki/bills/의안-2212280.md (1137 chars)
+  📄 Written wiki/bills/의안-2212281.md (1095 chars)
+  📄 Written wiki/committees/법제사법위원회.md (7233 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 5.7s + generate 64.1s)
+  ⏳ [█████████░░░░░░░░░░░░░░░░░░░░░] 50/154 (32.5%) | elapsed: 20m44s | ETA: 43m07s | avg: 24.9s/article
+==================================================
+  Batch 26/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2212283 김건희와 명태균·건진법사 관련 국정, 의안 2212366 윤석열 전 대통령 등에 의한 내란·]
+  🔍 Selected 10 pages: ['의안-2212280', '의안-2212199', '의안-2212281', '의안-2212184', '의안-2210136']... (5.8s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2212283-김건희와-명태균·건진법사-관련-국정농단-및-불법-선거-개입-사건-등-진상규명을-위한-특별.md (1107 chars)
+  📄 Written wiki/sources/digests/의안-2212366-윤석열-전-대통령-등에-의한-내란·외환-행위의-진상규명을-위한-특별검사-임명-등에-관한.md (1187 chars)
+  📄 Written wiki/bills/의안-2210136.md (1538 chars)
+  📄 Written wiki/bills/의안-2210129.md (1629 chars)
+  📄 Written wiki/committees/법제사법위원회.md (7851 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 5.8s + generate 75.7s)
+  ⏳ [██████████░░░░░░░░░░░░░░░░░░░░] 52/154 (33.8%) | elapsed: 22m05s | ETA: 43m20s | avg: 25.5s/article
+  🔧 Quick fix: broken_links=4
+
+==================================================
+  Batch 27/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2212367 순직 해병 수사 방해 및 사건 은폐, 의안 2212368 김건희와 명태균·건진법사 관련 국정]
+  🔍 Selected 6 pages: ['의안-2210136', '의안-2208594', '의안-2212280', '법제사법위원회', '김건희-주가조작-및-가족-비위-의혹']... (6.3s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2212367-순직-해병-수사-방해-및-사건-은폐-등의-진상규명을-위한-특별검사의-임명-등에-관한-법률.md (1054 chars)
+  📄 Written wiki/sources/digests/의안-2212368-김건희와-명태균·건진법사-관련-국정농단-및-불법-선거-개입-사건-등-진상규명을-위한-특별.md (1093 chars)
+  📄 Written wiki/bills/의안-2212367.md (975 chars)
+  📄 Written wiki/bills/의안-2212368.md (1009 chars)
+  📄 Written wiki/bills/의안-2210136.md (1815 chars)
+  📄 Written wiki/cases/순직-해병-수사-방해-및-사건-은폐-의혹.md (2841 chars)
+  📄 Written wiki/cases/김건희-주가조작-및-가족-비위-의혹.md (4116 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 6.3s + generate 77.0s)
+  ⏳ [██████████░░░░░░░░░░░░░░░░░░░░] 54/154 (35.1%) | elapsed: 23m29s | ETA: 43m29s | avg: 26.1s/article
+==================================================
+  Batch 28/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2212371 순직 해병 수사 방해 및 사건 은폐, 의안 2212434 윤석열 전 대통령 등에 의한 내란·]
+  🔍 Selected 7 pages: ['의안-2212367', '의안-2212281', '의안-2208594', '의안-2210129', '순직-해병-수사-방해-및-사건-은폐-의혹']... (4.9s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2212371-순직-해병-수사-방해-및-사건-은폐-등의-진상규명을-위한-특별검사의-임명-등에-관한-법률.md (1123 chars)
+  📄 Written wiki/sources/digests/의안-2212434-윤석열-전-대통령-등에-의한-내란·외환-행위의-진상규명을-위한-특별검사-임명-등에-관한.md (857 chars)
+  📄 Written wiki/bills/의안-2212371.md (1079 chars)
+  📄 Written wiki/bills/의안-2212434.md (818 chars)
+  📄 Written wiki/bills/의안-2210129.md (1792 chars)
+  📄 Written wiki/cases/순직-해병-수사-방해-및-사건-은폐-의혹.md (3232 chars)
+  📄 Written wiki/cases/비상계엄-선포-및-내란-행위-진상규명-의혹.md (2809 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 4.9s + generate 68.3s)
+  ⏳ [██████████░░░░░░░░░░░░░░░░░░░░] 56/154 (36.4%) | elapsed: 24m42s | ETA: 43m14s | avg: 26.5s/article
+==================================================
+  Batch 29/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2212522 김건희와 명태균·건진법사 관련 국정, 의안 2212604 윤석열 전 대통령 등에 의한 내란·]
+  🔍 Selected 8 pages: ['의안-2210136', '의안-2212368', '의안-2212280', '의안-2210129', '김건희-주가조작-및-가족-비위-의혹']... (5.5s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2212522-김건희와-명태균·건진법사-관련-국정농단-및-불법-선거-개입-사건-등-진상규명을-위한-특별.md (1020 chars)
+  📄 Written wiki/sources/digests/의안-2212604-윤석열-전-대통령-등에-의한-내란·외환-행위의-진상규명을-위한-특별검사-임명-등에-관한.md (746 chars)
+  📄 Written wiki/bills/의안-2212522.md (1096 chars)
+  📄 Written wiki/bills/의안-2212604.md (751 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 4 files for 2 articles (select 5.5s + generate 22.6s)
+  ⏳ [███████████░░░░░░░░░░░░░░░░░░░] 58/154 (37.7%) | elapsed: 25m10s | ETA: 41m40s | avg: 26.0s/article
+==================================================
+  Batch 30/77 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2212723 김건희와 명태균·건진법사 관련 국정, 의안 2212724 윤석열 전 대통령 등에 의한 내란·]
+  🔍 Selected 14 pages: ['의안-2212368', '의안-2212283', '의안-2212280', '의안-2212199', '의안-2212434']... (5.6s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2212723-김건희와-명태균·건진법사-관련-국정농단-및-불법-선거-개입-사건-등-진상규명을-위한-특별.md (1237 chars)
+  📄 Written wiki/sources/digests/의안-2212724-윤석열-전-대통령-등에-의한-내란·외환-행위의-진상규명을-위한-특별검사-임명-등에-관한.md (1307 chars)
+  📄 Written wiki/bills/의안-2212723.md (1189 chars)
+  📄 Written wiki/bills/의안-2212724.md (1238 chars)
+  📄 Written wiki/bills/의안-2210136.md (1935 chars)
+  📄 Written wiki/bills/의안-2210129.md (1910 chars)
+  📄 Written wiki/committees/법제사법위원회.md (7244 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 5.6s + generate 72.1s)
+  ⏳ [███████████░░░░░░░░░░░░░░░░░░░] 60/154 (39.0%) | elapsed: 26m28s | ETA: 41m28s | avg: 26.5s/article
+  🔧 Quick fix: related_source_text=1
+
+──────────────────────────────────────────────────
+  🔄 Periodic LLM maintenance (every 30 articles)
+──────────────────────────────────────────────────
+
+  🤖 LLM Fix (Structural): Incomplete digests...
+  🤖 LLM Fix (Structural): Missing summaries...
+  🤖 LLM Fix (Structural): Missing sections...
+  🤖 LLM Fix (Structural): Broken links (create pages)...
+  🔗 Creating 3 missing pages for broken links...
+    ✅ Created bills/의안-2212366
+    📎 Injected Related Sources for 의안-2212366
+    ✅ Created meetings/제426회-국회-임시회-제1차-본회의
+    📎 Injected Related Sources for 제426회-국회-임시회-제1차-본회의
+    ✅ Created bills/의안-2212283
+    📎 Injected Related Sources for 의안-2212283
+  📔 Marked 3 broken_link sample(s) as fixed
+  🤖 LLM Fix (Structural): Empty Related Pages...
+  ✅ No empty Related Pages found.
+  🤖 Structural LLM fixed 3 issues (pages_created=3)
+  🔬 Content-level LLM fix (every 60 articles)...
+
+  🤖 LLM Fix (Content): Source grounding verification (Unsupported Facts)...
+    ✂️ Removed 6 unsupported facts from 30 sampled pages
+  🤖 LLM Fix (Content): Cross-page contradiction detection...
+
+[중단] 사용자 요청으로 여기서 멈췄다 (60/154). 아래는 같은 명령을 다시 실행해 ingest 캐시로 처리한 60개를 건너뛰고 이어서 끝낸 로그다.
+
+.venv/bin/llm-wiki build --corpus assembly_spc
+📋 Batch ingestion | Total: 94 | Batch size: 2 | Skipped: 60
+
+==================================================
+  Batch 1/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2212725 순직 해병 수사 방해 및 사건 은폐, 의안 2213077 특별검사의 임명 등에 관한 법률 일]
+  🔍 Selected 8 pages: ['의안-2212371', '의안-2212367', '의안-2203920', '의안-2208594', '순직-해병-수사-방해-및-사건-은폐-의혹']... (6.3s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2212725-순직-해병-수사-방해-및-사건-은폐-등의-진상규명을-위한-특별검사의-임명-등에-관한-법률.md (1305 chars)
+  📄 Written wiki/sources/digests/의안-2213077-특별검사의-임명-등에-관한-법률-일부개정법률안.md (954 chars)
+  📄 Written wiki/bills/의안-2212725.md (1189 chars)
+  📄 Written wiki/bills/의안-2213077.md (950 chars)
+  📄 Written wiki/bills/의안-2212367.md (1110 chars)
+  📄 Written wiki/bills/의안-2212371.md (1214 chars)
+  📄 Written wiki/committees/법제사법위원회.md (7691 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 6.3s + generate 71.1s)
+  ⏳ [░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 2/94 (2.1%) | elapsed: 1m17s | ETA: 59m26s | avg: 38.8s/article
+  🔧 Quick fix: related_source_text=1
+
+==================================================
+  Batch 2/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2213520 특별검사의 임명 등에 관한 법률 일, 의안 2213548 민중기 특검의 강압수사로 인한 양평]
+  🔍 Selected 4 pages: ['의안-2206299', '의안-2210087', '의안-2213077', '법제사법위원회'] (6.4s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2213520-특별검사의-임명-등에-관한-법률-일부개정법률안.md (857 chars)
+  📄 Written wiki/sources/digests/의안-2213548-민중기-특검의-강압수사로-인한-양평군-소속-공무원-사망-사건의-진상규명을-위한-특별검사.md (1139 chars)
+  📄 Written wiki/bills/의안-2213520.md (899 chars)
+  📄 Written wiki/bills/의안-2213548.md (1154 chars)
+  📄 Written wiki/cases/양평군-공무원-사망-및-민중기-특검-강압수사-의혹.md (859 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 6.4s + generate 27.3s)
+  ⏳ [█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 4/94 (4.3%) | elapsed: 1m51s | ETA: 41m48s | avg: 27.9s/article
+==================================================
+  Batch 3/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2213660 특별검사의 임명 등에 관한 법률 일, 의안 2215487 윤석열ㆍ김건희에 의한 내란ㆍ외환 및]
+  🔍 Selected 6 pages: ['의안-2213520', '의안-2210146', '의안-2210129', '이성윤', '법제사법위원회']... (5.1s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2213660-특별검사의-임명-등에-관한-법률-일부개정법률안.md (917 chars)
+  📄 Written wiki/sources/digests/의안-2215487-윤석열ㆍ김건희에-의한-내란ㆍ외환-및-국정농단-행위의-진상규명을-위한-특별검사-임명-등에.md (1206 chars)
+  📄 Written wiki/bills/의안-2213660.md (980 chars)
+  📄 Written wiki/bills/의안-2215487.md (1148 chars)
+  📄 Written wiki/votes/표결-560.md (600 chars)
+  📄 Written wiki/members/이성윤.md (1200 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 5.1s + generate 31.4s)
+  ⏳ [█░░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 6/94 (6.4%) | elapsed: 2m28s | ETA: 36m13s | avg: 24.7s/article
+  🔧 Quick fix: broken_links=1
+
+==================================================
+  Batch 4/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2215539 통일교와 정치권 인사간 불법 금품수, 의안 2215551 통일교(세계평화통일가정연합) 불법 ]
+  🔍 Selected 1 pages: ['법제사법위원회'] (5.1s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2215539-통일교와-정치권-인사간-불법-금품수수-및-유착의혹-진상규명을-위한-특별검사-임명-등에-관.md (1138 chars)
+  📄 Written wiki/sources/digests/의안-2215551-통일교(세계평화통일가정연합)-불법-정치자금-제공-사건-등-진상규명을-위한-특별검사-임명.md (1202 chars)
+  📄 Written wiki/bills/의안-2215539.md (1237 chars)
+  📄 Written wiki/bills/의안-2215551.md (1169 chars)
+  📄 Written wiki/cases/통일교-정치권-불법-금품수수-및-정교유착-의혹.md (1180 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 5.1s + generate 34.2s)
+  ⏳ [██░░░░░░░░░░░░░░░░░░░░░░░░░░░░] 8/94 (8.5%) | elapsed: 3m07s | ETA: 33m37s | avg: 23.5s/article
+==================================================
+  Batch 5/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2215647 통일교와 신천지의 정치권 유착 및 , 의안 2215890 김병기·강선우 국회의원의 공천 뇌물]
+  🔍 Selected 4 pages: ['의안-2215551', '의안-2215539', '통일교-정치권-불법-금품수수-및-정교유착-의혹', '법제사법위원회'] (4.5s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2215647-통일교와-신천지의-정치권-유착-및-비리-의혹-사건-등-진상규명을-위한-특별검사-임명-등에.md (1198 chars)
+  📄 Written wiki/sources/digests/의안-2215890-김병기·강선우-국회의원의-공천-뇌물-수수-의혹-사건-진상규명을-위한-특별검사-임명-등에.md (1149 chars)
+  📄 Written wiki/bills/의안-2215647.md (1071 chars)
+  📄 Written wiki/bills/의안-2215890.md (959 chars)
+  📄 Written wiki/cases/통일교-정치권-불법-금품수수-및-정교유착-의혹.md (1440 chars)
+  📄 Written wiki/cases/김병기·강선우-공천-금품수수-및-은폐-의혹.md (774 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 4.5s + generate 37.1s)
+  ⏳ [███░░░░░░░░░░░░░░░░░░░░░░░░░░░] 10/94 (10.6%) | elapsed: 3m49s | ETA: 32m07s | avg: 22.9s/article
+==================================================
+  Batch 6/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2217528 이재명 대통령 형사사건 공소취소 외, 의안 2217766 윤석열·김건희에 의한 내란·외환 및]
+  🔍 Selected 3 pages: ['의안-2215487', '의안-2212724', '법제사법위원회'] (6.6s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2217528-이재명-대통령-형사사건-공소취소-외압-및-거래-게이트-진상규명을-위한-특별검사-임명-등에.md (1000 chars)
+  📄 Written wiki/sources/digests/의안-2217766-윤석열·김건희에-의한-내란·외환-및-국정농단-행위의-진상규명을-위한-특별검사-임명-등에.md (1052 chars)
+  📄 Written wiki/bills/의안-2217528.md (1081 chars)
+  📄 Written wiki/cases/이재명-형사사건-공소취소-외압-및-거래-의혹.md (792 chars)
+  📄 Written wiki/bills/의안-2217766.md (942 chars)
+  📄 Written wiki/bills/의안-2215487.md (1488 chars)
+  📄 Written wiki/committees/법제사법위원회.md (8111 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 6.6s + generate 72.4s)
+  ⏳ [███░░░░░░░░░░░░░░░░░░░░░░░░░░░] 12/94 (12.8%) | elapsed: 5m08s | ETA: 35m08s | avg: 25.7s/article
+==================================================
+  Batch 7/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2218763 윤석열 정권 검찰청, 국가정보원, , 의안 2219844 윤석열·김건희에 의한 내란·외환 및]
+  🔍 Selected 7 pages: ['의안-2215487', '의안-2212724', '의안-2217766', '법제사법위원회', '감사원-감사권-오남용-의혹']... (6.7s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2218763-윤석열-정권-검찰청,-국가정보원,-감사원-등의-조작수사ㆍ조작기소-등-의혹의-진상규명을-위.md (1232 chars)
+  📄 Written wiki/sources/digests/의안-2219844-윤석열·김건희에-의한-내란·외환-및-국정농단-행위의-진상규명을-위한-특별검사-임명-등에.md (984 chars)
+  📄 Written wiki/bills/의안-2218763.md (1043 chars)
+  📄 Written wiki/bills/의안-2219844.md (910 chars)
+  📄 Written wiki/cases/검찰권-오남용-및-조작수사·조작기소-의혹.md (924 chars)
+  📄 Written wiki/bills/의안-2215487.md (1834 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 6.7s + generate 35.5s)
+  ⏳ [████░░░░░░░░░░░░░░░░░░░░░░░░░░] 14/94 (14.9%) | elapsed: 5m51s | ETA: 33m26s | avg: 25.1s/article
+==================================================
+  Batch 8/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2219995 윤석열·김건희에 의한 내란·외환 및, 의안 2221215 특별검사의 임명 등에 관한 법률 일]
+  🔍 Selected 4 pages: ['의안-2219844', '의안-2217766', '의안-2215487', '법제사법위원회'] (5.0s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2219995-윤석열·김건희에-의한-내란·외환-및-국정농단-행위의-진상규명을-위한-특별검사-임명-등에.md (1132 chars)
+  📄 Written wiki/sources/digests/의안-2221215-특별검사의-임명-등에-관한-법률-일부개정법률안.md (994 chars)
+  📄 Written wiki/bills/의안-2219995.md (1262 chars)
+  📄 Written wiki/bills/의안-2221215.md (972 chars)
+  📄 Written wiki/bills/의안-2219844.md (955 chars)
+  📄 Written wiki/bills/의안-2217766.md (987 chars)
+  📄 Written wiki/bills/의안-2215487.md (1968 chars)
+  📄 Written wiki/committees/법제사법위원회.md (8703 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 8 files for 2 articles (select 5.0s + generate 77.8s)
+  ⏳ [█████░░░░░░░░░░░░░░░░░░░░░░░░░] 16/94 (17.0%) | elapsed: 7m14s | ETA: 35m15s | avg: 27.1s/article
+  🔧 Quick fix: broken_links=2
+
+==================================================
+  Batch 9/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2221526 국회의원 한동훈의 김승원 법무부장관, 의안 2221883 이재명 대통령 일가의 황제 골프 특]
+  🔍 Selected 1 pages: ['법제사법위원회'] (5.4s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2221526-국회의원-한동훈의-김승원-법무부장관-후보자-관련-검찰-수사정보-유출·취득-및-이용-의혹.md (921 chars)
+  📄 Written wiki/sources/digests/의안-2221883-이재명-대통령-일가의-황제-골프-특혜-및-특수활동비-등-국가-예산의-사적-유용-의혹-진상.md (959 chars)
+  📄 Written wiki/bills/의안-2221526.md (948 chars)
+  📄 Written wiki/cases/한동훈-김승원-관련-검찰-수사정보-유출·취득-및-이용-의혹.md (864 chars)
+  📄 Written wiki/bills/의안-2221883.md (1018 chars)
+  📄 Written wiki/cases/이재명-대통령-일가-골프-특혜-및-국가-예산-사적-유용-의혹.md (934 chars)
+  📄 Written wiki/committees/법제사법위원회.md (9061 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 5.4s + generate 69.7s)
+  ⏳ [█████░░░░░░░░░░░░░░░░░░░░░░░░░] 18/94 (19.1%) | elapsed: 8m29s | ETA: 35m50s | avg: 28.3s/article
+==================================================
+  Batch 10/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [회의록 T52103 제22대국회 제415회 (임시회) , 회의록 T52103 제22대국회 제415회 (임시회) ]
+  🔍 Selected 5 pages: ['의안-2200038', '표결-1627', '순직-해병-수사-방해-및-사건-은폐-의혹', '박성준', '법제사법위원회'] (5.2s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/회의록-t52103-제22대국회-제415회-(임시회)-제5차-국회본회의-(12).md (1420 chars)
+  📄 Written wiki/sources/digests/회의록-t52103-제22대국회-제415회-(임시회)-제5차-국회본회의-(22).md (982 chars)
+  📄 Written wiki/meetings/제415회-국회-임시회-제5차-본회의.md (1228 chars)
+  📄 Written wiki/bills/의안-2200038.md (1565 chars)
+  📄 Written wiki/votes/표결-1627.md (928 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 5.2s + generate 32.9s)
+  ⏳ [██████░░░░░░░░░░░░░░░░░░░░░░░░] 20/94 (21.3%) | elapsed: 9m07s | ETA: 33m46s | avg: 27.4s/article
+  🔧 Quick fix: related_source_text=1
+
+==================================================
+  Batch 11/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [회의록 T52595 제22대국회 제418회 (정기회) , 회의록 T52599 제22대국회 제418회 (정기회) ]
+  🔍 Selected 10 pages: ['제418회-국회-정기회-제8차-본회의', '의안-2203925', '의안-2203920', '의안-2204739', '표결-1590']... (6.2s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/회의록-t52595-제22대국회-제418회-(정기회)-제8차-국회본회의.md (1044 chars)
+  📄 Written wiki/sources/digests/회의록-t52599-제22대국회-제418회-(정기회)-제12차-국회본회의-(12).md (938 chars)
+  📄 Written wiki/meetings/제418회-국회-정기회-제8차-본회의.md (1056 chars)
+  📄 Written wiki/meetings/제418회-국회-정기회-제12차-본회의.md (867 chars)
+  📄 Written wiki/votes/표결-1488.md (777 chars)
+  📄 Written wiki/bills/의안-2204739.md (1327 chars)
+  📄 Written wiki/votes/표결-1590.md (791 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 6.2s + generate 33.8s)
+  ⏳ [███████░░░░░░░░░░░░░░░░░░░░░░░] 22/94 (23.4%) | elapsed: 9m47s | ETA: 32m04s | avg: 26.7s/article
+  🔧 Quick fix: broken_links=1
+
+==================================================
+  Batch 12/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [회의록 T52599 제22대국회 제418회 (정기회) , 회의록 T52600 제22대국회 제418회 (정기회) ]
+  🔍 Selected 6 pages: ['제418회-국회-정기회-제12차-본회의', '제418회-국회-정기회-제13차-본회의', '의안-2204595', '박성준', '표결-1451']... (2.9s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/회의록-t52599-제22대국회-제418회-(정기회)-제12차-국회본회의-(22).md (684 chars)
+  📄 Written wiki/sources/digests/회의록-t52600-제22대국회-제418회-(정기회)-제13차-국회본회의.md (909 chars)
+  📄 Written wiki/meetings/제418회-국회-정기회-제12차-본회의.md (1055 chars)
+  📄 Written wiki/meetings/제418회-국회-정기회-제13차-본회의.md (852 chars)
+  📄 Written wiki/votes/표결-1451.md (706 chars)
+  📄 Written wiki/bills/의안-2204595.md (1262 chars)
+  📄 Written wiki/committees/국회운영위원회.md (843 chars)
+  📄 Written wiki/members/박성준.md (1031 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 8 files for 2 articles (select 2.9s + generate 36.1s)
+  ⏳ [███████░░░░░░░░░░░░░░░░░░░░░░░] 24/94 (25.5%) | elapsed: 10m27s | ETA: 30m29s | avg: 26.1s/article
+==================================================
+  Batch 13/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [회의록 T52605 제22대국회 제418회 (정기회) , 회의록 T52620 제22대국회 제419회 (임시회) ]
+  🔍 Selected 8 pages: ['의안-2206226', '의안-2206291', '의안-2206292', '표결-1366', '표결-1345']... (2.9s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/회의록-t52605-제22대국회-제418회-(정기회)-제18차-국회본회의.md (1035 chars)
+  📄 Written wiki/sources/digests/회의록-t52620-제22대국회-제419회-(임시회)-제1차-국회본회의.md (1095 chars)
+  📄 Written wiki/meetings/제418회-국회-정기회-제18차-본회의.md (972 chars)
+  📄 Written wiki/meetings/제419회-국회-임시회-제1차-본회의.md (832 chars)
+  📄 Written wiki/bills/의안-2206226.md (1297 chars)
+  📄 Written wiki/bills/의안-2206291.md (1398 chars)
+  📄 Written wiki/bills/의안-2206292.md (1255 chars)
+  📄 Written wiki/votes/표결-1366.md (757 chars)
+  📄 Written wiki/votes/표결-1345.md (815 chars)
+  📄 Written wiki/votes/표결-1346.md (820 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 10 files for 2 articles (select 2.9s + generate 46.5s)
+  ⏳ [████████░░░░░░░░░░░░░░░░░░░░░░] 26/94 (27.7%) | elapsed: 11m16s | ETA: 29m30s | avg: 26.0s/article
+==================================================
+  Batch 14/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [회의록 T52694 제22대국회 제421회 (임시회) , 회의록 T52762 제22대국회 제422회 (임시회) ]
+  🔍 Selected 8 pages: ['의안-2207381', '의안-2208057', '표결-1217', '표결-1158', '비상계엄-선포-및-내란-행위-진상규명-의혹']... (4.9s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/회의록-t52694-제22대국회-제421회-(임시회)-제1차-국회본회의.md (1038 chars)
+  📄 Written wiki/sources/digests/회의록-t52762-제22대국회-제422회-(임시회)-제7차-국회본회의.md (863 chars)
+  📄 Written wiki/bills/의안-2207381.md (1475 chars)
+  📄 Written wiki/bills/의안-2208057.md (1415 chars)
+  📄 Written wiki/votes/표결-1217.md (887 chars)
+  📄 Written wiki/votes/표결-1158.md (861 chars)
+  📄 Written wiki/meetings/제421회-국회-임시회-제1차-본회의.md (844 chars)
+  📄 Written wiki/meetings/제422회-국회-임시회-제7차-본회의.md (816 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 8 files for 2 articles (select 4.9s + generate 40.0s)
+  ⏳ [████████░░░░░░░░░░░░░░░░░░░░░░] 28/94 (29.8%) | elapsed: 12m01s | ETA: 28m21s | avg: 25.8s/article
+==================================================
+  Batch 15/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [회의록 T54436 제22대국회 제423회 (임시회) , 회의록 T54810 제22대국회 제426회 (임시회) ]
+  ⚠️ LLM selected 16 pages, truncating to 15
+  🔍 Selected 15 pages: ['제423회-국회-임시회-제2차-본회의', '제426회-국회-임시회-제1차-본회의', '표결-1050', '표결-1051', '표결-955']... (2.9s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/회의록-t54436-제22대국회-제423회-(임시회)-제2차-국회본회의.md (982 chars)
+  📄 Written wiki/sources/digests/회의록-t54810-제22대국회-제426회-(임시회)-제1차-국회본회의.md (959 chars)
+  📄 Written wiki/meetings/제426회-국회-임시회-제1차-본회의.md (1459 chars)
+  📄 Written wiki/bills/의안-2208356.md (1017 chars)
+  📄 Written wiki/bills/의안-2208058.md (1095 chars)
+  📄 Written wiki/bills/의안-2210129.md (2028 chars)
+  📄 Written wiki/bills/의안-2208594.md (1395 chars)
+  📄 Written wiki/bills/의안-2210136.md (2075 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 8 files for 2 articles (select 2.9s + generate 51.9s)
+  ⏳ [█████████░░░░░░░░░░░░░░░░░░░░░] 30/94 (31.9%) | elapsed: 12m56s | ETA: 27m37s | avg: 25.9s/article
+  🔧 Quick fix: broken_links=1
+
+──────────────────────────────────────────────────
+  🔄 Periodic LLM maintenance (every 30 articles)
+──────────────────────────────────────────────────
+
+  🤖 LLM Fix (Structural): Incomplete digests...
+  🤖 LLM Fix (Structural): Missing summaries...
+  🤖 LLM Fix (Structural): Missing sections...
+  🤖 LLM Fix (Structural): Broken links (create pages)...
+  🔗 Creating 5 missing pages for broken links...
+    ✅ Created members/김동아
+    📎 Injected Related Sources for 김동아
+    ✅ Created votes/표결-1588
+    📎 Injected Related Sources for 표결-1588
+    ✅ Created meetings/제423회-국회-임시회-제2차-본회의
+    📎 Injected Related Sources for 제423회-국회-임시회-제2차-본회의
+    ✅ Created meetings/제431회-국회-임시회-제1차-본회의
+    📎 Injected Related Sources for 제431회-국회-임시회-제1차-본회의
+    ✅ Created meetings/제439회-국회-정기회-제9차-본회의
+    📎 Injected Related Sources for 제439회-국회-정기회-제9차-본회의
+  📔 Marked 5 broken_link sample(s) as fixed
+  🤖 LLM Fix (Structural): Empty Related Pages...
+  ✅ No empty Related Pages found.
+  🤖 Structural LLM fixed 5 issues (pages_created=5)
+
+  📂 bills/: 「## Unsorted」48 entries, 5 existing sections
+    → Moved to existing: 45, new sections: 1 (3 entries)
+       Existing: 기타특검(+15), 내란특검(+13), 김건희특검(+8), 특검제도(+5), 해병특검(+4)
+       New: 통일교특검(3)
+    ✅ Updated bills/_index.md
+
+  📂 votes/: 「## Unsorted」9 entries, 2 existing sections
+    → Moved to existing: 6, new sections: 2 (3 entries)
+       Existing: 정국특검(+5), 해병특검(+1)
+       New: 특검제도(2), 내란특검(1)
+    ✅ Updated votes/_index.md
+
+  📂 members/: 「## Unsorted」4 entries, 0 existing sections
+    → Moved to existing: 0, new sections: 2 (4 entries)
+       New: 의원소개(2), 법안발의(2)
+    ✅ Updated members/_index.md
+
+  📂 committees/: 「## Unsorted」2 entries, 0 existing sections
+    ⏭️  Too few entries (2) and no existing sections, skip LLM
+
+  📂 cases/: 「## Unsorted」14 entries, 3 existing sections
+    → Moved to existing: 14, new sections: 0 (0 entries)
+       Existing: 수사논란(+8), 정치인비위(+6)
+    ✅ Updated cases/_index.md
+
+  📂 meetings/: 「## Unsorted」12 entries, 0 existing sections
+    → Moved to existing: 0, new sections: 3 (12 entries)
+       New: 특검안건(6), 정기회(3), 임시회(3)
+    ✅ Updated meetings/_index.md
+  📑 Relocated 87 entries from Unsorted
+  🔍 Checking for duplicate pages...
+    ✅ No duplicate pages found
+  🔍 Checking for alias overlaps...
+    ⚠️ Found 28 alias overlap pairs
+    🔧 Removed alias '내란·외환 특검법 개정안' from bills/의안-2219844
+    🔧 Removed alias '내란·외환 특검법 개정안' from bills/의안-2212604
+    🔧 Removed alias '내란·외환 특검법 개정안' from bills/의안-2212434
+    🔧 Removed alias '내란·외환 특검법 개정안' from bills/의안-2212184
+    🔧 Removed alias '특별검사 임명 등에 관한 법률 개정안' from bills/의안-2213660
+    🔧 Removed alias '특별검사 임명 등에 관한 법률 개정안' from bills/의안-2213520
+    🔧 Removed alias '순직 해병 특검법 개정안' from bills/의안-2212367
+    🔧 Removed alias '내란·외환 특검법 개정안' from bills/의안-2217766
+    🔧 Removed alias '내란·외환 특별검사법 일부개정안' from bills/의안-2212184
+    🔧 Removed alias '순직 해병 특검법' from bills/의안-2203576
+    🔧 Removed alias '특별검사의 임명 등에 관한 법률 일부개정법률안' from bills/의안-2221215
+    🔧 Removed alias '김건희·명태균·건진법사 특검법 개정안' from bills/의안-2212522
+    🔧 Removed alias '김건희·명태균·건진법사 특검법 개정안' from bills/의안-2212199
+    🔧 Removed alias '내란·외환 특검법 개정 대안' from bills/의안-2212724
+    🔧 Removed alias '통일교 특검법안' from bills/의안-2215551
+    🔧 Removed alias '김건희 특별검사법안' from bills/의안-2206292
+    🔧 Removed alias '김건희 주가조작 특검법안' from bills/의안-2210147
+    ✅ Fixed 17 alias overlaps
+  ✅ Periodic maintenance complete
+
+==================================================
+  Batch 16/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [회의록 T55345 제22대국회 제429회 (정기회) , 회의록 T56171 제22대국회 제431회 (임시회) ]
+  🔍 Selected 11 pages: ['의안-2212723', '의안-2212724', '의안-2212725', '의안-2215487', '표결-560']... (2.9s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/회의록-t55345-제22대국회-제429회-(정기회)-제4차-국회본회의.md (1173 chars)
+  📄 Written wiki/sources/digests/회의록-t56171-제22대국회-제431회-(임시회)-제1차-국회본회의-(12).md (1257 chars)
+  📄 Written wiki/meetings/제429회-국회-정기회-제4차-본회의.md (1062 chars)
+  📄 Written wiki/meetings/제431회-국회-임시회-제1차-본회의.md (1284 chars)
+  📄 Written wiki/votes/표결-852.md (590 chars)
+  📄 Written wiki/votes/표결-853.md (598 chars)
+  📄 Written wiki/votes/표결-854.md (607 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 2.9s + generate 35.3s)
+  ⏳ [██████████░░░░░░░░░░░░░░░░░░░░] 32/94 (34.0%) | elapsed: 14m54s | ETA: 28m53s | avg: 28.0s/article
+==================================================
+  Batch 17/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [회의록 T56171 제22대국회 제431회 (임시회) , 회의록 T56470 제22대국회 제433회 (임시회) ]
+  🔍 Selected 4 pages: ['의안-2219995', '의안-2215890', '김병기·강선우-공천-금품수수-및-은폐-의혹', '제431회-국회-임시회-제1차-본회의'] (5.6s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/회의록-t56171-제22대국회-제431회-(임시회)-제1차-국회본회의-(22).md (999 chars)
+  📄 Written wiki/sources/digests/회의록-t56470-제22대국회-제433회-(임시회)-제3차-국회본회의-(12).md (1184 chars)
+  📄 Written wiki/bills/의안-2219995.md (1580 chars)
+  📄 Written wiki/meetings/제431회-국회-임시회-제1차-본회의.md (1866 chars)
+  📄 Written wiki/meetings/제433회-국회-임시회-제3차-본회의.md (1507 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 5.6s + generate 30.6s)
+  ⏳ [██████████░░░░░░░░░░░░░░░░░░░░] 34/94 (36.2%) | elapsed: 15m31s | ETA: 27m23s | avg: 27.4s/article
+==================================================
+  Batch 18/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [회의록 T56470 제22대국회 제433회 (임시회) , 국회의원 황운하]
+  🔍 Selected 7 pages: ['제433회-국회-임시회-제3차-본회의', '의안-2206172', '의안-2206262', '의안-2207381', '의안-2209631']... (5.4s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/회의록-t56470-제22대국회-제433회-(임시회)-제3차-국회본회의-(22).md (923 chars)
+  📄 Written wiki/sources/digests/국회의원-황운하.md (827 chars)
+  📄 Written wiki/meetings/제433회-국회-임시회-제3차-본회의.md (1875 chars)
+  📄 Written wiki/members/황운하.md (1028 chars)
+  📄 Written wiki/bills/의안-2206172.md (1028 chars)
+  📄 Written wiki/bills/의안-2206262.md (811 chars)
+  📄 Written wiki/bills/의안-2207381.md (1595 chars)
+  📄 Written wiki/bills/의안-2209631.md (887 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 8 files for 2 articles (select 5.4s + generate 40.7s)
+  ⏳ [███████████░░░░░░░░░░░░░░░░░░░] 36/94 (38.3%) | elapsed: 16m17s | ETA: 26m15s | avg: 27.2s/article
+  🔧 Quick fix: broken_links=2
+
+==================================================
+  Batch 19/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 박은정, 국회의원 전현희]
+  🔍 Selected 9 pages: ['박은정', '의안-2200005', '의안-2202162', '의안-2202260', '의안-2202476']... (4.7s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-박은정.md (899 chars)
+  📄 Written wiki/sources/digests/국회의원-전현희.md (844 chars)
+  📄 Written wiki/members/박은정.md (1226 chars)
+  📄 Written wiki/members/전현희.md (935 chars)
+  📄 Written wiki/bills/의안-2202476.md (1167 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 4.7s + generate 25.1s)
+  ⏳ [████████████░░░░░░░░░░░░░░░░░░] 38/94 (40.4%) | elapsed: 16m47s | ETA: 24m44s | avg: 26.5s/article
+==================================================
+  Batch 20/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 이재강, 국회의원 윤종오]
+  🔍 Selected 10 pages: ['이재강', '윤종오', '의안-2210480', '의안-2203576', '의안-2206172']... (3.3s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-이재강.md (765 chars)
+  📄 Written wiki/sources/digests/국회의원-윤종오.md (905 chars)
+  📄 Written wiki/members/이재강.md (716 chars)
+  📄 Written wiki/members/윤종오.md (831 chars)
+  📄 Written wiki/bills/의안-2210480.md (1163 chars)
+  📄 Written wiki/bills/의안-2203576.md (1235 chars)
+  📄 Written wiki/bills/의안-2206172.md (1080 chars)
+  📄 Written wiki/bills/의안-2208057.md (1553 chars)
+  📄 Written wiki/cases/검찰-특수활동비-오남용-및-자료폐기-정보은폐-의혹.md (944 chars)
+  📄 Written wiki/cases/명태균-관련-불법-선거개입-및-국정농단-의혹.md (932 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 10 files for 2 articles (select 3.3s + generate 40.8s)
+  ⏳ [████████████░░░░░░░░░░░░░░░░░░] 40/94 (42.6%) | elapsed: 17m32s | ETA: 23m40s | avg: 26.3s/article
+==================================================
+  Batch 21/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 송언석, 국회의원 김선민]
+  🔍 Selected 4 pages: ['의안-2213548', '의안-2215539', '의안-2217528', '의안-2211806'] (3.8s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-송언석.md (907 chars)
+  📄 Written wiki/sources/digests/국회의원-김선민.md (835 chars)
+  📄 Written wiki/members/송언석.md (996 chars)
+  📄 Written wiki/members/김선민.md (784 chars)
+  📄 Written wiki/bills/의안-2213548.md (1232 chars)
+  📄 Written wiki/bills/의안-2215539.md (1319 chars)
+  📄 Written wiki/bills/의안-2217528.md (1159 chars)
+  📄 Written wiki/bills/의안-2211806.md (820 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 8 files for 2 articles (select 3.8s + generate 36.4s)
+  ⏳ [█████████████░░░░░░░░░░░░░░░░░] 42/94 (44.7%) | elapsed: 18m12s | ETA: 22m32s | avg: 26.0s/article
+==================================================
+  Batch 22/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 서왕진, 국회의원 강득구]
+  🔍 Selected 3 pages: ['의안-2215551', '의안-2217766', '통일교-정치권-불법-금품수수-및-정교유착-의혹'] (3.9s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-서왕진.md (759 chars)
+  📄 Written wiki/sources/digests/국회의원-강득구.md (759 chars)
+  📄 Written wiki/members/서왕진.md (822 chars)
+  📄 Written wiki/members/강득구.md (731 chars)
+  📄 Written wiki/bills/의안-2215551.md (1220 chars)
+  📄 Written wiki/bills/의안-2217766.md (1033 chars)
+  📄 Written wiki/cases/통일교-정치권-불법-금품수수-및-정교유착-의혹.md (1508 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 3.9s + generate 32.1s)
+  ⏳ [██████████████░░░░░░░░░░░░░░░░] 44/94 (46.8%) | elapsed: 18m48s | ETA: 21m22s | avg: 25.7s/article
+==================================================
+  Batch 23/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 김병기, 국회의원 천준호]
+  🔍 Selected 5 pages: ['의안-2215647', '의안-2218763', '통일교-정치권-불법-금품수수-및-정교유착-의혹', '검찰권-오남용-및-조작수사·조작기소-의혹', '국회운영위원회'] (5.0s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-김병기.md (807 chars)
+  📄 Written wiki/sources/digests/국회의원-천준호.md (760 chars)
+  📄 Written wiki/members/김병기.md (949 chars)
+  📄 Written wiki/members/천준호.md (898 chars)
+  📄 Written wiki/bills/의안-2215647.md (1176 chars)
+  📄 Written wiki/bills/의안-2218763.md (1148 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 5.0s + generate 27.3s)
+  ⏳ [██████████████░░░░░░░░░░░░░░░░] 46/94 (48.9%) | elapsed: 19m21s | ETA: 20m11s | avg: 25.2s/article
+==================================================
+  Batch 24/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 김승원, 국회의원 정혜경]
+  🔍 Selected 4 pages: ['의안-2203756', '의안-2219844', '의안-2210129', '의안-2210136'] (4.6s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-김승원.md (1131 chars)
+  📄 Written wiki/sources/digests/국회의원-정혜경.md (1083 chars)
+  📄 Written wiki/members/김승원.md (972 chars)
+  📄 Written wiki/members/정혜경.md (870 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 4 files for 2 articles (select 4.6s + generate 20.5s)
+  ⏳ [███████████████░░░░░░░░░░░░░░░] 48/94 (51.1%) | elapsed: 19m46s | ETA: 18m57s | avg: 24.7s/article
+==================================================
+  Batch 25/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 박찬대, 국회의원 최혁진]
+  🔍 Selected 6 pages: ['박찬대', '최혁진', '의안-2200038', '의안-2202651', '의안-2212100']... (3.4s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-박찬대.md (694 chars)
+  📄 Written wiki/sources/digests/국회의원-최혁진.md (721 chars)
+  📄 Written wiki/members/박찬대.md (676 chars)
+  📄 Written wiki/members/최혁진.md (651 chars)
+  📄 Written wiki/bills/의안-2200038.md (1644 chars)
+  📄 Written wiki/bills/의안-2202651.md (1171 chars)
+  📄 Written wiki/bills/의안-2212100.md (994 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 3.4s + generate 30.2s)
+  ⏳ [███████████████░░░░░░░░░░░░░░░] 50/94 (53.2%) | elapsed: 20m20s | ETA: 17m54s | avg: 24.4s/article
+==================================================
+  Batch 26/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 양부남, 국회의원 박준태]
+  🔍 Selected 3 pages: ['의안-2206299', '의안-2213520', '박준태'] (2.8s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-양부남.md (815 chars)
+  📄 Written wiki/sources/digests/국회의원-박준태.md (809 chars)
+  📄 Written wiki/members/양부남.md (817 chars)
+  📄 Written wiki/members/박준태.md (807 chars)
+  📄 Written wiki/bills/의안-2206299.md (1016 chars)
+  📄 Written wiki/bills/의안-2213520.md (943 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 2.8s + generate 25.4s)
+  ⏳ [████████████████░░░░░░░░░░░░░░] 52/94 (55.3%) | elapsed: 20m49s | ETA: 16m48s | avg: 24.0s/article
+==================================================
+  Batch 27/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 권성동, 국회의원 주진우]
+  🔍 Selected 5 pages: ['권성동', '주진우', '의안-2207608', '의안-2212044', '의안-2221883'] (3.0s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-권성동.md (829 chars)
+  📄 Written wiki/sources/digests/국회의원-주진우.md (962 chars)
+  📄 Written wiki/members/권성동.md (722 chars)
+  📄 Written wiki/members/주진우.md (782 chars)
+  📄 Written wiki/bills/의안-2207608.md (906 chars)
+  📄 Written wiki/bills/의안-2212044.md (964 chars)
+  📄 Written wiki/bills/의안-2221883.md (1128 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 3.0s + generate 27.8s)
+  ⏳ [█████████████████░░░░░░░░░░░░░] 54/94 (57.4%) | elapsed: 21m20s | ETA: 15m48s | avg: 23.7s/article
+==================================================
+  Batch 28/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 박성준, 국회의원 김형연]
+  🔍 Selected 7 pages: ['박성준', '의안-2203576', '의안-2204595', '의안-2221526', '국회운영위원회']... (4.6s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-박성준.md (1072 chars)
+  📄 Written wiki/sources/digests/국회의원-김형연.md (823 chars)
+  📄 Written wiki/members/박성준.md (1704 chars)
+  📄 Written wiki/bills/의안-2221526.md (1046 chars)
+  📄 Written wiki/members/김형연.md (807 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 4.6s + generate 26.1s)
+  ⏳ [█████████████████░░░░░░░░░░░░░] 56/94 (59.6%) | elapsed: 21m51s | ETA: 14m49s | avg: 23.4s/article
+==================================================
+  Batch 29/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 차규근, 국회의원 김동아]
+  🔍 Selected 3 pages: ['김동아', '의안-2221215', '의안-2202143'] (4.7s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-차규근.md (763 chars)
+  📄 Written wiki/sources/digests/국회의원-김동아.md (744 chars)
+  📄 Written wiki/members/차규근.md (772 chars)
+  📄 Written wiki/members/김동아.md (1070 chars)
+  📄 Written wiki/bills/의안-2221215.md (948 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 4.7s + generate 20.3s)
+  ⏳ [██████████████████░░░░░░░░░░░░] 58/94 (61.7%) | elapsed: 22m16s | ETA: 13m49s | avg: 23.0s/article
+==================================================
+  Batch 30/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 윤상현, 국회의원 이성윤]
+  🔍 Selected 10 pages: ['의안-2200092', '의안-2208972', '의안-2200049', '의안-2200078', '의안-2210146']... (4.2s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-윤상현.md (1010 chars)
+  📄 Written wiki/sources/digests/국회의원-이성윤.md (1119 chars)
+  📄 Written wiki/members/윤상현.md (1144 chars)
+  📄 Written wiki/members/이성윤.md (1751 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 4 files for 2 articles (select 4.2s + generate 26.0s)
+  ⏳ [███████████████████░░░░░░░░░░░] 60/94 (63.8%) | elapsed: 22m46s | ETA: 12m54s | avg: 22.8s/article
+──────────────────────────────────────────────────
+  🔄 Periodic LLM maintenance (every 30 articles)
+──────────────────────────────────────────────────
+
+  🤖 LLM Fix (Structural): Incomplete digests...
+  🤖 LLM Fix (Structural): Missing summaries...
+  🤖 LLM Fix (Structural): Missing sections...
+  🤖 LLM Fix (Structural): Broken links (create pages)...
+  🔗 Creating 2 missing pages for broken links...
+    ✅ Created parties/조국혁신당
+    📎 Injected Related Sources for 조국혁신당
+    ✅ Created committees/국토교통위원회
+    📎 Injected Related Sources for 국토교통위원회
+  📔 Marked 2 broken_link sample(s) as fixed
+  🤖 LLM Fix (Structural): Empty Related Pages...
+  ✅ No empty Related Pages found.
+  🤖 Structural LLM fixed 2 issues (pages_created=2)
+  🔬 Content-level LLM fix (every 60 articles)...
+
+  🤖 LLM Fix (Content): Source grounding verification (Unsupported Facts)...
+    ✂️ Removed 7 unsupported facts from 30 sampled pages
+  🤖 LLM Fix (Content): Cross-page contradiction detection...
+    🔄 Fixed 1 cross-page contradictions from 10 page pairs
+  🤖 Content LLM fixed 8 issues (unsupported_facts_removed=7, contradictions_fixed=1)
+
+  📂 votes/: 「## Unsorted」3 entries, 4 existing sections
+    → Moved to existing: 3, new sections: 0 (0 entries)
+       Existing: 정국특검(+1), 내란특검(+1), 해병특검(+1)
+    ✅ Updated votes/_index.md
+
+  📂 members/: 「## Unsorted」21 entries, 2 existing sections
+    → Moved to existing: 4, new sections: 1 (17 entries)
+       Existing: 의원소개(+3), 법안발의(+1)
+       New: 특검발의(17)
+    ✅ Updated members/_index.md
+
+  📂 parties/: 「## Unsorted」1 entries, 0 existing sections
+    ⏭️  Too few entries (1) and no existing sections, skip LLM
+
+  📂 committees/: 「## Unsorted」3 entries, 0 existing sections
+    ⏭️  Too few entries (3) and no existing sections, skip LLM
+
+  📂 meetings/: 「## Unsorted」2 entries, 3 existing sections
+    → Moved to existing: 2, new sections: 0 (0 entries)
+       Existing: 임시회(+1), 정기회(+1)
+    ✅ Updated meetings/_index.md
+  📑 Relocated 26 entries from Unsorted
+  🔍 Checking for duplicate pages...
+    ✅ No duplicate pages found
+  🔍 Checking for alias overlaps...
+    ✅ No alias overlaps found
+  ✅ Periodic maintenance complete
+
+==================================================
+  Batch 31/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 신장식, 국회의원 김용민]
+  🔍 Selected 15 pages: ['의안-2207409', '의안-2212522', '의안-2200459', '의안-2204739', '의안-2206226']... (4.7s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-신장식.md (752 chars)
+  📄 Written wiki/sources/digests/국회의원-김용민.md (954 chars)
+  📄 Written wiki/members/신장식.md (884 chars)
+  📄 Written wiki/members/김용민.md (1134 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 4 files for 2 articles (select 4.7s + generate 18.9s)
+  ⏳ [███████████████████░░░░░░░░░░░] 62/94 (66.0%) | elapsed: 27m48s | ETA: 14m21s | avg: 26.9s/article
+  🔧 Quick fix: broken_links=1, related_source_text=1
+
+==================================================
+  Batch 32/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 신동욱, 국회의원 안상훈]
+  🔍 Selected 2 pages: ['의안-2213077', '법제사법위원회'] (4.2s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-신동욱.md (854 chars)
+  📄 Written wiki/sources/digests/국회의원-안상훈.md (891 chars)
+  📄 Written wiki/members/신동욱.md (824 chars)
+  📄 Written wiki/members/안상훈.md (802 chars)
+  📄 Written wiki/bills/의안-2213077.md (1110 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 4.2s + generate 21.9s)
+  ⏳ [████████████████████░░░░░░░░░░] 64/94 (68.1%) | elapsed: 28m15s | ETA: 13m14s | avg: 26.5s/article
+  🔧 Quick fix: broken_links=2
+
+==================================================
+  Batch 33/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 곽규택, 국회의원 장경태]
+  🔍 Selected 14 pages: ['의안-2215890', '의안-2204851', '의안-2206172', '의안-2208356', '의안-2210466']... (6.2s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-곽규택.md (829 chars)
+  📄 Written wiki/sources/digests/국회의원-장경태.md (1272 chars)
+  📄 Written wiki/members/곽규택.md (787 chars)
+  📄 Written wiki/members/장경태.md (1419 chars)
+  📄 Written wiki/bills/의안-2215890.md (1078 chars)
+  📄 Written wiki/bills/의안-2204851.md (1006 chars)
+  📄 Written wiki/bills/의안-2206172.md (1178 chars)
+  📄 Written wiki/bills/의안-2208356.md (1131 chars)
+  📄 Written wiki/bills/의안-2210466.md (851 chars)
+  📄 Written wiki/bills/의안-2212366.md (950 chars)
+  📄 Written wiki/bills/의안-2212367.md (1202 chars)
+  📄 Written wiki/bills/의안-2212368.md (1116 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 12 files for 2 articles (select 6.2s + generate 57.2s)
+  ⏳ [█████████████████████░░░░░░░░░] 66/94 (70.2%) | elapsed: 29m18s | ETA: 12m26s | avg: 26.7s/article
+==================================================
+  Batch 34/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 노종면, 국회의원 주철현]
+  🔍 Selected 4 pages: ['노종면', '주철현', '의안-2210087', '의안-2200305'] (2.6s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-노종면.md (785 chars)
+  📄 Written wiki/sources/digests/국회의원-주철현.md (835 chars)
+  📄 Written wiki/members/노종면.md (810 chars)
+  📄 Written wiki/members/주철현.md (902 chars)
+  📄 Written wiki/bills/의안-2210087.md (1082 chars)
+  📄 Written wiki/bills/의안-2200305.md (949 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 2.6s + generate 27.0s)
+  ⏳ [█████████████████████░░░░░░░░░] 68/94 (72.3%) | elapsed: 29m48s | ETA: 11m23s | avg: 26.3s/article
+==================================================
+  Batch 35/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 전용기, 국회의원 서영교]
+  🔍 Selected 8 pages: ['의안-2212371', '의안-2212280', '의안-2210136', '순직-해병-수사-방해-및-사건-은폐-의혹', '명태균-관련-불법-선거개입-및-국정농단-의혹']... (7.1s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-전용기.md (787 chars)
+  📄 Written wiki/sources/digests/국회의원-서영교.md (926 chars)
+  📄 Written wiki/members/전용기.md (937 chars)
+  📄 Written wiki/members/서영교.md (1031 chars)
+  📄 Written wiki/bills/의안-2212280.md (1208 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 7.1s + generate 25.6s)
+  ⏳ [██████████████████████░░░░░░░░] 70/94 (74.5%) | elapsed: 30m21s | ETA: 10m24s | avg: 26.0s/article
+==================================================
+  Batch 36/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 민형배, 국회의원 정춘생]
+  🔍 Selected 7 pages: ['의안-2202892', '의안-2203576', '의안-2208057', '의안-2208594', '의안-2210129']... (5.8s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-민형배.md (693 chars)
+  📄 Written wiki/sources/digests/국회의원-정춘생.md (986 chars)
+  📄 Written wiki/members/민형배.md (729 chars)
+  📄 Written wiki/members/정춘생.md (1589 chars)
+  📄 Written wiki/bills/의안-2202892.md (1149 chars)
+  📄 Written wiki/bills/의안-2203576.md (1320 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 5.8s + generate 33.1s)
+  ⏳ [██████████████████████░░░░░░░░] 72/94 (76.6%) | elapsed: 31m01s | ETA: 9m28s | avg: 25.8s/article
+  🔧 Quick fix: broken_links=1
+
+==================================================
+  Batch 37/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [국회의원 천하람, 표결 1050 2025-03-20 윤석열 대통령 배우자]
+  🔍 Selected 5 pages: ['의안-2207381', '의안-2208594', '의안-2215539', '표결-1050', '제423회-국회-임시회-제2차-본회의'] (7.5s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/국회의원-천하람.md (825 chars)
+  📄 Written wiki/sources/digests/표결-1050-2025-03-20-윤석열-대통령-배우자-김건희의-주가조작-사건-등의-진상규명을-위한-특별검사.md (840 chars)
+  📄 Written wiki/members/천하람.md (952 chars)
+  📄 Written wiki/bills/의안-2207381.md (1667 chars)
+  📄 Written wiki/bills/의안-2208594.md (1467 chars)
+  📄 Written wiki/bills/의안-2215539.md (1399 chars)
+  📄 Written wiki/votes/표결-1050.md (979 chars)
+  📄 Written wiki/meetings/제423회-국회-임시회-제2차-본회의.md (1058 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 8 files for 2 articles (select 7.5s + generate 43.4s)
+  ⏳ [███████████████████████░░░░░░░] 74/94 (78.7%) | elapsed: 31m52s | ETA: 8m36s | avg: 25.8s/article
+  🔧 Quick fix: broken_links=1
+
+==================================================
+  Batch 38/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [표결 1051 2025-03-20 인천세관 마약 수사외, 표결 1158 2025-02-27 명태균과 관련한 불법]
+  🔍 Selected 15 pages: ['의안-2208058', '의안-2208057', '표결-1051', '표결-1158', '김용민']... (3.4s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/표결-1051-2025-03-20-인천세관-마약-수사외압-의혹-사건-등-진상규명을-위한-특별검사-수사요구안.md (923 chars)
+  📄 Written wiki/sources/digests/표결-1158-2025-02-27-명태균과-관련한-불법-선거개입-및-국정농단-사건-등의-진상규명을-위한-특별.md (899 chars)
+  📄 Written wiki/votes/표결-1051.md (989 chars)
+  📄 Written wiki/votes/표결-1158.md (1068 chars)
+  📄 Written wiki/meetings/제422회-국회-임시회-제7차-본회의.md (1027 chars)
+  📄 Written wiki/bills/의안-2208058.md (1370 chars)
+  📄 Written wiki/bills/의안-2208057.md (1827 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 3.4s + generate 40.1s)
+  ⏳ [████████████████████████░░░░░░] 76/94 (80.9%) | elapsed: 32m36s | ETA: 7m43s | avg: 25.7s/article
+==================================================
+  Batch 39/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [표결 1217 2025-01-17 윤석열 정부의 내란ㆍ, 표결 1345 2024-12-12 윤석열 대통령 배우자]
+  🔍 Selected 15 pages: ['표결-1217', '표결-1345', '의안-2207381', '의안-2206292', '박성준']... (4.6s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/표결-1217-2025-01-17-윤석열-정부의-내란ㆍ외환-행위의-진상규명을-위한-특별검사-임명-등에-관.md (1035 chars)
+  📄 Written wiki/sources/digests/표결-1345-2024-12-12-윤석열-대통령-배우자-김건희의-주가조작-사건-등의-진상규명을-위한-특별검사.md (1063 chars)
+  📄 Written wiki/votes/표결-1217.md (1167 chars)
+  📄 Written wiki/votes/표결-1345.md (1137 chars)
+  📄 Written wiki/bills/의안-2207381.md (1984 chars)
+  📄 Written wiki/bills/의안-2206292.md (1600 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 4.6s + generate 41.0s)
+  ⏳ [████████████████████████░░░░░░] 78/94 (83.0%) | elapsed: 33m22s | ETA: 6m50s | avg: 25.7s/article
+==================================================
+  Batch 40/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [표결 1346 2024-12-12 윤석열 정부의 위헌적, 표결 1366 2024-12-10 위헌적 비상계엄 선포]
+  🔍 Selected 14 pages: ['표결-1346', '표결-1366', '의안-2206291', '의안-2206226', '김용민']... (4.0s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/표결-1346-2024-12-12-윤석열-정부의-위헌적-비상계엄-선포를-통한-내란-행위의-진상규명을-위한-특.md (1051 chars)
+  📄 Written wiki/sources/digests/표결-1366-2024-12-10-위헌적-비상계엄-선포를-통한-내란-행위의-진상규명을-위한-특별검사의-수사요.md (1256 chars)
+  📄 Written wiki/votes/표결-1346.md (1132 chars)
+  📄 Written wiki/votes/표결-1366.md (1260 chars)
+  🔗 Fixed/added 3 digest article links
+  ✅ Batch done: wrote 4 files for 2 articles (select 4.0s + generate 25.4s)
+  ⏳ [█████████████████████████░░░░░] 80/94 (85.1%) | elapsed: 33m51s | ETA: 5m55s | avg: 25.4s/article
+==================================================
+  Batch 41/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [표결 1451 2024-11-28 특별검사후보추천위원회, 표결 1488 2024-11-14 윤석열 대통령 배우자]
+  🔍 Selected 8 pages: ['의안-2204595', '의안-2204739', '표결-1451', '표결-1488', '박성준']... (2.7s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/표결-1451-2024-11-28-특별검사후보추천위원회의-구성-및-운영-등에-관한-규칙-일부개정규칙안.md (984 chars)
+  📄 Written wiki/sources/digests/표결-1488-2024-11-14-윤석열-대통령-배우자-김건희의-주가조작-사건-등의-진상규명을-위한-특별검사.md (932 chars)
+  📄 Written wiki/votes/표결-1451.md (964 chars)
+  📄 Written wiki/votes/표결-1488.md (1015 chars)
+  📄 Written wiki/bills/의안-2204739.md (1429 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 2.7s + generate 27.3s)
+  ⏳ [██████████████████████████░░░░] 82/94 (87.2%) | elapsed: 34m22s | ETA: 5m01s | avg: 25.1s/article
+==================================================
+  Batch 42/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [표결 1588 2024-09-19 윤석열 대통령 배우자, 표결 1590 2024-09-19 순직 해병 수사 방해]
+  🔍 Selected 5 pages: ['표결-1588', '표결-1590', '의안-2203925', '의안-2203920', '제418회-국회-정기회-제8차-본회의'] (4.3s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/표결-1588-2024-09-19-윤석열-대통령-배우자-김건희의-주가조작-사건-등의-진상규명을-위한-특별검사.md (966 chars)
+  📄 Written wiki/sources/digests/표결-1590-2024-09-19-순직-해병-수사-방해-및-사건-은폐-등의-진상규명을-위한-특별검사의-임명.md (974 chars)
+  📄 Written wiki/votes/표결-1588.md (1084 chars)
+  📄 Written wiki/votes/표결-1590.md (1185 chars)
+  📄 Written wiki/bills/의안-2203925.md (1757 chars)
+  📄 Written wiki/bills/의안-2203920.md (1432 chars)
+  📄 Written wiki/meetings/제418회-국회-정기회-제8차-본회의.md (1570 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 4.3s + generate 43.3s)
+  ⏳ [██████████████████████████░░░░] 84/94 (89.4%) | elapsed: 35m10s | ETA: 4m11s | avg: 25.1s/article
+==================================================
+  Batch 43/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [표결 1627 2024-07-04 순직 해병 수사 방해, 표결 27492 2026-07-21 윤석열·김건희에 의]
+  🔍 Selected 11 pages: ['표결-1627', '의안-2200038', '제415회-국회-임시회-제5차-본회의', '순직-해병-수사-방해-및-사건-은폐-의혹', '표결-27492']... (7.9s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/표결-1627-2024-07-04-순직-해병-수사-방해-및-사건-은폐-등의-진상규명을-위한-특별검사의-임명.md (906 chars)
+  📄 Written wiki/sources/digests/표결-27492-2026-07-21-윤석열·김건희에-의한-내란·외환-및-국정농단-행위의-진상규명을-위한-특별.md (928 chars)
+  📄 Written wiki/votes/표결-1627.md (1293 chars)
+  📄 Written wiki/votes/표결-27492.md (863 chars)
+  📄 Written wiki/bills/의안-2219995.md (1806 chars)
+  📄 Written wiki/meetings/제433회-국회-임시회-제3차-본회의.md (2030 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 7.9s + generate 37.5s)
+  ⏳ [███████████████████████████░░░] 86/94 (91.5%) | elapsed: 35m55s | ETA: 3m20s | avg: 25.1s/article
+==================================================
+  Batch 44/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [표결 560 2026-01-16 윤석열ㆍ김건희에 의한 , 표결 770069 2026-09-17 특별검사의 임명 ]
+  🔍 Selected 8 pages: ['표결-560', '의안-2215487', '제431회-국회-임시회-제1차-본회의', '천하람', '의안-2221215']... (6.4s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/표결-560-2026-01-16-윤석열ㆍ김건희에-의한-내란ㆍ외환-및-국정농단-행위의-진상규명을-위한-특별검사.md (927 chars)
+  📄 Written wiki/sources/digests/표결-770069-2026-09-17-특별검사의-임명-등에-관한-법률-일부개정법률안.md (897 chars)
+  📄 Written wiki/votes/표결-560.md (900 chars)
+  📄 Written wiki/votes/표결-770069.md (842 chars)
+  📄 Written wiki/bills/의안-2215487.md (2220 chars)
+  📄 Written wiki/bills/의안-2221215.md (1256 chars)
+  📄 Written wiki/meetings/제439회-국회-정기회-제9차-본회의.md (1187 chars)
+  📄 Written wiki/members/천하람.md (1126 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 8 files for 2 articles (select 6.4s + generate 46.1s)
+  ⏳ [████████████████████████████░░] 88/94 (93.6%) | elapsed: 36m48s | ETA: 2m30s | avg: 25.1s/article
+==================================================
+  Batch 45/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [표결 852 2025-09-11 순직 해병 수사 방해 , 표결 853 2025-09-11 윤석열 전 대통령 등에]
+  🔍 Selected 7 pages: ['표결-852', '표결-853', '의안-2212725', '의안-2212724', '제429회-국회-정기회-제4차-본회의']... (4.3s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/표결-852-2025-09-11-순직-해병-수사-방해-및-사건-은폐-등의-진상규명을-위한-특별검사의-임명-등.md (741 chars)
+  📄 Written wiki/sources/digests/표결-853-2025-09-11-윤석열-전-대통령-등에-의한-내란·외환-행위의-진상규명을-위한-특별검사-임명.md (839 chars)
+  📄 Written wiki/votes/표결-852.md (840 chars)
+  📄 Written wiki/votes/표결-853.md (922 chars)
+  📄 Written wiki/members/김용민.md (1331 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 5 files for 2 articles (select 4.3s + generate 24.8s)
+  ⏳ [████████████████████████████░░] 90/94 (95.7%) | elapsed: 37m18s | ETA: 1m39s | avg: 24.9s/article
+──────────────────────────────────────────────────
+  🔄 Periodic LLM maintenance (every 30 articles)
+──────────────────────────────────────────────────
+
+  🤖 LLM Fix (Structural): Incomplete digests...
+  🤖 LLM Fix (Structural): Missing summaries...
+  🤖 LLM Fix (Structural): Missing sections...
+  🤖 LLM Fix (Structural): Broken links (create pages)...
+  🔗 Creating 3 missing pages for broken links...
+    ✅ Created parties/더불어민주당
+    📎 Injected Related Sources for 더불어민주당
+    ✅ Created parties/국민의힘
+    📎 Injected Related Sources for 국민의힘
+    ✅ Created parties/개혁신당
+    📎 Injected Related Sources for 개혁신당
+  📔 Marked 3 broken_link sample(s) as fixed
+  🤖 LLM Fix (Structural): Empty Related Pages...
+  ✅ No empty Related Pages found.
+  🤖 Structural LLM fixed 3 issues (pages_created=3)
+
+  📂 votes/: 「## Unsorted」2 entries, 4 existing sections
+    → Moved to existing: 2, new sections: 0 (0 entries)
+       Existing: 특검제도(+2)
+    ✅ Updated votes/_index.md
+
+  📂 members/: 「## Unsorted」13 entries, 3 existing sections
+    → Moved to existing: 13, new sections: 0 (0 entries)
+       Existing: 특검발의(+10), 의원소개(+3)
+    ✅ Updated members/_index.md
+
+  📂 parties/: 「## Unsorted」4 entries, 0 existing sections
+    → Moved to existing: 0, new sections: 3 (4 entries)
+       New: 신생정당(2), 보수정당(1), 민주계정당(1)
+    ✅ Updated parties/_index.md
+
+  📂 committees/: 「## Unsorted」3 entries, 0 existing sections
+    ⏭️  Too few entries (3) and no existing sections, skip LLM
+  📑 Relocated 19 entries from Unsorted
+  🔍 Checking for duplicate pages...
+    ✅ No duplicate pages found
+  🔍 Checking for alias overlaps...
+    ⚠️ Found 1 alias overlap pairs
+    🔧 Removed alias '내란·외환 특별검사법 일부개정안' from bills/의안-2212366
+    ✅ Fixed 1 alias overlaps
+  ✅ Periodic maintenance complete
+
+==================================================
+  Batch 46/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [표결 854 2025-09-11 김건희와 명태균·건진법, 표결 955 2025-06-05 김건희와 명태균ㆍ건진법]
+  🔍 Selected 13 pages: ['표결-854', '표결-955', '의안-2212723', '의안-2210136', '제429회-국회-정기회-제4차-본회의']... (5.5s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/표결-854-2025-09-11-김건희와-명태균·건진법사-관련-국정농단-및-불법-선거-개입-사건-등-진상규명.md (899 chars)
+  📄 Written wiki/sources/digests/표결-955-2025-06-05-김건희와-명태균ㆍ건진법사-관련-국정농단-및-불법-선거-개입-사건-등-진상규명.md (931 chars)
+  📄 Written wiki/votes/표결-854.md (830 chars)
+  📄 Written wiki/votes/표결-955.md (832 chars)
+  📄 Written wiki/bills/의안-2210136.md (2354 chars)
+  📄 Written wiki/bills/의안-2212723.md (1419 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 5.5s + generate 40.3s)
+  ⏳ [█████████████████████████████░] 92/94 (97.9%) | elapsed: 38m50s | ETA: 50s | avg: 25.3s/article
+  🔧 Quick fix: related_source_text=2
+
+==================================================
+  Batch 47/47 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [표결 956 2025-06-05 윤석열 전 대통령 등에, 표결 957 2025-06-05 순직 해병 수사 방해 ]
+  🔍 Selected 10 pages: ['의안-2210129', '의안-2208594', '표결-957', '박성준', '김용민']... (5.6s)
+  📔 Error Book: injecting 1 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/표결-956-2025-06-05-윤석열-전-대통령-등에-의한-내란ㆍ외환-행위의-진상규명을-위한-특별검사-임명.md (988 chars)
+  📄 Written wiki/sources/digests/표결-957-2025-06-05-순직-해병-수사-방해-및-사건-은폐-등의-진상규명을-위한-특별검사의-임명-등.md (986 chars)
+  📄 Written wiki/votes/표결-956.md (934 chars)
+  📄 Written wiki/votes/표결-957.md (1055 chars)
+  📄 Written wiki/bills/의안-2210129.md (2277 chars)
+  📄 Written wiki/meetings/제426회-국회-임시회-제1차-본회의.md (2267 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 5.6s + generate 48.1s)
+  ⏳ [██████████████████████████████] 94/94 (100.0%) | elapsed: 39m45s | ETA: 0s | avg: 25.4s/article
+
+==================================================
+  🏁 Finalization (3-round code+LLM fix loop)
+==================================================
+
+  ────────────────────────────────────────
+  📋 Round 1: Code fix...
+  ────────────────────────────────────────
+    Found 1 issues
+      broken_links: 1
+
+  📋 Round 1: LLM fix...
+
+  🤖 LLM Fix (Structural): Incomplete digests...
+  🤖 LLM Fix (Structural): Missing summaries...
+  🤖 LLM Fix (Structural): Missing sections...
+  🤖 LLM Fix (Structural): Broken links (create pages)...
+  🤖 LLM Fix (Structural): Empty Related Pages...
+  ✅ No empty Related Pages found.
+  🤖 No structural LLM fixes needed
+
+  🤖 LLM Fix (Content): Source grounding verification (Unsupported Facts)...
+    ✂️ Removed 8 unsupported facts from 30 sampled pages
+  🤖 LLM Fix (Content): Cross-page contradiction detection...
+  🤖 Content LLM fixed 8 issues (unsupported_facts_removed=8)
+
+  📋 Merge duplicates...
+  🔍 Checking for duplicate pages...
+    ✅ No duplicate pages found
+
+  📋 Alias overlap detection...
+  🔍 Checking for alias overlaps...
+    ⚠️ Found 1 alias overlap pairs
+    🔧 Removed alias '내란·외환 특별검사법 표결' from votes/표결-956
+    ✅ Fixed 1 alias overlaps
+
+  ────────────────────────────────────────
+  📋 Round 2: Code fix...
+  ────────────────────────────────────────
+    Found 1 issues
+      broken_links: 1
+
+  📋 Round 2: LLM fix...
+
+  🤖 LLM Fix (Structural): Incomplete digests...
+  🤖 LLM Fix (Structural): Missing summaries...
+  🤖 LLM Fix (Structural): Missing sections...
+  🤖 LLM Fix (Structural): Broken links (create pages)...
+  🤖 LLM Fix (Structural): Empty Related Pages...
+  ✅ No empty Related Pages found.
+  🤖 No structural LLM fixes needed
+
+  🤖 LLM Fix (Content): Source grounding verification (Unsupported Facts)...
+    ✂️ Removed 4 unsupported facts from 30 sampled pages
+  🤖 LLM Fix (Content): Cross-page contradiction detection...
+    🔄 Fixed 1 cross-page contradictions from 10 page pairs
+  🤖 Content LLM fixed 5 issues (unsupported_facts_removed=4, contradictions_fixed=1)
+
+  ────────────────────────────────────────
+  📋 Round 3: Code fix...
+  ────────────────────────────────────────
+    Found 1 issues
+      broken_links: 1
+
+  📋 Round 3: LLM fix...
+
+  🤖 LLM Fix (Structural): Incomplete digests...
+  🤖 LLM Fix (Structural): Missing summaries...
+  🤖 LLM Fix (Structural): Missing sections...
+  🤖 LLM Fix (Structural): Broken links (create pages)...
+  🤖 LLM Fix (Structural): Empty Related Pages...
+  ✅ No empty Related Pages found.
+  🤖 No structural LLM fixes needed
+
+  🤖 LLM Fix (Content): Source grounding verification (Unsupported Facts)...
+    ✂️ Removed 7 unsupported facts from 30 sampled pages
+  🤖 LLM Fix (Content): Cross-page contradiction detection...
+    🔄 Fixed 1 cross-page contradictions from 10 page pairs
+  🤖 Content LLM fixed 8 issues (unsupported_facts_removed=7, contradictions_fixed=1)
+
+  📋 Directory structure audit...
+  📂 Directory audit skipped (max dir size: 78 pages, threshold: 100)
+    ℹ️ max dir 78 < 100 threshold
+
+  📋 Final Unsorted relocation (force)...
+
+  📂 votes/: 「## Unsorted」1 entries, 4 existing sections
+    → Moved to existing: 1, new sections: 0 (0 entries)
+       Existing: 내란특검(+1)
+    ✅ Updated votes/_index.md
+
+  📂 committees/: 「## Unsorted」3 entries, 0 existing sections
+    → Moved to existing: 0, new sections: 3 (3 entries)
+       New: 정책분야(1), 의회운영(1), 법률심사(1)
+    ✅ Updated committees/_index.md
+    📑 Force-relocated 4 entries from Unsorted
+
+  📋 Rebuild indexes...
+
+  📋 Final lint check...
+    ⚠️ 1 remaining issues:
+      broken_links: 1
+
+  📋 Error book summary...
+
+============================================================
+  📔 Error Book (1 active / 0 closed)
+============================================================
+
+  🔴 Active errors:
+    [E01] Broken links: wikilinks pointing to non-existent pages (auto-deleted, pending LLM fix to create missing pages)
+         17 sampled, 16 fixed, 1 remaining · clean checks 0/2
+         ✅ 의안-2210136 → [[bills/의안-2212283]]
+         ✅ 의안-2210129 → [[bills/의안-2212366]]
+         ✅ 황운하 → [[committees/국토교통위원회]]
+
+
+  🏁 Finalization complete | 179 knowledge pages
+
+==================================================
+✅ Batch ingestion complete: 94 success / 0 failed / 94 total
+  total: 52m33s | avg: 33.5s/article
+
+⏱  build took 3153s
+
+📚 Wiki: wiki_output/assembly_spc/wiki
+   knowledge pages: 179 (bills 78, votes 21, members 38, parties 4, committees 3, cases 21, meetings 14)
+   source digests : 154
+   error book     : 1 open / 0 closed
+.venv/bin/llm-wiki errorbook --corpus assembly_spc export
+📝 wiki_output/assembly_spc/wiki/error-book.md
+.venv/bin/llm-wiki snapshot --corpus assembly_spc --name built
+📸 Snapshot saved: .snapshots/assembly_spc/built

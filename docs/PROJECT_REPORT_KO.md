@@ -64,7 +64,7 @@
 | 운영 | 사전 구축 + 일부 라이브 (검색, 추가, Error Book) |
 | Error Book | 논문 설명대로 동작하게 수정하고, 수정점을 문서화 |
 | 언어 규칙 | 섹션 제목·frontmatter 키·디렉터리 이름은 영어(코드가 검사함), 나머지 내용은 한국어 |
-| 커밋 범위 | 코드 + 변환된 예제 문서만. raw 원본(2GB)과 완성 위키 md는 커밋하지 않음. Pages에는 정적 빌드만 `gh-pages` 브랜치로 |
+| 커밋 범위 | 코드 + 변환된 예제 문서만. raw 원본(2GB)과 완성 위키 md는 커밋하지 않음. Pages에는 정적 빌드만 `gh-pages` 브랜치로. (10-26 변경: 클론만으로 시연할 수 있게 시연 기준 위키 `built` 스냅샷을 커밋함) |
 | 작업 위치 | 내 fork(`origin`), 원본은 `upstream`. 작업 브랜치 `ko-demo` |
 
 ### 3-3. 계획 단계 (모두 완료)
@@ -164,7 +164,7 @@ make deploy-pages          # 정적 사이트를 gh-pages로 배포
 | 01:40~01:52 | 로컬 Quartz 확인, 시연 시간 문서화, 커밋 | 12분 |
 | 14:55~15:50 | push (`ko-demo`), fork `main` 병합, **GitHub Pages 배포** | 약 1시간 (Pages 대기 포함) |
 | 10-25 18:58~ | Quartz 그래프·탐색기 문제 수정 → 재배포, 이 문서 작성 | 약 1시간 |
-| 10-26 | 시연 가이드(`docs/DEMO_KO.md`) 작성, 문서를 `docs/`로 정리하고 한국어 README를 기본 README로 교체 | — |
+| 10-26 | 시연 가이드(`docs/DEMO_KO.md`) 작성, 문서를 `docs/`로 정리하고 한국어 README를 기본 README로 교체. 시연 기준 위키를 커밋해 클론만으로 시연할 수 있게 하고, 새 클론에서 가이드대로 끝까지 확인 | — |
 
 ---
 
@@ -247,7 +247,7 @@ make deploy-pages          # 정적 사이트를 gh-pages로 배포
 
 ## 9. Quartz · GitHub Pages
 
-- **배포 방식:** `scripts/deploy_pages.sh`가 Quartz로 정적 빌드한 뒤 `gh-pages` 고아 브랜치에 push하고 Pages를 켠다. 위키 md 원본은 main에 올리지 않는다.
+- **배포 방식:** `scripts/deploy_pages.sh`가 Quartz로 정적 빌드한 뒤 `gh-pages` 고아 브랜치에 push하고 Pages를 켠다. 사이트에는 정적 HTML만 올라간다.
 - **10-24 배포 후 문제 (10-25 수정):** 사이트에서 그래프가 비어 있고 왼쪽 탐색기가 동작하지 않았다.
   - **원인:** Quartz `v5.0.0` 태그의 그래프·탐색기·검색 플러그인(0.x)이 `/static/contentIndex.json`을 **도메인 루트 기준**으로 불러오고, 링크도 루트 기준으로 만들었다.
     - 사이트가 `hyeongrae-kim.github.io/LLM-Wiki/` 하위 경로에 있어서 데이터 요청이 404가 났다.
@@ -341,10 +341,12 @@ make deploy-pages          # 정적 사이트를 gh-pages로 배포
 | `llm_wiki_bench/`, `corpora/`, `scripts/`, `tests/`, `Makefile`, `pyproject.toml` | 코드 | ✅ |
 | `examples/assembly_spc/` | 변환된 예제 문서 154+5+9개, 질문 226개 | ✅ |
 | `README.md`, `docs/DEMO_KO.md`, `docs/CHANGES_KO.md`, `docs/PROJECT_REPORT_KO.md` | 문서 | ✅ |
-| `wiki_output/assembly_spc/` | v2 위키와 로그 (`build-v2-*.log`, `rehearsal-add*.log`) | ❌ |
+| `docs/logs/` | v2 구축 로그, 시연 리허설(추가) 로그 | ✅ |
+| `.snapshots/assembly_spc/built/` | 시연 기준본: v2 위키, 입력 문서 154개, ingest 캐시, purpose. 클론 후 `make demo-reset`으로 복원 | ✅ |
+| `wiki_output/assembly_spc/` | 작업 중인 v2 위키와 원본 로그 | ❌ |
 | `wiki_output/assembly_spc_v1/` | v1 위키 (비교용), `build-v1.log` | ❌ |
 | `results/` | 평가 결과 (문항별 trace, 읽은 페이지) | ❌ |
-| `.snapshots/assembly_spc/` | `built`(시연 기준본), `before-inject`, `full-v1`, `small-v1` | ❌ |
+| `.snapshots/assembly_spc/` 나머지 | `before-inject`, `full-v1`, `small-v1` | ❌ |
 | `raw/` | 원본 2GB | ❌ |
 | `.env` | API 키 | ❌ |
 | `gh-pages` 브랜치 | 정적 사이트 | ✅ (사이트만) |

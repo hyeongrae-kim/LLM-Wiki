@@ -1,7 +1,8 @@
 # 시연 가이드 — LLM-Wiki (22대 국회 특별검사법)
 
-이 문서 하나로 시연을 준비하고 진행할 수 있게 정리했다.
+이 레포를 `git clone`한 뒤 이 문서만 따라 하면 시연을 준비하고 진행할 수 있다. 처음이라면 [§3 준비](#3-준비-git-clone부터-시연-직전까지)부터 시작한다.
 - 명령은 모두 레포 루트에서 실행한다.
+- 시연 기준 위키가 레포에 들어 있어서 다시 구축할 필요가 없다. OpenAI API 키만 있으면 된다.
 - 예상 출력과 시간은 2026-10-24 리허설과 2026-10-26 재확인에서 실측한 값이다 (모델 gpt-6-luna).
 - 설치 방법은 [README.md](../README.md), 원본 코드 대비 수정 사항은 [CHANGES_KO.md](CHANGES_KO.md), 프로젝트 전체 경과와 비용은 [PROJECT_REPORT_KO.md](PROJECT_REPORT_KO.md)에 있다.
 
@@ -120,22 +121,35 @@
 
 ---
 
-## 3. 사전 준비
+## 3. 준비: git clone부터 시연 직전까지
 
-### 처음 한 번 (이미 완료됨)
+레포에는 시연 기준 위키가 `built` 스냅샷으로 들어 있다(`.snapshots/assembly_spc/built/`). 스냅샷에는 위키, 입력 문서 154개, ingest 캐시, purpose 파일이 함께 들어 있다. 그래서 다시 구축하지 않고 클론만으로 시연할 수 있다.
+
+### 3-1. 준비물
+
+| 항목 | 쓰는 곳 |
+|---|---|
+| git, make, Python 3.10 이상 | 전부 |
+| OpenAI API 키 (`gpt-6-luna`를 쓸 수 있는 키) | `ask`(에이전트 질의)와 데이터 추가. `search`, `lint`, Error Book 기록은 키 없이도 된다 |
+| Node 22 이상, npm 10.9.2 이상 | (선택) 로컬 Quartz 사이트 |
+| Obsidian | (선택) 위키 폴더를 그래프로 보기 |
+
+### 3-2. 클론과 설치 (처음 한 번, 1분 안팎)
 
 ```bash
-make setup                 # .venv 생성, .env 생성 (OPENAI_API_KEY 입력)
-make prepare PRESET=full   # 예제 문서 154개 → raw/assembly_spc/articles
-make build                 # 위키 구축(약 80분) 후 "built" 스냅샷 저장
+git clone https://github.com/hyeongrae-kim/LLM-Wiki.git
+cd LLM-Wiki
+make setup          # .venv 생성, 패키지 설치, .env 생성
 ```
 
-지금 레포는 이미 구축돼 있고 `built` 스냅샷도 있다. 다시 구축할 필요는 없다.
+- 편집기로 `.env`를 열어 `OPENAI_API_KEY=sk-replace-me`를 자기 키로 바꾼다.
+- 나머지 설정(모델 `gpt-6-luna`, `WIKI_LANG=ko` 등)은 이 위키를 만들 때와 같다. 그대로 둔다.
+- 시스템 `python3`가 3.10보다 낮으면 `make setup PY=python3.12`처럼 버전을 지정한다.
 
-### 시연 30분 전 점검
+### 3-3. 시연 기준본 복원
 
 ```bash
-make demo-reset   # 남아 있는 변경을 지우고 "built" 상태로 되돌린다
+make demo-reset     # built 스냅샷 → wiki_output/(위키), raw/(입력 문서), 캐시, purpose
 make status
 ```
 
@@ -147,22 +161,62 @@ make status
    error book     : 0 open / 1 closed
 ```
 
-- **API 확인:** `make ask`를 한 번 실행한다. 기본 질문의 답으로 **안철수**가 나오면 키와 네트워크가 정상이다.
-  - `ask`는 위키를 바꾸지 않는다. 점검 후 따로 복구할 필요가 없다.
-  - `.env`를 화면에 띄우지 않는다. 키가 노출된다.
+- `wiki_output/`과 `raw/`는 git에서 제외된 작업 폴더다. 시연하면서 위키가 바뀌어도 git 상태는 깨끗하게 남는다.
+- 시연을 시작하기 전과 끝난 뒤에 항상 `make demo-reset`을 실행한다.
 
-### 화면 배치
+### 3-4. 동작 확인 (시연 30분 전)
+
+```bash
+make search Q="순직 해병"   # LLM 없이 실행. 1위: cases/순직-해병-수사-방해-및-사건-은폐-의혹
+make ask                   # API 키 확인. 답: 안철수 (10초 안팎)
+```
+
+- `make ask`에서 답이 나오면 키와 네트워크가 정상이다.
+- `ask`는 위키를 바꾸지 않는다. 확인 후 따로 복구할 필요가 없다.
+- `.env`는 화면에 띄우지 않는다. 키가 노출된다.
+
+### 3-5. (선택) 로컬 사이트와 Obsidian
+
+```bash
+make site PORT=8090   # http://localhost:8090. 처음 실행할 때 Quartz를 .quartz/에 설치한다
+```
+
+- 기본 포트는 8080이다. 다른 프로그램이 쓰고 있으면 위처럼 다른 포트를 지정한다.
+- 설치 없이 보려면 배포 사이트 https://hyeongrae-kim.github.io/LLM-Wiki/ 를 쓴다. 내용은 `built` 상태와 같다.
+- **Obsidian:** "Open folder as vault"로 `wiki_output/assembly_spc/wiki`를 열고 그래프 뷰를 띄운다. 파일이 바뀌면 바로 반영된다.
+
+### 3-6. 화면 배치
 
 | 창 | 내용 |
 |---|---|
 | 터미널 ① | 명령 실행용. 글자를 크게 키운다 |
-| 터미널 ② | `tail -F wiki_output/assembly_spc/wiki/log.md`: 추가·lint·Error Book 이벤트가 실시간으로 쌓인다. 복구하면 파일이 새로 만들어지므로 `-f`가 아니라 `-F`를 쓴다 |
-| 터미널 ③ | `make site PORT=8090` → http://localhost:8090. 포트 8080은 다른 프로그램이 쓰고 있으니 그 프로그램을 끄지 않는다 |
-| 브라우저 | 배포 사이트 https://hyeongrae-kim.github.io/LLM-Wiki/ 또는 localhost:8090 |
-| Obsidian | `wiki_output/assembly_spc/wiki`를 vault로 열고 그래프 뷰를 띄워 둔다. 파일이 바뀌면 바로 반영된다 |
+| 터미널 ② | `tail -F wiki_output/assembly_spc/wiki/log.md`: 추가·lint·Error Book 이벤트가 실시간으로 쌓인다. 복원하면 파일이 새로 만들어지므로 `-f`가 아니라 `-F`를 쓴다 |
+| 터미널 ③ | (선택) `make site PORT=8090` |
+| 브라우저 | 배포 사이트 또는 localhost:8090 |
+| Obsidian | (선택) 위키 vault와 그래프 뷰 |
 
 - **브라우저 탭:** 홈(그래프), `bills/의안-2206292`, `members/김용민`, `error-book`을 미리 열어 둔다.
-- **두 사이트의 차이:** 배포 사이트는 `built` 상태로 고정돼 있다. 로컬 사이트(`make site`)는 시작할 때 위키를 한 번 복사한다. 그래서 추가 후의 변화는 **Obsidian**에서 보여주는 것이 가장 편하다.
+- **사이트별 반영 범위:** 배포 사이트는 `built` 상태로 고정돼 있다. 로컬 사이트(`make site`)는 시작할 때 위키를 한 번만 복사한다. 그래서 추가 후의 변화는 **Obsidian**에서 보여주는 것이 가장 편하다.
+
+### 3-7. (선택) 위키를 직접 다시 구축하기
+
+시연에는 필요 없다. 같은 과정을 처음부터 돌려 보고 싶을 때만 한다. 약 80분이 걸리고 API 비용은 약 $0.7이다.
+
+```bash
+make clean-wiki             # 작업 중인 위키, 복사된 입력 문서, 캐시를 지운다 (스냅샷은 남는다)
+make prepare PRESET=full    # 예제 문서 154개 → raw/assembly_spc/articles, purpose·page_types 배치
+make build                  # 구축이 끝나면 built 스냅샷을 새 위키로 덮어쓴다
+```
+
+- 빨리 해 보려면 `make quickstart`를 쓴다. 문서 27개로 약 20분 걸리고, 결과는 `small` 스냅샷으로 저장한다. 레포의 `built` 기준본은 건드리지 않는다.
+- LLM 출력은 매번 달라진다. 그래서 다시 구축한 위키로 시연하면 페이지 수나 결함을 심는 대상이 이 문서의 실측값과 다르게 나온다.
+- 덮어쓴 스냅샷은 git에서 변경으로 보인다. 레포의 기준본으로 돌아가려면 다음을 실행한다.
+  ```bash
+  git checkout -- .snapshots/assembly_spc/built
+  git clean -fdq .snapshots/assembly_spc/built
+  make demo-reset
+  ```
+- 구축 로그는 터미널에만 출력된다. 이 문서가 인용하는 로그는 [docs/logs/build-v2.log](logs/build-v2.log)에 있다.
 
 ---
 
@@ -186,11 +240,11 @@ make status
 ### 1. raw → 문서 (2분)
 
 ```bash
-ls raw/bills raw/votes raw/members raw/minutes
+ls examples/assembly_spc/articles | head   # 변환된 문서: bill-, vote-, member-, meeting-
 sed -n 1,45p examples/assembly_spc/articles/vote-1627.md
 ```
 
-- **원천 데이터:** CSV/JSON 테이블이다. 규모는 §1의 표와 같다.
+- **원천 데이터:** CSV/JSON 테이블이다. 규모는 §1의 표와 같다. 원본(약 2GB)은 레포에 없고, 변환된 문서만 `examples/`에 있다.
 - **변환:** 표결 문서 하나는 표결 1건에 대한 의원별 기록 150~290건을 정당별 집계와 명단으로 묶은 것이다. 표가 문서로 바뀐 모습을 보여준다.
 - **짚을 것:** 표결 문서의 `## 정당별 표결`과 `## 정당 내 소수 의견 투표자`(`- 안철수 (국민의힘): 찬성`). 이 줄이 3단계 질문의 정답 근거다.
 
@@ -199,9 +253,12 @@ sed -n 1,45p examples/assembly_spc/articles/vote-1627.md
 ```bash
 make status
 sed -n 1,40p wiki_output/assembly_spc/wiki/index.md
-grep -m4 "🔍 Selected\|📄 Written\|📔 Error Book: injecting" wiki_output/assembly_spc/build-v2-resume.log
+sed -n '/Batch 9\/77/,/Batch done/p' docs/logs/build-v2.log   # 구축 로그 중 배치 하나
 ```
 
+- **구축 로그:** `docs/logs/build-v2.log`는 이 위키를 만들 때 남긴 로그다.
+  - 처음 60개 문서를 처리하다 중단했고, 같은 명령으로 이어서 끝냈다.
+  - 배치 9에는 Step 1이 고른 기존 법안 페이지 7개, Error Book 제약 주입, Step 2가 쓴 파일 6개가 차례로 나온다.
 - **2단계 구축**
   - Step 1 `🔍 Selected N pages`: 새 문서와 관련된 기존 페이지를 고른다.
   - Step 2 `📄 Written …`: 고른 페이지를 새로 쓰거나 기존 내용과 병합한다.
@@ -358,6 +415,7 @@ make status       # 179 pages, error book 0 open / 1 closed 확인
 
 - 터미널 ②의 `tail -F`는 복원된 `log.md`를 자동으로 다시 따라간다.
 - 로컬 사이트를 계속 쓸 거라면 터미널 ③에서 `make site PORT=8090`을 다시 실행한다.
+- `git status`를 보면 변경이 없다. 시연은 git에서 제외된 `wiki_output/`과 `raw/`만 바꾼다.
 
 ---
 
@@ -379,12 +437,15 @@ make status       # 179 pages, error book 0 open / 1 closed 확인
 
 | 상황 | 대응 |
 |---|---|
-| `make demo-add` 중 API 오류가 나거나 멈춤 | Ctrl-C → `make demo-reset` → `make demo-errorbook` → `make demo-add` 순으로 다시 한다. 시간이 없으면 리허설 로그로 설명한다: `sed -n 1,110p wiki_output/assembly_spc/rehearsal-add2.log` |
-| 4xx 오류 (키·모델 문제) | 재시도하지 않고 즉시 원인 메시지를 내도록 고쳐 두었다. 메시지를 확인하고, `.env`의 키와 모델명은 화면 밖에서 확인한다 |
+| `make setup` 실패 | `python3 --version`이 3.10 이상인지 확인한다. 낮으면 `make setup PY=python3.12`처럼 지정한다 |
+| `❌ No snapshot at …/built` | 레포 루트에서 실행했는지 확인한다. `ls .snapshots/assembly_spc/built`에 `wiki/`가 보여야 한다 |
+| `make demo-add` 중 API 오류가 나거나 멈춤 | Ctrl-C → `make demo-reset` → `make demo-errorbook` → `make demo-add` 순으로 다시 한다. 시간이 없으면 리허설 로그로 설명한다: `sed -n 1,110p docs/logs/rehearsal-demo-add.log` |
+| 4xx 오류 (키·모델 문제) | 재시도하지 않고 즉시 원인 메시지를 낸다. `status=401`이면 키가 틀린 것이고, 모델 오류면 키가 `gpt-6-luna`를 쓸 수 있는지 확인한다. `.env`는 화면 밖에서 연다 |
 | `ask`가 틀리거나 느림 | `-v` trace로 어디서 빗나갔는지 설명한다. 그다음 같은 질문을 다시 하거나, `make search`로 근거 페이지를 보여준다 |
 | 심은 결함만 되돌리기 | `.venv/bin/llm-wiki restore --corpus assembly_spc --name before-inject` |
 | 처음 상태로 되돌리기 | `make demo-reset` |
-| 포트 8080 사용 중 | `make site PORT=8090`을 쓴다. 8080을 쓰는 프로그램은 끄지 않는다 |
+| 포트가 이미 사용 중 | `make site PORT=8090`처럼 다른 포트를 지정한다 |
+| `make site`에서 Node·npm 버전 오류 | Node 22 이상, npm 10.9.2 이상이 필요하다 (`npm install -g npm@latest`). 설치가 어렵다면 배포 사이트를 쓴다 |
 | 로컬 사이트에 추가 결과가 안 보임 | 정상이다. `make site`는 시작할 때만 위키를 복사한다. 다시 실행하거나 Obsidian으로 보여준다 |
 | 배포 사이트에 추가 결과가 없음 | 정상이다. 배포 사이트는 `built` 상태로 고정돼 있다. 갱신하려면 `make deploy-pages`를 실행해야 하는데, 외부에 공개되는 작업이니 시연 중에는 하지 않는다 |
 | `tail`이 더 이상 갱신되지 않음 | `tail -f`로 띄운 경우다. 복원이 파일을 새로 만들기 때문이다. `tail -F`로 다시 띄운다 |
@@ -416,6 +477,7 @@ make status       # 179 pages, error book 0 open / 1 closed 확인
 | 위키 (Obsidian vault) | `wiki_output/assembly_spc/wiki/` |
 | Error Book 원본 / 표 | `wiki/error_book.yaml` / `wiki/error-book.md` |
 | 수리 이력 / 이벤트 로그 | `wiki/lint_ledger.jsonl` / `wiki/log.md` |
-| 스냅샷 | `.snapshots/assembly_spc/built`, `.snapshots/assembly_spc/before-inject` |
-| 구축 로그 / 리허설 로그 | `wiki_output/assembly_spc/build-v2-resume.log` / `wiki_output/assembly_spc/rehearsal-add2.log` |
+| 시연 기준본 (git에 포함) | `.snapshots/assembly_spc/built/`: `wiki/`, `articles/`, `cache.json`, `purpose.md` |
+| 결함 심기 직전 상태 (로컬에서 생성) | `.snapshots/assembly_spc/before-inject/` |
+| 구축 로그 / 리허설 로그 | [docs/logs/build-v2.log](logs/build-v2.log) / [docs/logs/rehearsal-demo-add.log](logs/rehearsal-demo-add.log) |
 | 저장된 프롬프트 | `wiki_output/assembly_spc/logs/prompts/` |

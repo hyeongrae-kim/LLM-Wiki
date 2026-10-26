@@ -1,0 +1,50 @@
+errors:
+- id: E01
+  category: broken_link
+  description: 'Broken links: wikilinks pointing to non-existent pages (auto-deleted,
+    pending LLM fix to create missing pages)'
+  constraint: Avoid creating links to non-existent pages. If referencing a new entity,
+    create the page simultaneously
+  status: closed
+  count: 1
+  samples:
+  - name: 의안-2210136 → [[bills/의안-2212283]]
+    fixed: true
+  - name: 의안-2210129 → [[bills/의안-2212366]]
+    fixed: true
+  - name: 황운하 → [[committees/국토교통위원회]]
+    fixed: true
+  - name: 표결-1366 → [[meetings/제418회-국회-정기회-제18차-본회의]]
+    fixed: true
+  - name: 표결-1590 → [[meetings/제418회-국회-정기회-제8차-본회의]]
+    fixed: true
+  - name: 제426회-국회-임시회-제1차-본회의 → [[meetings/제423회-국회-임시회-제2차-본회의]]
+    fixed: true
+  - name: 표결-955 → [[meetings/제426회-국회-임시회-제1차-본회의]]
+    fixed: true
+  - name: 표결-560 → [[meetings/제431회-국회-임시회-제1차-본회의]]
+    fixed: true
+  - name: 의안-2221215 → [[meetings/제439회-국회-정기회-제9차-본회의]]
+    fixed: true
+  - name: 의안-2221215 → [[members/김동아]]
+    fixed: true
+  - name: 의안-2204595 → [[members/박성준]]
+    fixed: true
+  - name: 천하람 → [[parties/개혁신당]]
+    fixed: true
+  - name: 신동욱 → [[parties/국민의힘]]
+    fixed: true
+  - name: 김용민 → [[parties/더불어민주당]]
+    fixed: true
+  - name: 황운하 → [[parties/조국혁신당]]
+    fixed: true
+  - name: 법제사법위원회 → [[sources/digests/의안-2210005-한동훈-전-법무부장관의-검사·장관-재직시-비위의혹-및-자녀-논문대필-등-가족의-비위-의혹]]
+    fixed: true
+  - name: 제418회-국회-정기회-제8차-본회의 → [[votes/표결-1588]]
+    fixed: true
+  discovered_at: '2026-10-23'
+  last_seen: '2026-10-24'
+  pass_count: 2
+  brief: true
+  needs_llm_fix: true
+  closed_at: '2026-10-24'

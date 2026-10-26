@@ -18,6 +18,7 @@
 |---|---|
 | [docs/DEMO_KO.md](docs/DEMO_KO.md) | **시연 가이드.** 원본 데이터에서 무엇을 어떻게, 왜 골랐는지, 시연 순서와 그 이유, 사전 준비와 화면 배치, 단계별 명령·예상 출력·짚을 말, 시간 조절, 문제 대응, 예상 질문과 정답 |
 | [docs/CHANGES_KO.md](docs/CHANGES_KO.md) | **원본 코드 대비 변경 사항.** Error Book을 논문 설명대로 동작하게 고친 내용, 실행 경로·호환성 버그, 매칭 버그, 수리 품질 버그, 한국어 지원, 사용 편의(CLI·Makefile·Quartz) |
+| [docs/logs/](docs/logs) | **실제 실행 로그.** 시연 가이드가 인용하는 v2 전체 구축 로그(`build-v2.log`)와 시연 리허설의 데이터 추가 로그(`rehearsal-demo-add.log`) |
 | [docs/PROJECT_REPORT_KO.md](docs/PROJECT_REPORT_KO.md) | **프로젝트 전체 정리.** 계획을 세운 방법과 결정, 세팅, 진행 타임라인, v1·v2를 두 번 구축한 이유, 리허설 결과, Quartz·Pages 문제 해결, API 비용·시간 |
 
 ## 무엇을 하는가
@@ -45,20 +46,33 @@ raw 문서 ──ingest──▶ LLM-Wiki (Markdown, [[링크]]) ──wiki_sear
 
 요구사항: Python 3.10 이상, OpenAI API 키. Quartz 사이트를 쓰려면 Node 22 이상과 npm 10.9.2 이상도 필요하다.
 
+### 바로 시연하기 (구축 없이)
+
+레포에 이미 구축된 시연 기준 위키(`.snapshots/assembly_spc/built/`)가 들어 있다. 클론한 뒤 복원만 하면 된다.
+
 ```bash
 git clone https://github.com/hyeongrae-kim/LLM-Wiki.git && cd LLM-Wiki
 make setup                 # .venv 생성, 패키지 설치(editable), .env 생성
 # .env 의 OPENAI_API_KEY 입력 (모델·언어 기본값: gpt-6-luna, WIKI_LANG=ko)
 
-make quickstart            # 문서 27개(small preset)로 구축 — 약 20분 (전체 154개는 약 80분)
+make demo-reset            # 시연 기준 위키 복원 (지식 페이지 179개)
 make ask Q="순직 해병 특검법 첫 본회의 표결에서 국민의힘 소속으로 찬성한 의원은?"
 ```
 
-전체 154개 문서로 구축하려면 다음을 실행한다.
+시연 순서와 단계별 명령은 [docs/DEMO_KO.md](docs/DEMO_KO.md)에 있다.
+
+### 직접 구축하기
 
 ```bash
+make quickstart            # 문서 27개(small preset)로 처음부터 구축 — 약 20분, "small" 스냅샷으로 저장
+```
+
+전체 154개 문서로 구축하려면 다음을 실행한다 (약 80분, API 비용 약 $0.7).
+
+```bash
+make clean-wiki            # 작업 중인 위키·입력 문서·캐시 삭제 (스냅샷은 남는다)
 make prepare PRESET=full
-make build                 # 끝나면 "built" 스냅샷을 저장한다 (make demo-reset으로 복원)
+make build                 # 끝나면 "built" 스냅샷을 새 위키로 덮어쓴다 (make demo-reset으로 복원)
 ```
 
 `make help`로 전체 명령을 볼 수 있다. `make`를 쓰지 않는다면 `.venv/bin/llm-wiki <명령>`을 직접 실행하면 된다.
@@ -75,7 +89,7 @@ make build                 # 끝나면 "built" 스냅샷을 저장한다 (make d
 | `eval [--stage initial\|add] [--limit 10]` | 표 데이터에서 계산한 정답으로 채점한다 |
 | `lint` / `fix [--llm] [--content]` | lint를 실행해 Error Book에 기록한다 / 코드·LLM으로 수리한 뒤 다시 lint한다 |
 | `errorbook show\|export\|inject-demo` | Error Book과 주입될 제약을 보여 준다 / `wiki/error-book.md`를 만든다 / 시연용 결함 3개를 심는다 |
-| `snapshot` / `restore [--name]` | 위키·문서·캐시를 백업하고 복원한다 |
+| `snapshot` / `restore [--name]` | 위키·입력 문서·캐시·purpose를 백업하고 복원한다 |
 | `status` | 위키 통계 |
 
 모든 명령은 `--corpus`(기본값 `$WIKI_CORPUS`)를 받는다. `--log-llm`을 붙이면 LLM 호출 로그도 출력된다.
@@ -115,7 +129,7 @@ make convert               # 기본값: --keyword 특별검사 --add-keyword 지
 - **Quartz:** `make site`를 실행하면 http://localhost:8080 에서 볼 수 있다. 포트가 사용 중이면 `make site PORT=8090`으로 바꾼다.
   처음 실행할 때 Quartz v5와 플러그인을 `.quartz/`에 설치한다. 고정 버전(`QUARTZ_REF`)이 바뀌면 자동으로 다시 설치한다.
 - **GitHub Pages:** `make deploy-pages`를 실행하면 정적 사이트만 `gh-pages` 브랜치에 push하고 Pages를 활성화한다.
-  위키 Markdown 원본은 main에 커밋하지 않는다.
+  작업 중인 위키(`wiki_output/`)는 커밋하지 않는다. 시연 기준 위키는 `.snapshots/assembly_spc/built/`에만 커밋돼 있다.
 
 ## 설정 (`.env`)
 

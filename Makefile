@@ -11,12 +11,13 @@ RAW      ?= raw
 PORT     ?= 8080
 TITLE    ?= LLM-Wiki · 22대 국회 특별검사법
 Q        ?= 순직 해병 특검법 첫 본회의 표결에서 국민의힘 소속으로 찬성한 의원은?
+SNAP     ?= built
 
 BIN := $(VENV)/bin
 CLI := $(BIN)/llm-wiki
 C   := --corpus $(CORPUS)
 
-.PHONY: help setup convert prepare build quickstart status search ask eval \
+.PHONY: help setup convert prepare build quickstart clean-wiki status search ask eval \
         demo-add demo-errorbook demo-fix demo-reset test site deploy-pages
 
 help:  ## Show this help
@@ -33,14 +34,18 @@ convert:  ## (Optional) regenerate example articles from raw/ tables
 prepare:  ## Copy example articles + purpose/page types into place (PRESET=small|full)
 	$(CLI) prepare $(C) --source $(EXAMPLES) --config-dir $(CONFIG) --preset $(PRESET)
 
-build:  ## Compile the wiki, then save the "built" snapshot used by demo-reset
+build:  ## Compile the wiki, then save it as snapshot SNAP (default "built", restored by demo-reset)
 	$(CLI) build $(C)
 	$(CLI) errorbook $(C) export
-	$(CLI) snapshot $(C) --name built
+	$(CLI) snapshot $(C) --name $(SNAP)
 
-quickstart:  ## Small end-to-end build (~27 documents)
+quickstart:  ## Small build from scratch (~27 documents); keeps the committed "built" snapshot
+	$(MAKE) clean-wiki
 	$(MAKE) prepare PRESET=small
-	$(MAKE) build
+	$(MAKE) build SNAP=small
+
+clean-wiki:  ## Delete the working wiki, its copied articles and ingest cache (snapshots are kept)
+	rm -rf wiki_output/$(CORPUS)/wiki $(RAW)/$(CORPUS) .wiki-cache-bench-$(CORPUS).json
 
 status:  ## Wiki statistics
 	$(CLI) status $(C)

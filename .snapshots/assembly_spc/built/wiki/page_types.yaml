@@ -1,0 +1,25 @@
+# Page-type directories for the 22대 국회 특별검사법 corpus.
+# Directory names stay English (they are the frontmatter `type` values checked by
+# the lint); descriptions are Korean because the wiki is written in Korean.
+page_types:
+  bills:
+    description: 법안 — 특별검사법 등 의안 (의안번호, 대표발의자, 심사·의결·재의요구·공포 경과, 대안 관계)
+    auto_created: false
+  votes:
+    description: 본회의 표결 — 표결별 결과, 찬성·반대·기권 수, 정당별 찬반, 소수 의견 투표자
+    auto_created: false
+  members:
+    description: 국회의원 — 인적 사항, 소속 정당, 선거구, 위원회, 대표발의한 법안
+    auto_created: false
+  parties:
+    description: 정당 — 소속 의원, 특별검사법에 대한 발의·표결 경향
+    auto_created: false
+  committees:
+    description: 위원회 — 상임위원회·특별위원회, 소관 법안과 심사 경과
+    auto_created: false
+  cases:
+    description: 사건 — 특별검사 수사 대상 사건·의혹 (순직 해병, 주가조작, 비상계엄·내란 등)
+    auto_created: false
+  meetings:
+    description: 본회의 — 회의별 안건, 표결, 주요 발언
+    auto_created: false

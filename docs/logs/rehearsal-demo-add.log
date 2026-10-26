@@ -1,0 +1,114 @@
+.venv/bin/llm-wiki add --corpus assembly_spc examples/assembly_spc/add/*.md
+📥 Adding 5 document(s) to raw/assembly_spc/articles
+📋 Batch ingestion | Total: 5 | Batch size: 2 | Skipped: 0
+
+==================================================
+  Batch 1/3 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [의안 2220309 제9회 전국동시지방선거 투표용지 부, 의안 2221376 제9회 전국동시지방선거 투표용지 부]
+  🔍 Selected 3 pages: ['김용민', '법제사법위원회', '제439회-국회-정기회-제9차-본회의'] (4.6s)
+  📔 Error Book: injecting 3 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/의안-2220309-제9회-전국동시지방선거-투표용지-부족-사태-등-국민참정권-침해-의혹-진상규명을-위한-특별.md (970 chars)
+  📄 Written wiki/sources/digests/의안-2221376-제9회-전국동시지방선거-투표용지-부족-사태-등-국민참정권-침해-의혹-진상규명을-위한-특별.md (982 chars)
+  📄 Written wiki/bills/의안-2220309.md (852 chars)
+  📄 Written wiki/bills/의안-2221376.md (920 chars)
+  📄 Written wiki/members/김용민.md (1611 chars)
+  📄 Written wiki/committees/법제사법위원회.md (9124 chars)
+  📄 Written wiki/meetings/제439회-국회-정기회-제9차-본회의.md (1704 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 7 files for 2 articles (select 4.6s + generate 76.2s)
+  ⏳ [████████████░░░░░░░░░░░░░░░░░░] 2/5 (40.0%) | elapsed: 1m20s | ETA: 2m01s | avg: 40.4s/article  🔧 Moved votes/의안-2200005.md → bills/의안-2200005.md
+
+  🔧 Quick fix: type_path_mismatch=1
+
+==================================================
+  Batch 2/3 (2 articles)
+==================================================
+  📦 Batch mode: 2 articles [회의록 T57268 제22대국회 제439회 (정기회) , 표결 195345 2026-07-30 제9회 전국동시지]
+  🔍 Selected 8 pages: ['의안-2221376', '의안-2220309', '의안-2221215', '표결-770069', '제439회-국회-정기회-제9차-본회의']... (4.2s)
+  📔 Error Book: injecting 3 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/회의록-t57268-제22대국회-제439회-(정기회)-제9차-국회본회의.md (985 chars)
+  📄 Written wiki/sources/digests/표결-195345-2026-07-30-제9회-전국동시지방선거-투표용지-부족-사태-등-국민참정권-침해-의혹-진.md (980 chars)
+  📄 Written wiki/meetings/제439회-국회-정기회-제9차-본회의.md (1918 chars)
+  📄 Written wiki/bills/의안-2220309.md (1151 chars)
+  📄 Written wiki/votes/표결-195345.md (841 chars)
+  📄 Written wiki/committees/법제사법위원회.md (9284 chars)
+  🔗 Fixed/added 2 digest article links
+  ✅ Batch done: wrote 6 files for 2 articles (select 4.2s + generate 71.0s)
+  ⏳ [████████████████████████░░░░░░] 4/5 (80.0%) | elapsed: 2m36s | ETA: 39s | avg: 39.1s/article
+==================================================
+  Batch 3/3 (1 articles)
+==================================================
+  📦 Batch mode: 1 articles [표결 770034 2026-09-17 제9회 전국동시지]
+  🔍 Selected 6 pages: ['의안-2221376', '김용민', '더불어민주당', '국민의힘', '법제사법위원회']... (4.7s)
+  📔 Error Book: injecting 3 active constraint(s) into the Step 2 prompt
+  📄 Written wiki/sources/digests/표결-770034-2026-09-17-제9회-전국동시지방선거-투표용지-부족-사태-등-국민참정권-침해-의혹-진.md (866 chars)
+  📄 Written wiki/votes/표결-770034.md (1023 chars)
+  📄 Written wiki/bills/의안-2221376.md (1230 chars)
+  📄 Written wiki/meetings/제439회-국회-정기회-제9차-본회의.md (2313 chars)
+  📄 Written wiki/committees/법제사법위원회.md (9494 chars)
+  🔗 Fixed/added 1 digest article links
+  ✅ Batch done: wrote 5 files for 1 articles (select 4.7s + generate 72.6s)
+  ⏳ [██████████████████████████████] 5/5 (100.0%) | elapsed: 3m53s | ETA: 0s | avg: 46.8s/article  📔 Error E02 (type_path_mismatch) not seen for 2 checks, closed
+
+
+==================================================
+  🏁 Light finalization (1 round: code fix + structural LLM fix)
+==================================================
+
+  🤖 LLM Fix (Structural): Incomplete digests...
+  🤖 LLM Fix (Structural): Missing summaries...
+  📝 Found 1 knowledge pages missing summary, starting LLM fix...
+  📔 Marked 1 missing_summary sample(s) as fixed
+  🤖 LLM Fix (Structural): Missing sections...
+  🤖 LLM Fix (Structural): Broken links (create pages)...
+  🔗 Creating 1 missing pages for broken links...
+    ✅ Created members/한지아
+    📎 Injected Related Sources for 한지아
+  📔 Marked 1 broken_link sample(s) as fixed
+  🤖 LLM Fix (Structural): Empty Related Pages...
+  ✅ No empty Related Pages found.
+  🤖 Structural LLM fixed 2 issues (summary_added=1, pages_created=1)
+
+  📂 bills/: 「## Unsorted」2 entries, 6 existing sections
+    → Moved to existing: 0, new sections: 1 (2 entries)
+       New: 지방선거(2)
+    ✅ Updated bills/_index.md
+
+  📂 votes/: 「## Unsorted」2 entries, 4 existing sections
+    → Moved to existing: 2, new sections: 0 (0 entries)
+       Existing: 특검제도(+2)
+    ✅ Updated votes/_index.md
+
+  📂 members/: 「## Unsorted」1 entries, 3 existing sections
+    → Moved to existing: 1, new sections: 0 (0 entries)
+       Existing: 의원소개(+1)
+    ✅ Updated members/_index.md
+    ✅ Zero issues
+
+============================================================
+  📔 Error Book (2 active / 1 closed)
+============================================================
+
+  🔴 Active errors:
+    [E01] Broken links: wikilinks pointing to non-existent pages (auto-deleted, pending LLM fix to create missing pages)
+         18 sampled, 18 fixed, 0 remaining · clean checks 1/2
+         ✅ 의안-2210136 → [[bills/의안-2212283]]
+         ✅ 의안-2210129 → [[bills/의안-2212366]]
+         ✅ 황운하 → [[committees/국토교통위원회]]
+    [E03] Knowledge page missing one-sentence summary: no > blockquote after # title
+         1 sampled, 1 fixed, 0 remaining · clean checks 1/2
+         ✅ members/강득구
+
+  🟢 Closed: 1 errors
+
+
+==================================================
+✅ Batch ingestion complete: 5 success / 0 failed / 5 total
+  total: 4m11s | avg: 50.3s/article
+
+📚 Wiki: wiki_output/assembly_spc/wiki
+   knowledge pages: 184 (bills 80, votes 23, members 39, parties 4, committees 3, cases 21, meetings 14)
+   source digests : 159
+   error book     : 2 open / 1 closed
+WIKI_DUMP_PROMPTS=1 PYTHONUNBUFFERED=1 make demo-add  1.27s user 0.71s system 0% cpu 4:11.61 total

@@ -365,6 +365,11 @@ def _snapshot_dir(corpus: str, name: str) -> Path:
     return REPO / ".snapshots" / corpus / name
 
 
+def _purpose_file(config, corpus: str) -> Path:
+    # Without it, the next ingest asks the LLM to invent a new purpose.
+    return config.BASE_DIR / f"purpose_{corpus}.md"
+
+
 def _snapshot(config, corpus: str, name: str) -> None:
     dst = _snapshot_dir(corpus, name)
     if dst.exists():
@@ -375,6 +380,8 @@ def _snapshot(config, corpus: str, name: str) -> None:
         shutil.copytree(config.RAW_DIR, dst / "articles")
     if config.CACHE_FILE.exists():
         shutil.copyfile(config.CACHE_FILE, dst / "cache.json")
+    if _purpose_file(config, corpus).exists():
+        shutil.copyfile(_purpose_file(config, corpus), dst / "purpose.md")
     print(f"📸 Snapshot saved: {dst.relative_to(REPO)}")
 
 
@@ -395,6 +402,8 @@ def cmd_restore(args) -> None:
         shutil.copytree(src / "articles", config.RAW_DIR)
     if (src / "cache.json").exists():
         shutil.copyfile(src / "cache.json", config.CACHE_FILE)
+    if (src / "purpose.md").exists():
+        shutil.copyfile(src / "purpose.md", _purpose_file(config, args.corpus))
     print(f"♻️  Restored {config.WIKI_DIR.relative_to(REPO)} from {src.relative_to(REPO)}")
 
 
