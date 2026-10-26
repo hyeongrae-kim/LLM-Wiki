@@ -1,6 +1,6 @@
 """llm-wiki — command-line front end for building, querying and demoing an LLM-Wiki.
 
-Typical flow (see README.ko.md / docs/DEMO_KO.md):
+Typical flow (see README.md / docs/DEMO_KO.md):
 
     llm-wiki prepare --source examples/assembly_spc --config-dir corpora/assembly --preset small
     llm-wiki build                       # compile raw/<corpus>/articles into wiki_output/<corpus>/wiki
